@@ -1,9 +1,13 @@
 package controllers;
 
-import com.mongodb.async.client.FindIterable;
-import com.mongodb.async.client.MongoClient;
-import com.mongodb.async.client.MongoClients;
-import com.mongodb.async.client.MongoDatabase;
+
+
+import com.mongodb.DBObject;
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.util.JSON;
+import model.Ad;
 import org.bson.Document;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -11,18 +15,18 @@ import play.mvc.Result;
 import service.Dao;
 import views.html.postad;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by sasinda on 9/30/15.
  */
 public class API extends Controller{
 
-    MongoClient mongoClient = MongoClients.create("mongodb://localhost");
+    MongoClient mongoClient = new MongoClient("localhost");
     MongoDatabase addhub = mongoClient.getDatabase("addhub");
 
 
-    public Result postAd(){
-       return null;
-    }
 
     /**
      * get category by name
@@ -30,13 +34,47 @@ public class API extends Controller{
      * @return
      */
     public Result getCategory(String name){
+        String collection="category";
         if(name.equalsIgnoreCase("all")){
-            FindIterable<Document> categories = addhub.getCollection("category").find();
-            return ok(Json.toJson(categories));
+            List< Document> categories = findAll(collection);
+           return ok(Json.toJson(categories));
         }else {
 
         }
         return null;
+    }
+
+
+
+
+    /**
+     * get category by name
+     * @return
+     */
+    public Result postAd(){
+        Ad ad=Json.fromJson(request().body().asJson(), Ad.class);
+        String cat=ad.getCategory();
+        if(cat!=null){
+            DBObject adv= (DBObject) JSON.parse(Json.toJson(ad).toString());
+            addhub.getCollection(cat);
+        }
+
+        return ok("");
+    }
+
+
+
+    private List<Document> findAll(String collection) {
+        List<Document> docs =new ArrayList<>();
+        MongoCursor<Document> cursor=addhub.getCollection(collection).find().iterator();
+        try {
+            while (cursor.hasNext()) {
+                docs.add(cursor.next());
+            }
+        } finally {
+            cursor.close();
+        }
+        return docs;
     }
 
 

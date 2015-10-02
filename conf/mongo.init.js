@@ -20,7 +20,7 @@ db.category.insert({
                    });
 db.category.insert({
                      "name": "Services",
-                     "subcategories": [
+                     "subcats": [
                        "Automotive Services",
                        "Beauty & Salon Services",
                        "Caregivers & Baby Sitting",
@@ -36,15 +36,14 @@ db.category.insert({
                    });
 db.category.insert({
                      "name": "Pets",
-                     "subcategories": [
+                     "subcats": [
                        "Birds",
                        "Cats",
                        "Dogs",
                        "Fish & Reptile Pets",
                        "Free Pets to Good Home",
                        "Horses",
-                       "Pet Supplies",
-                       ""
+                       "Pet Supplies"
                      ]
                    });
 

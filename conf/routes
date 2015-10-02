@@ -4,11 +4,16 @@
 
 
 # Home page
-GET        /                                 controllers.Application.viewIndex()
-
-# Map the JS resource paths
-GET        /*file                            controllers.Assets.versioned(path="/public", file: Asset)
-
+GET         /                          controllers.Application.viewIndex()
 
 #Rest API
-GET        /api/category/:name                controllers.API.getCategory(name: String)
+#Category api
+GET         /api/category/:name        controllers.API.getCategory(name: String)
+
+#Ad api
+POST        /api/ad                   controllers.API.postAd()
+
+# Map the JS resource paths
+GET         /*file                     controllers.Assets.versioned(path="/public", file: Asset)
+
+

@@ -2,21 +2,30 @@
 
 'use strict';
 
-define(function() {
+define(function () {
 
-/* Controllers */
+    /* Controllers */
 
-var controllers = {};
+    var controllers = {};
 
-controllers.postAdd = function($scope, Category) {
-    console.log($scope)
-    console.log(Category);
-}
-controllers.postAdd.$inject = [];
+    controllers.postAd = function ($scope, Category, Ad) {
+        Category.query(function (data) {
+            $scope.categories = data;
+            console.log(data);
+        });
 
-controllers.MyCtrl2 = function() {}
-controllers.MyCtrl2.$inject = [];
+        $scope.postAd=function(){
+            console.log($scope.ad)
+            Ad.save($scope.ad)
+        }
 
-return controllers;
+    }
+    controllers.postAd.$inject = ['$scope', 'Category', 'Ad'];
+
+    controllers.MyCtrl2 = function () {
+    }
+    controllers.MyCtrl2.$inject = [];
+
+    return controllers;
 
 });

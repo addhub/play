@@ -11,11 +11,10 @@ define(['angular'], function (angular) {
     angular.module('myApp.services', []).
         value('version', '0.21')
         .factory('Category', function ($resource) {
-            console.out("hi")
             return $resource('/api/category/:name', {name:'all'})
         })
-        .factory('Advertisement',function(){
-
+        .factory('Ad',function($resource){
+            return $resource('/api/ad/:id', {id:'@id'});
         });
 
 });
