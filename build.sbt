@@ -11,6 +11,7 @@ libraryDependencies ++= Seq(
   "org.webjars" % "angularjs" % "1.4.6",
   "org.webjars" % "requirejs" % "2.1.11-1",
   "org.webjars" % "jquery" % "2.1.4",
+  "org.webjars" % "bootstrap" % "3.3.5",
 //  "org.mongodb" % "mongodb-driver-async" % "3.0.4",
   "org.mongodb" % "mongo-java-driver" % "3.0.4"
 )     
@@ -21,4 +22,4 @@ routesGenerator := InjectedRoutesGenerator
 pipelineStages := Seq(rjs, digest, gzip)
 
 
-fork in run := true
+fork in run := false

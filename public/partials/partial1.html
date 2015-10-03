@@ -1,23 +1,22 @@
-<p>This is the partial for view 1.</p>
-
 <div class="">
-    <h2 class="heading5"><span class="maintext"> Post An Ad</span></h2>
+    <h2 class="heading5"><span class="maintext"> Post Your Ad</span></h2>
     <form class="form-horizontal mt20" ng-submit="postAd()">
         <fieldset>
             <div class="form-group">
                 <label class="col-sm-2 control-label">Title:</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" ng-model='ad.title' placeholder="Title">
+                    <input type="text" class="form-control" placeholder="Title" ng-model='ad.title'  id="title" required>
                 </div>
             </div>
+
             <div class="form-group">
                 <label class="col-sm-2 control-label">Category:</label>
                 <div class="col-sm-6">
-                    <select name="category" class="form-control" id="category" ng-model='ad.category'>
+                    <select name="category" class="form-control" id="category" ng-model='ad.category' id="category" required>
                         <option value="">Choose a category</option>
 
                         <optgroup ng-repeat="cat in categories", ng-attr-label="{{cat.name}}" label="cat.name">
-                            <option ng-repeat="subcat in cat.subcats" ,  value="2">{{subcat | trust}}</option>
+                            <option ng-repeat="subcat in cat.subcats" ,  value="{{subcat}}">{{subcat | trust}}</option>
                         </optgroup>
 
                     </select>
@@ -26,22 +25,22 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">Description</label>
                 <div class="col-sm-6">
-                    <textarea rows="6" class="form-control col-sm-6" ng-model='ad.description'></textarea>
+                    <textarea rows="6" class="form-control col-sm-6" ng-model='ad.description' id='description' required></textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">Keywords</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="Keywords" ng-model='ad.keywords'>
+                    <input type="text" class="form-control" placeholder="Keywords" ng-model='ad.keywords' id='keywords'>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">Adress</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="Address"  ng-model='ad.address'>
-                    <input type="text" class="form-control  mt10" placeholder="State" ng-model='ad.state'>
-                    <input type="text" class="form-control mt10" placeholder="Country" ng-model='ad.country'>
-                    <input type="text" class="form-control mt10" placeholder="Zip Code" ng-model='ad.zipcode'>
+                    <input type="text" class="form-control" placeholder="Address"  ng-model='ad.address' id='address'>
+                    <input type="text" class="form-control  mt10" placeholder="State" ng-model='ad.state' id="state" required>
+                    <input type="text" class="form-control mt10" placeholder="Country" ng-model='ad.country' id="country" required>
+                    <input type="text" class="form-control mt10" placeholder="Zip Code" ng-model='ad.zipcode' id="zipcode" required>
                 </div>
             </div>
             <div class="form-group">
@@ -55,18 +54,18 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">Price</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="Price" ng-model='ad.price'>
+                    <input type="text" class="form-control" placeholder="Price" ng-model='ad.price' id="price">
                 </div>
             </div>
             <div class="col-sm-offset-2 col-sm-10">
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" ng-model='ad.agree'>
+                        <input type="checkbox" ng-model='ad.agree' id="agree">
                         I agree to the terms and conditions </label>
                 </div>
             </div>
             <div class="col-sm-offset-2 col-sm-10 mt20">
-                <input type="submit" class="btn btn-orange" value="Post Ad">
+                <input type="submit" class="btn btn-orange" value="Post Ad" id="submit">
             </div>
         </fieldset>
     </form>

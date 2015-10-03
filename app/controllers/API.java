@@ -9,11 +9,11 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.util.JSON;
 import model.Ad;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import service.Dao;
-import views.html.postad;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,12 +54,15 @@ public class API extends Controller{
     public Result postAd(){
         Ad ad=Json.fromJson(request().body().asJson(), Ad.class);
         String cat=ad.getCategory();
+        cat.replace(' ','_');
         if(cat!=null){
             DBObject adv= (DBObject) JSON.parse(Json.toJson(ad).toString());
-            addhub.getCollection(cat);
-        }
+            Document doc=new Document(adv.toMap());
+            addhub.getCollection(cat).insertOne(doc);
 
-        return ok("");
+            return ok(Json.newObject().put("id",doc.get("_id").toString()));
+        }
+        return badRequest("category must be provided");
     }
 
 
@@ -76,6 +79,5 @@ public class API extends Controller{
         }
         return docs;
     }
-
 
 }

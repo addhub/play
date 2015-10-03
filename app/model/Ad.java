@@ -9,7 +9,7 @@ public class Ad {
     private String title;
     private String category;
     private String description;
-    private String keywrods;
+    private String keywords;
     private String address;
     private String state;
     private String country;
@@ -42,12 +42,12 @@ public class Ad {
         this.description = description;
     }
 
-    public String getKeywrods() {
-        return keywrods;
+    public String getKeywords() {
+        return keywords;
     }
 
-    public void setKeywrods(String keywrods) {
-        this.keywrods = keywrods;
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
     }
 
     public String getAddress() {

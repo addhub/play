@@ -11,7 +11,7 @@ GET         /                          controllers.Application.viewIndex()
 GET         /api/category/:name        controllers.API.getCategory(name: String)
 
 #Ad api
-POST        /api/ad                   controllers.API.postAd()
+POST        /api/ad                    controllers.API.postAd()
 
 # Map the JS resource paths
 GET         /*file                     controllers.Assets.versioned(path="/public", file: Asset)
