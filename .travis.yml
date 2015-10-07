@@ -13,3 +13,6 @@ env:
 
 script:
 -  ./activator test
+
+notifications:
+email: false
