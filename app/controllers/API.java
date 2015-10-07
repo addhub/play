@@ -13,6 +13,7 @@ import org.bson.types.ObjectId;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import service.Mongo;
 
 
 import java.util.ArrayList;
@@ -23,10 +24,8 @@ import java.util.List;
  */
 public class API extends Controller{
 
-    MongoClient mongoClient = new MongoClient("localhost");
-    MongoDatabase addhub = mongoClient.getDatabase("addhub");
 
-
+    Mongo mongo=new Mongo();
 
     /**
      * get category by name
@@ -34,50 +33,29 @@ public class API extends Controller{
      * @return
      */
     public Result getCategory(String name){
-        String collection="category";
-        if(name.equalsIgnoreCase("all")){
-            List< Document> categories = findAll(collection);
-           return ok(Json.toJson(categories));
-        }else {
-
-        }
-        return null;
+        return ok(Json.toJson(mongo.getCategory(name)));
     }
 
 
 
 
     /**
-     * get category by name
+     * Post an advertisement.
      * @return
      */
     public Result postAd(){
         Ad ad=Json.fromJson(request().body().asJson(), Ad.class);
-        String cat=ad.getCategory();
-        cat.replace(' ','_');
-        if(cat!=null){
-            DBObject adv= (DBObject) JSON.parse(Json.toJson(ad).toString());
-            Document doc=new Document(adv.toMap());
-            addhub.getCollection(cat).insertOne(doc);
 
+        Document doc=mongo.postAd(ad);
+        if(doc!=null){
             return ok(Json.newObject().put("id",doc.get("_id").toString()));
+        }else {
+            return badRequest("category must be provided");
         }
-        return badRequest("category must be provided");
     }
 
 
 
-    private List<Document> findAll(String collection) {
-        List<Document> docs =new ArrayList<>();
-        MongoCursor<Document> cursor=addhub.getCollection(collection).find().iterator();
-        try {
-            while (cursor.hasNext()) {
-                docs.add(cursor.next());
-            }
-        } finally {
-            cursor.close();
-        }
-        return docs;
-    }
+
 
 }
