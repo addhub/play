@@ -4,16 +4,33 @@
 
 
 # Home page
-GET         /                          controllers.Application.viewIndex()
+GET           /                          controllers.Application.viewIndex()
 
 #Rest API
 #Category api
-GET         /api/category/:name        controllers.API.getCategory(name: String)
+GET           /api/category/:name        controllers.API.getCategory(name: String)
+
 
 #Ad api
-POST        /api/ad                    controllers.API.postAd()
+POST          /api/ad                    controllers.API.postAd()
+#/api/ad? cat=Vehicles &subcat=Car &start=0 &limit=10 & price$lt9.95
+GET           /api/ad                    controllers.API.queryAds()
+GET           /api/ad/:id                controllers.API.getAd(id: String)
+DELETE        /api/ad/:id                controllers.API.deleteAd(id:String)
+PUT           /api/ad/:id                controllers.API.updateAd(id:String)
+
+
+#User API
+POST          /api/user                  controllers.API.createUser()
+GET           /api/user/:username        controllers.API.getUser(username:String)
+#PUT           /api/user/:username        controllers.API.updateUser()
+#DELETE        /api/user/:username        controllers.API.deleteUser()
+#
+POST           /user/login                 controllers.Application.login()
+GET            /user/logout                controllers.Application.logout()
+
 
 # Map the JS resource paths
-GET         /*file                     controllers.Assets.versioned(path="/public", file: Asset)
+GET           /*file                     controllers.Assets.versioned(path="/public", file: Asset)
 
 

@@ -2,7 +2,6 @@ package service;
 
 import model.Ad;
 import org.bson.Document;
-import org.junit.BeforeClass;
 
 import java.util.List;
 
@@ -12,13 +11,13 @@ import static org.junit.Assert.*;
 /**
  * Created by sasinda on 10/7/15.
  */
-public class MongoTest {
+public class AdServiceTest {
 
-    Mongo mongo=new Mongo();
+    AdService adService =new AdService();
 
     @org.junit.Test
     public void testGetCategory() throws Exception {
-        List<Document> all = mongo.getCategory("all");
+        List<Document> all = adService.getCategories("all");
         assertNotNull(all);
     }
 
@@ -27,7 +26,7 @@ public class MongoTest {
         Ad ad=new Ad();
         ad.setTitle("test ad");
         ad.setCategory("test");
-        Document document = mongo.postAd(ad);
+        Document document = adService.postAd(ad);
         assertNotNull(document.get("title"));
     }
 }

@@ -16,7 +16,7 @@
                         <option value="">Choose a category</option>
 
                         <optgroup ng-repeat="cat in categories", ng-attr-label="{{cat.name}}" label="cat.name">
-                            <option ng-repeat="subcat in cat.subcats" ,  value="{{subcat}}">{{subcat | trust}}</option>
+                            <option ng-repeat="subcat in cat.subcats" ,  value="{{cat.name}}-{{subcat}}">{{subcat | trust}}</option>
                         </optgroup>
 
                     </select>

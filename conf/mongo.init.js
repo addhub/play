@@ -6,7 +6,9 @@
 
 db.category.insert({
                      "name": "Vehicle",
+                     "collection":"ad_",
                      "subcats": [
+                       "Automotive Items & Parts",
                        "Boats & Watercraft",
                        "Cars",
                        "Classic Cars",
@@ -48,3 +50,20 @@ db.category.insert({
                    });
 
 
+
+
+
+db.Vehicle.insert({
+    "_id" : ObjectId("560f0841e746b7031b037829"),
+    "title" : "Title",
+    "category":"Vehicle",
+    "subCat" : "Cars",
+    "description" : "Gallant",
+    "keywords" : ["Gallant","Diesel"],
+    "address" : "309 West 30th Street",
+    "state" : "NY",
+    "country" : "USA",
+    "zipcode" : "10001",
+    "price" : 100000,
+    "agree" : true
+});

@@ -31,8 +31,13 @@ require(['angular', './controllers', './directives', './filters', './services', 
         angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 'ngRoute', 'ngResource']).
             config(['$routeProvider', function ($routeProvider) {
                 $routeProvider.when('/home', {templateUrl: 'partials/home.html', controller: controllers.home});
-                $routeProvider.when('/postAd', {templateUrl: 'partials/partial1.html', controller: controllers.postAd});
+                $routeProvider.when('/postAd', {templateUrl: 'partials/postAd.html', controller: controllers.postAd});
                 $routeProvider.when('/success/:id', {templateUrl: 'partials/success.html', controller: controllers.postAdSuccess});
+                $routeProvider.when('/login', {templateUrl: 'partials/login.html', controller: controllers.login});
+                $routeProvider.when('/register', {templateUrl: 'partials/register.html', controller: controllers.register});
+                $routeProvider.when('/myAccount/dashboard/:id', {templateUrl: 'partials/mydashboard.html', controller: controllers.register});
+                $routeProvider.when('/myAccount/profile/:id', {templateUrl: 'partials/myProfile.html', controller: controllers.register});
+                $routeProvider.when('/myAccount/:noid', {templateUrl: 'partials/login.html', controller: controllers.register});
                 $routeProvider.otherwise({redirectTo: '/home'});
             }]);
 

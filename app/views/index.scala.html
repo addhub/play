@@ -1,3 +1,4 @@
+@(user: model.User)
 <!doctype html>
 
 
@@ -10,7 +11,7 @@
         <title>Addhub</title>
 
         <style type="text/css">.gm-style.gm-style-mtc label,.gm-style.gm-style-mtc div { font-weight : 400 }</style>
-        <style type="text/css">.gm-style.gm-style-cc span,.gm-style.gm-style-cc a,.gm-style.gm-style-mtc div { font-size : 10 px }</style>
+        <style type="text/css">.gm-style.gm-style-cc span,.gm-style.gm-style-cc a,.gm-style.gm-style-mtc div { font-size : 10px }</style>
         <style type="text/css">@@media print {.gm-style.gmnoprint,.gmnoprint { display : none } } @@media screen {.gm-style.gmnoscreen,.gmnoscreen { display : none } }</style>
         <style type="text/css">.gm-style { font-family : Roboto, Arial, sans-serif ; font-size : 11 px ; font-weight : 400 ; text-decoration : none }.gm-style img { max-width : none }</style>
 
@@ -30,14 +31,7 @@
         <script async="" src="http://api.flickr.com/services/rest/?method=flickr.people.findByUsername&amp;username=flickr&amp;format=json&amp;api_key=32ff8e5ef78ef2f44e6a1be3dbcf0617&amp;jsoncallback=jQuery1102020590969291515648_1443029674630&amp;_=1443029674631"></script>
 
 <body style="">
-    <ul class="menu">
-        <li><a href="#/view1">view1</a></li>
-        <li><a href="#/view2">view2</a></li>
-    </ul>
 
-
-
-    <div>Angular seed app: v<span app-version></span></div>
         <!-- Header Start -->
     <header id="header">
         <div class="headerdetails">
@@ -47,18 +41,34 @@
                     <nav class="subnav">
                         <div class="menurelative"> <a class="btn btn-orange mainmenumobile">Menu</a>
                             <ul class="nav-pills mainmenucontain">
-                                <li> <a class="active home submenu2" href="index.html">Home</a>
+                                <li> <a class="active home submenu2" href="/">Home</a>
                                 </li>
                                 <li> <a class="submenu2" href="list.html">Listing</a>
                                 </li>
-                                <li> <a class="submenu2">My Account</a>
+                                <li>
+                                    <a class="submenu2">My Account
+                                        @if(user!=null){
+                                            <span style="
+                                            font-size: x-small;
+                                            ">&lt;(Hi @user.getName())</span>
+
+                                        }
+                                    </a>
                                     <div class="submenu">
                                         <ul>
-                                            <li> <a class="" href="/login.html">Login</a> </li>
-                                            <li> <a class="" href="register.html">Register</a> </li>
-                                            <li> <a class="" href="account.html">Dashboard</a> </li>
-                                            <li> <a class="" href="profile.html">Edit Profile</a> </li>
-                                            <li> <a class="" href="postad.html">Post An Ad</a> </li>
+                                            @if(user==null){
+                                                <li> <a class="" href="#/login">Login</a> </li>
+                                                <li> <a class="" href="#/register">Register</a> </li>
+
+                                                <li> <a class="" href="#/myAccount/dashboard">Dashboard</a> </li>
+                                                <li> <a class="" href="#/myAccount/profile">Profile</a> </li>
+                                            }else{
+                                                <li> <a class="" href="user/logout">Logout</a> </li>
+                                                <li> <a class="" href="#/myAccount/dashboard/@user.getId()">Dashboard</a> </li>
+                                                <li> <a class="" href="#/myAccount/profile/@user.getId()">Profile</a> </li>
+                                            }
+                                            <li> <a class="" href="#/postad.html">Post An Ad</a> </li>
+
                                         </ul>
                                     </div>
                                 </li>

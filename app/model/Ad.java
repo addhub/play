@@ -1,13 +1,22 @@
 package model;
 
+import org.apache.commons.lang3.text.WordUtils;
+
 import java.math.BigDecimal;
 
 /**
  * Created by sasinda on 10/2/15.
  */
-public class Ad {
+public class Ad extends BaseModel{
+    public static final String TITLE="title";
+    public static final String CATEGORY="category";
+    public static final String SUBCAT="subCat";
+    public static final String DESCRIPTION="description";
+
+
     private String title;
     private String category;
+    private String subCat;
     private String description;
     private String keywords;
     private String address;
@@ -30,8 +39,21 @@ public class Ad {
         return category;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategory(String cat) {
+        cat= WordUtils.capitalize(cat);
+        cat=cat.replaceAll("\\s","");
+        this.category = cat;
+    }
+
+    public String getSubCat() {
+        return subCat;
+    }
+
+    public void setSubCat(String subCat) {
+        subCat= WordUtils.capitalize(subCat);
+        subCat=subCat.replaceAll("\\s","");
+        this.category = subCat;
+        this.subCat = subCat;
     }
 
     public String getDescription() {

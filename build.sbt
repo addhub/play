@@ -12,9 +12,12 @@ libraryDependencies ++= Seq(
   "org.webjars" % "requirejs" % "2.1.11-1",
   "org.webjars" % "jquery" % "2.1.4",
   "org.webjars" % "bootstrap" % "3.3.5",
-//  "org.mongodb" % "mongodb-driver-async" % "3.0.4",
-  "org.mongodb" % "mongo-java-driver" % "3.0.4"
-)     
+  //  "org.mongodb" % "mongodb-driver-async" % "3.0.4",
+  "org.mongodb" % "mongo-java-driver" % "3.0.4",
+  "org.apache.commons" % "commons-lang3" % "3.4",
+  "commons-collections" % "commons-collections" % "3.2.1",
+  "org.jongo" % "jongo" % "1.2"
+)
 
 // Play provides two styles of routers, one expects its actions to be injected, the
 // other, legacy style, accesses its actions statically.
@@ -23,5 +26,3 @@ pipelineStages := Seq(rjs, digest, gzip)
 
 
 fork in run := false
-
-fork in run := true
