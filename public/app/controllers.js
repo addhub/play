@@ -4,11 +4,13 @@
 
 define(function () {
 
+
     /* Controllers */
 
     var controllers = {};
 
     controllers.postAd = function ($scope, Category, Ad, $location) {
+        _Auth();
         Category.query(function (data) {
             $scope.categories = data;
             console.log(data);
@@ -35,14 +37,22 @@ define(function () {
     controllers.postAdSuccess.$inject = ['$scope', '$routeParams'];
 
 
-    controllers.home = function ($scope) {
+    controllers.home = function ($scope, $rootScope, $cookies) {
+        delete $rootScope.currentUser;
+        if($cookies.get("user-name")){
+            $rootScope.currentUser={name:$cookies.get("user-name")}
+        }
     };
-    controllers.home.$inject = ['$scope'];
+    controllers.home.$inject = ['$scope','$rootScope', '$cookies' ];
 
 
-    controllers.login = function ($scope) {
+    controllers.login = function ($scope, $routeParams) {
+        $scope.message=$routeParams.message;
+        $scope.redirect=$routeParams.redirect;
+        $scope.action="user/login?redirect="+$routeParams.redirect;
+
     }
-    controllers.login.$inject = ['$scope'];
+    controllers.login.$inject = ['$scope','$routeParams'];
 
     controllers.register = function ($scope, $location, User) {
         $scope.createUser = function () {
@@ -54,6 +64,55 @@ define(function () {
     }
     controllers.register.$inject = ['$scope','$location','User'];
 
+
+
+
+
+
+    /**
+     * Interceptors for the controllers
+     */
+
+    controllers.intercept= function(event, next, current, $rootScope, $location){
+
+
+        if(next.loginRequired){
+            if(!$rootScope.currentUser ){
+                var msg=null;
+                var nextPath='/#/'+$location.path()
+                $location.path('login/').search({'redirect':nextPath, 'message': msg});
+            }
+        }
+
+
+
+
+
+
+
+    }
+
     return controllers;
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

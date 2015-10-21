@@ -23,6 +23,11 @@ public class Application extends Controller {
         session().clear();
         session("email", email);
         session("name", user.getName());
+        response().setCookie("user-name", user.getName());
+        String redirect = request().getQueryString("redirect");
+        if(redirect!=null){
+           return redirect(redirect);
+        }
         return redirect(
             routes.Application.viewIndex()
         );
@@ -30,8 +35,9 @@ public class Application extends Controller {
 
     public Result logout() {
         session().clear();
+        response().discardCookie("user-name");
         return redirect(
-                routes.Application.viewIndex()
+            routes.Application.viewIndex()
         );
     }
 
