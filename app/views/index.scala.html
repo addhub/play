@@ -35,16 +35,16 @@
         <!-- Header Start -->
     <header id="header">
         <div class="headerdetails">
-            <div class="container"> <a class="logo pull-left" href="./index.html"><img title="Classifieds" alt="Classifieds" src="img/add-hub-logo.jpg"></a>
-                <div id="mainmenu" class=" pull-right">
+            <div class="container">
+                <div class="col-md-2 col-md-offset-1"><a class="logo pull-left" href="#/index"><img title="Classifieds" alt="Classifieds" src="img/add-hub-logo.jpg"></a></div>
+
+                <div id="mainmenu" class="col=md-10 pull-right">
                         <!-- Navigation -->
                     <nav class="subnav">
                         <div class="menurelative"> <a class="btn btn-orange mainmenumobile">Menu</a>
                             <ul class="nav-pills mainmenucontain">
-                                <li> <a class="active home submenu2" href="/">Home</a>
-                                </li>
-                                <li> <a class="submenu2" href="list.html">Listing</a>
-                                </li>
+                                <li> <a class="active home submenu2" href="#/home">Home</a></li>
+                                <li> <a class="submenu2" href="#/list">Listing</a></li>
                                 <li>
                                     <a class="submenu2">My Account
                                         @if(user!=null){
@@ -67,7 +67,7 @@
                                                 <li> <a class="" href="#/myAccount/dashboard/@user.getId()">Dashboard</a> </li>
                                                 <li> <a class="" href="#/myAccount/profile/@user.getId()">Profile</a> </li>
                                             }
-                                            <li> <a class="" href="#/postad.html">Post An Ad</a> </li>
+                                            <li> <a class="" href="#/postAd">Post An Ad</a> </li>
 
                                         </ul>
                                     </div>
@@ -112,12 +112,12 @@
                 <div class="container">
                     <div class="row">
                         <ul class="quicklinks">
-                            <li> <a class="active home" href="index.html">Home</a> </li>
-                            <li> <a class="" href="list.html">Listing</a> </li>
-                            <li> <a class="" href="login.html">Login</a> </li>
-                            <li> <a class="" href="register.html">Register</a> </li>
-                            <li> <a class="" href="account.html">My Account</a> </li>
-                            <li> <a class="" href="contact.html">Contact</a> </li>
+                            <li> <a class="active home" href="#/home">Home</a> </li>
+                            <li> <a class="" href="#/list">Listing</a> </li>
+                            <li> <a class="" href="#/login">Login</a> </li>
+                            <li> <a class="" href="#/register">Register</a> </li>
+                            <li> <a class="" href="#/account">My Account</a> </li>
+                            <li> <a class="" href="#/contact">Contact</a> </li>
                         </ul>
                     </div>
                 </div>
@@ -125,7 +125,7 @@
             <section class="copyrightbottom">
                 <div class="container">
                     <div class="row">
-                        <div class="pull-left"> Copyright © 2015. Classic. All rights reserved </div>
+                        <div class="pull-left"> Copyright © 2015. All rights reserved </div>
                         <div class="pull-right"> Developed by Addhub</div>
                     </div>
                 </div>

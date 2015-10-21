@@ -1,4 +1,6 @@
-<div class="">
+<div class="row">
+    <div class="sidebar" ng-include src="'partials/sidenav.html'"></div>
+<div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-2">
     <h2 class="heading5"><span class="maintext"> Post Your Ad</span></h2>
     <form class="form-horizontal mt20" ng-submit="postAd()">
         <fieldset>
@@ -35,7 +37,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">Adress</label>
+                <label class="col-sm-2 control-label">Address</label>
                 <div class="col-sm-6">
                     <input type="text" class="form-control" placeholder="Address"  ng-model='ad.address' id='address'>
                     <input type="text" class="form-control  mt10" placeholder="State" ng-model='ad.state' id="state" required>
@@ -69,4 +71,5 @@
             </div>
         </fieldset>
     </form>
+</div>
 </div>

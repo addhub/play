@@ -1,0 +1,59 @@
+<aside class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+
+    <!--Filter-->
+    <div class="filter sidemodule">
+        <h2 class="heading5"><span class="maintext">Filter Search</span></h2>
+        <h5 class="subheading">Price</h5>
+        <ul class="checkprice">
+            <li>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="">
+                        Rs. 999 and Below (0) </label>
+                </div>
+            </li>
+            <li>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="">
+                        Rs. 1000 - Rs. 1999 </label>
+                </div>
+            </li>
+            <li>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="">
+                        Rs. 2000 - Rs. 3999 </label>
+                </div>
+            </li>
+            <li>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="">
+                        Rs. 3000 - Rs. 5000 </label>
+                </div>
+            </li>
+        </ul>
+
+
+    <!--Caegogries-->
+    <div class="sidemodule">
+        <h2 class="heading5"><span class="maintext"> Refine Category</span></h2>
+        <list ng-repeat="cat in categories", ng-attr-label="{{cat.name}}" label="cat.name">
+            <option ng-repeat="subcat in cat.subcats" ,  value="{{cat.name}}-{{subcat}}">{{subcat | trust}}</option>
+        </list>
+        <ul class="nav nav-list categories">
+            <li> <a href="#">Real Estate </a></li>
+            <li> <a href="#">Services </a></li>
+            <li> <a href="#">Electronics </a>
+                <ul class="nav nav-list">
+                    <li> <a href="#">Mobiles &amp; Tablets </a>
+                        <ul class="nav nav-list">
+                            <li class="active"> <a href="#">Mobile Phones </a> </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</aside>

@@ -1,0 +1,29 @@
+<div class="sidebar" ng-include src="'partials/listsidenav.html'"></div>
+<div class="mt40" id="serchlist">
+    <div class="list">
+        <ul>
+            <li class="clearfix">
+                <div class="col-sm-2"> <a class="thumbnail" href="#/detail"><img src="./img/product1.jpg" alt=""></a>
+                </div>
+                <div class="col-sm-8">
+                    <h3><a class="title" href="#/detail">{{ad.title}}</a></h3>
+                    <ul class="icondetail">
+                        <list ng-repeat="ad in ads", ng-attr-label="{{ad.title}}" label="ad.name">
+
+                            <li><i class="fa fa-th-list"></i> Category: <a href="#">{{ad.category}}</a></li>
+                            <li><i class="fa fa-map-marker"></i> Location: {{ad.state}}, {{ad.country}}</li>
+                            <li><i class="fa fa-calendar"></i> Posted On: {{ad.date}}</li>
+                            <li><i class="fa fa-user"></i> Posted by: <a href="#">{{ad.author}}</a></li>
+                        </list>
+
+                    </ul>
+                    <div class="discrption"> {{ad.description}}</div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="share"> Share On : <br>
+                        <a data-original-title="Twitter" class="tooltip-test"><i class="fa fa-twitter"></i></a> </div>
+                    <a class="btn  contact"><i class="fa fa-envelope-o"></i> Contact</a> </div>
+            </li>
+        </ul>
+    </div>
+</div>
