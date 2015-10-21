@@ -13,7 +13,7 @@ GET           /api/category/:name        controllers.API.getCategory(name: Strin
 
 #Ad api
 POST          /api/ad                    controllers.API.postAd()
-#/api/ad? cat=Vehicles &subcat=Car &start=0 &limit=10 & price$lt9.95
+#/api/ad? category=Vehicles &subCat=Car &start=0 &limit=10 & price$lt9.95
 GET           /api/ad                    controllers.API.queryAds()
 GET           /api/ad/:id                controllers.API.getAd(id: String)
 DELETE        /api/ad/:id                controllers.API.deleteAd(id:String)
