@@ -3,6 +3,7 @@ package controllers;
 import model.Login;
 import model.User;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.*;
 import service.UserService;
 import views.html.*;
@@ -24,13 +25,8 @@ public class Application extends Controller {
         session("email", email);
         session("name", user.getName());
         response().setCookie("user-name", user.getName());
-        String redirect = request().getQueryString("redirect");
-        if(redirect!=null){
-           return redirect(redirect);
-        }
-        return redirect(
-            routes.Application.viewIndex()
-        );
+        user.setPassword(null);
+        return ok(Json.toJson(user));
     }
 
     public Result logout() {

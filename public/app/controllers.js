@@ -46,13 +46,29 @@ define(function () {
     controllers.home.$inject = ['$scope','$rootScope', '$cookies' ];
 
 
-    controllers.login = function ($scope, $routeParams) {
+    controllers.login = function ($rootScope, $scope, $routeParams, $http, $window, $route, $location) {
         $scope.message=$routeParams.message;
-        $scope.redirect=$routeParams.redirect;
-        $scope.action="user/login?redirect="+$routeParams.redirect;
+        var redirect  =$routeParams.redirect;
+        redirect= redirect || "/";
+        var action="user/login?redirect="+redirect;
+
+        $scope.authenticate=function(){
+            var user = $scope.user;
+            $http.post(action, user).then(
+                function success(response){
+                    $location.path(redirect);
+                    $route.reload();
+                    delete $rootScope.currentUser;
+                    $rootScope.currentUser={name:response.data.name}
+                },
+                function error(error){
+                    $scope.message=error;
+                }
+            );
+        }
 
     }
-    controllers.login.$inject = ['$scope','$routeParams'];
+    controllers.login.$inject = ['$rootScope', '$scope','$routeParams', '$http', '$window','$route', '$location'];
 
     controllers.register = function ($scope, $location, User) {
         $scope.createUser = function () {

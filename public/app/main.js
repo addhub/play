@@ -36,7 +36,7 @@ require(['angular', './controllers', './directives', './filters', './services', 
 
         // Declare app level module which depends on filters, and services
 
-        angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 'ngRoute', 'ngResource','ngCookies', 'http-auth-interceptor']).
+        angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 'ngRoute', 'ngResource','ngCookies']).
             config(['$routeProvider', function ($routeProvider) {
                 $routeProvider.when('/home', {templateUrl: 'partials/home.html', controller: controllers.home});
                 $routeProvider.when('/list', {templateUrl: 'partials/list.html', controller: controllers.list});
@@ -52,7 +52,7 @@ require(['angular', './controllers', './directives', './filters', './services', 
                 $rootScope.$on( "$routeChangeStart", function(event, next, current) {
                     controllers.intercept(event,next,current, $rootScope, $location);
                 });
-            });
+            }).controller("HomeController", controllers.home);
 
         angular.bootstrap(document, ['myApp']);
 

@@ -10,4 +10,7 @@ public class Login {
     public String email;
     @Constraints.Required
     public String password;
+
+    public String name;
+    public String redirect;
 }

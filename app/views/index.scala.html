@@ -40,34 +40,28 @@
 
                 <div id="mainmenu" class="col=md-10 pull-right">
                         <!-- Navigation -->
-                    <nav class="subnav">
+                    <nav class="subnav" ng-controller="HomeController">
                         <div class="menurelative"> <a class="btn btn-orange mainmenumobile">Menu</a>
                             <ul class="nav-pills mainmenucontain">
                                 <li> <a class="active home submenu2" href="#/home">Home</a></li>
                                 <li> <a class="submenu2" href="#/list">Listing</a></li>
                                 <li>
                                     <a class="submenu2">My Account
-                                        @if(user!=null){
-                                            <span style="
-                                            font-size: x-small;
-                                            ">&lt;(Hi @user.getName())</span>
 
-                                        }
+                                            <span ng-show="currentUser" style="
+                                            font-size: x-small;
+                                            ">&lt;Hi {{currentUser.name}}</span>
+
+
                                     </a>
                                     <div class="submenu">
                                         <ul>
-                                            @if(user==null){
-                                                <li> <a class="" href="#/login">Login</a> </li>
-                                                <li> <a class="" href="#/register">Register</a> </li>
-
-                                                <li> <a class="" href="#/myAccount/dashboard/noid">Dashboard</a> </li>
-                                                <li> <a class="" href="#/myAccount/profile/noid">Profile</a> </li>
-                                            }else{
-                                                <li> <a class="" href="user/logout">Logout</a> </li>
-                                                <li> <a class="" href="#/myAccount/dashboard/@user.getId()">Dashboard</a> </li>
-                                                <li> <a class="" href="#/myAccount/profile/@user.getId()">Profile</a> </li>
-                                            }
-                                            <li> <a class="" href="#/postAd">Post An Ad</a> </li>
+                                                <li ng-hide="currentUser"> <a class="" href="#/login">Login</a> </li>
+                                                <li ng-hide="currentUser"> <a class="" href="#/register">Register</a> </li>
+                                                <li ng-show="currentUser"> <a class="" href="/user/logout">Logout</a> </li>
+                                                <li> <a ng-href="#/myAccount/dashboard/{{currentUser.id}}">Dashboard</a> </li>
+                                                <li> <a ng-href="#/myAccount/profile/{{currentUser.id}}">Profile</a> </li>
+                                                <li> <a class="" href="#/postad.html">Post An Ad</a> </li>
 
                                         </ul>
                                     </div>
@@ -125,7 +119,7 @@
             <section class="copyrightbottom">
                 <div class="container">
                     <div class="row">
-                        <div class="pull-left"> Copyright © 2015. All rights reserved </div>
+                        <div class="pull-left"> Copyright © 2015. Classic. All rights reserved </div>
                         <div class="pull-right"> Developed by Addhub</div>
                     </div>
                 </div>
