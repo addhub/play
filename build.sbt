@@ -1,8 +1,8 @@
-name := """angular-seed-play-java"""
+name := """addhub"""
 
 version := "1.0-SNAPSHOT"
 
-lazy val root = (project in file(".")).enablePlugins(PlayJava, PlayEbean)
+lazy val root = (project in file(".")).enablePlugins(PlayJava, PlayEbean, SbtWeb)
 
 scalaVersion := "2.11.6"
 
@@ -19,10 +19,11 @@ libraryDependencies ++= Seq(
   "org.jongo" % "jongo" % "1.2"
 )
 
+//RjsKeys.mainModule := "app/main"
+
 // Play provides two styles of routers, one expects its actions to be injected, the
 // other, legacy style, accesses its actions statically.
 routesGenerator := InjectedRoutesGenerator
-pipelineStages := Seq(rjs, digest, gzip)
+//pipelineStages := Seq(rjs, digest, gzip)
+pipelineStages := Seq( digest, gzip)
 
-
-fork in run := false
