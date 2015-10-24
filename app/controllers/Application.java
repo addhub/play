@@ -32,9 +32,7 @@ public class Application extends Controller {
     public Result logout() {
         session().clear();
         response().discardCookie("user-name");
-        return redirect(
-            routes.Application.viewIndex()
-        );
+        return redirect("/");
     }
 
     public Result viewIndex() {
