@@ -3,11 +3,13 @@ package service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.util.JSON;
 import model.BaseModel;
 import org.bson.Document;
 import org.jongo.Jongo;
+import play.Play;
 import play.libs.Json;
 
 
@@ -17,9 +19,14 @@ import java.io.IOException;
  * Created by sasinda on 10/14/15.
  */
 public class BasicMongoService {
-    MongoClient mongoClient = new MongoClient("localhost");
-    MongoDatabase addhub = mongoClient.getDatabase("addhub");
-    Jongo jaddhub = new Jongo(mongoClient.getDB("addhub"));
+
+    String dburi= Play.application().configuration().getString("mongodb.uri");
+    String dbName=Play.application().configuration().getString("mongodb.name");
+    MongoClientURI uri = new MongoClientURI(dburi);
+
+    MongoClient mongoClient = new MongoClient(uri);
+    MongoDatabase addhub = mongoClient.getDatabase(dbName);
+    Jongo jaddhub = new Jongo(mongoClient.getDB(dbName));
 
 
     private static ObjectMapper mapper =new ObjectMapper();
