@@ -1,6 +1,7 @@
 package model;
 
 import org.apache.commons.lang3.text.WordUtils;
+import play.data.validation.Constraints;
 
 import java.math.BigDecimal;
 
@@ -13,9 +14,11 @@ public class Ad extends BaseModel{
     public static final String SUBCAT="subCat";
     public static final String DESCRIPTION="description";
 
-
+    @Constraints.Required
     private String title;
+    @Constraints.Required
     private String category;
+    @Constraints.Required
     private String subCat;
     private String description;
     private String keywords;
