@@ -29,4 +29,39 @@ public class AdServiceTest {
         Document document = adService.postAd(ad);
         assertNotNull(document.get("title"));
     }
+
+    @org.junit.Test
+    public void testGetAd() throws Exception {
+        Ad ad=new Ad();
+        ad.setTitle("testGet");
+        ad.setCategory("test Get Ad"); // All category word unit is capitalized. Note this when using adService.getAd(categoryName)!
+        Document document = adService.postAd(ad); //create one tested ad then get, delete or update
+        Document getAdDoc = adService.getAd("TestGetAd", document.getObjectId("_id").toString());
+        assertEquals("testGet", getAdDoc.get("title"));
+    }
+
+    @org.junit.Test
+    public void testDeleteAd() throws Exception { //test Delete Ad method from API - AdService
+        Ad ad=new Ad();
+        ad.setTitle("testDelete");
+        ad.setCategory("TestDeleteAd");
+        Document document = adService.postAd(ad);
+        long deleteAdDoc = adService.deleteAd("TestDeleteAd", document.getObjectId("_id").toString());
+        assertEquals((long)1, deleteAdDoc);
+    }
+
+    @org.junit.Test
+    public void testUpdateAd() throws Exception {  //test update Ad method from API - AdService
+        Ad ad=new Ad();
+        ad.setTitle("testUpdate");
+        ad.setCategory("TestUpdateAd");
+        ad.setZipcode("10011");
+        Document document = adService.postAd(ad);
+
+        ad.setZipcode("11122");
+
+        Document updateAd = adService.updateAd(ad);
+        assertEquals("11122", updateAd.get("zipcode"));
+    }
+
 }
