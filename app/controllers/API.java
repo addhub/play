@@ -39,8 +39,7 @@ public class API extends Controller {
 
 
     /**
-     * Post an advertisement.
-     *
+     * Post an advertisement
      * @return
      */
     public Result postAd() {
@@ -50,8 +49,9 @@ public class API extends Controller {
     }
 
 
-    public Result getAd(String id) {
-        return play.mvc.Results.TODO;
+    public Result getAd(String category, String id) { //fetch Ad once the Ad is posted by using postAd()
+        Document doc = adService.getAd(category, id);
+        return getDocIDResponse(doc,"The required Advertisement doens not exist");
     }
 
     public Result queryAds() {
@@ -59,12 +59,15 @@ public class API extends Controller {
         return ok(Json.toJson(adService.queryAds(query)));
     }
 
-    public Result deleteAd(String id) {
-        return play.mvc.Results.TODO;
+    public long deleteAd(String category, String id) {
+        long doc = adService.deleteAd(category, id);
+        return doc;
     }
 
-    public Result updateAd(String id) {
-        return play.mvc.Results.TODO;
+    public Result updateAd() {
+        Ad ad = validateForModel(Ad.class);
+        Document doc = adService.updateAd(ad);
+        return getDocIDResponse(doc,"The required Advertisement cannot be updated");
     }
 
     public Result createUser() {
@@ -72,8 +75,9 @@ public class API extends Controller {
         return getDocIDResponse(userService.createUser(user),"error creating user");
     }
 
-    public Result getUser(String username) {
-        return play.mvc.Results.TODO;
+    public Result getUser(String email) {
+        User userEmail = userService.getUser(email);
+        return ok(Json.toJson(userEmail));
     }
 
     private Result getDocIDResponse(Document doc, String errorMsg) {
