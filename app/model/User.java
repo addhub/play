@@ -1,7 +1,13 @@
 package model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.pac4j.core.profile.CommonProfile;
+import org.pac4j.core.profile.UserProfile;
+import org.pac4j.http.profile.HttpProfile;
 import play.data.validation.Constraints;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by sasinda on 10/15/15.
@@ -16,7 +22,8 @@ public class User extends BaseModel{
     @Constraints.Required
     private String password;
 
-    private Integer mobile;
+    public CommonProfile main;
+    Map<String, CommonProfile> profiles=new HashMap<>();
 
     public String getName() {
         return name;
@@ -42,11 +49,4 @@ public class User extends BaseModel{
         this.password = password;
     }
 
-    public Integer getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(Integer mobile) {
-        this.mobile = mobile;
-    }
 }

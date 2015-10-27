@@ -4,30 +4,38 @@
 
 
 # Home page
-GET           /                          controllers.Application.viewIndex()
+GET           /                          @controllers.Application.viewIndex()
 
 #Rest API
 #Category api
-GET           /api/category/:name        controllers.API.getCategory(name: String)
+GET           /api/category/:name        @controllers.API.getCategory(name: String)
 
 
 #Ad api
-POST          /api/ad                    controllers.API.postAd()
+POST          /api/ad                    @controllers.API.postAd()
 #/api/ad? category=Vehicles &subCat=Car &start=0 &limit=10 & price$lt9.95
-GET           /api/ad                    controllers.API.queryAds()
-GET           /api/ad/:category/:id                controllers.API.getAd(category:String , id: String)
-DELETE        /api/ad/:id                controllers.API.deleteAd(id:String)
-PUT           /api/ad/:id                controllers.API.updateAd(id:String)
 
+GET           /api/ad                    @controllers.API.queryAds()
+GET           /api/ad/:category/:id      @controllers.API.getAd(category:String , id: String)
+DELETE        /api/ad/:id                @controllers.API.deleteAd(id:String)
+PUT           /api/ad/:id                @controllers.API.updateAd(id:String)
 
 #User API
-POST          /api/user                  controllers.API.createUser()
-GET           /api/user/:username        controllers.API.getUser(username:String)
+POST          /api/user                  @controllers.API.createUser()
+GET           /api/user/:username        @controllers.API.getUser(username:String)
 #PUT           /api/user/:username        controllers.API.updateUser()
 #DELETE        /api/user/:username        controllers.API.deleteUser()
-#
-POST           /user/login                 controllers.Application.login()
-GET            /user/logout                controllers.Application.logout()
+
+
+
+#Login logout signup
+POST         /auth/login                 @controllers.AuthController.login()
+GET          /auth/logout                @controllers.AuthController.logout()
+GET          /auth/signup                @controllers.AuthController.signup()
+
+# Third party accesstokens, logins
+GET         /auth/callback                         @controllers.AuthController.callback()
+POST        /auth/callback                         @controllers.AuthController.callback()
 
 
 # Map the JS resource paths

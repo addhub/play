@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by sasinda on 10/24/15.
  */
-public class Config {
+public class AppConfig {
 
     static com.typesafe.config.Config conf;
     static {

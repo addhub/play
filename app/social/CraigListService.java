@@ -1,4 +1,4 @@
-package service;
+package social;
 
 /**
  * Created by sasinda on 10/14/15.

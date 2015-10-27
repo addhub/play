@@ -6,11 +6,10 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.util.JSON;
-import global.Config;
+import global.AppConfig;
 import model.BaseModel;
 import org.bson.Document;
 import org.jongo.Jongo;
-import play.Play;
 import play.libs.Json;
 
 
@@ -21,8 +20,8 @@ import java.io.IOException;
  */
 public class BasicMongoService {
 
-    String dburi= Config.getString("mongodb.uri");
-    String dbName=Config.getString("mongodb.name");
+    String dburi= AppConfig.getString("mongodb.uri");
+    String dbName= AppConfig.getString("mongodb.name");
     MongoClientURI uri = new MongoClientURI(dburi);
 
     MongoClient mongoClient = new MongoClient(uri);
