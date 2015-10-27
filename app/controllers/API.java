@@ -59,9 +59,9 @@ public class API extends Controller {
         return ok(Json.toJson(adService.queryAds(query)));
     }
 
-    public long deleteAd(String category, String id) {
-        long doc = adService.deleteAd(category, id);
-        return doc;
+    public Result deleteAd(String category, String id) {
+        long deletes = adService.deleteAd(category, id);
+        return ok(Json.toJson(deletes));
     }
 
     public Result updateAd() {

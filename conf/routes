@@ -14,11 +14,10 @@ GET           /api/category/:name        @controllers.API.getCategory(name: Stri
 #Ad api
 POST          /api/ad                    @controllers.API.postAd()
 #/api/ad? category=Vehicles &subCat=Car &start=0 &limit=10 & price$lt9.95
-
 GET           /api/ad                    @controllers.API.queryAds()
 GET           /api/ad/:category/:id      @controllers.API.getAd(category:String , id: String)
-DELETE        /api/ad/:id                @controllers.API.deleteAd(id:String)
-PUT           /api/ad/:id                @controllers.API.updateAd(id:String)
+DELETE        /api/ad/:category/:id      @controllers.API.deleteAd( category:String, id:String)
+PUT           /api/ad/                   @controllers.API.updateAd()
 
 #User API
 POST          /api/user                  @controllers.API.createUser()
