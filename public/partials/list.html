@@ -1,15 +1,15 @@
 <div class="sidebar" ng-include src="'partials/listsidenav.html'"></div>
-<div class="mt40" id="serchlist">
+<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 " id="serchlist">
     <div class="list">
         <ul ng-repeat="ad in adList">
 
             <li class="clearfix">
-                <div class="col-sm-2"> <a class="thumbnail" href="#/detail"><img src="./img/product1.jpg" alt=""></a>
-                </div>
+
                 <div class="col-sm-8">
                     <h3><a class="title" href="#/detail">{{ad.title}}</a></h3>
                     <ul class="icondetail">
                         <list ng-attr-label="{{ad.title}}" label="ad.name">
+                            <li><img ng-src="{{ad.pictureUrl}}" style="width: 80%"></li>
                             <li><i class="fa fa-th-list"></i> Category: <a href="#">{{ad.category}}</a></li>
                             <li><i class="fa fa-map-marker"></i> Location: {{ad.state}}, {{ad.country}}</li>
                             <li><i class="fa fa-calendar"></i> Posted On: {{ad.date}}</li>

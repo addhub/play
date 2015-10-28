@@ -28,6 +28,7 @@ public class Ad extends BaseModel{
     private String zipcode;
     private BigDecimal price;
     private boolean agree;
+    String pictureUrl;
 
 
     public String getTitle() {
@@ -120,5 +121,13 @@ public class Ad extends BaseModel{
 
     public void setAgree(boolean agree) {
         this.agree = agree;
+    }
+
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
     }
 }
