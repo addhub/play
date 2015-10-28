@@ -17,11 +17,11 @@ public class UserService extends BasicMongoService {
 
     public Document createUser(User u) {
         Document doc = asDocument(u);
-        addhub.getCollection("user").insertOne(doc);
+        addhub.getCollection("User").insertOne(doc);
         return doc;
     }
 
-    public User getUser(String email) {
-        return as(User.class,addhub.getCollection("user").find(eq("email", email)).first());
+    public User getUser(String username) {
+        return as(User.class,addhub.getCollection("User").find(eq("username", username)).first());
     }
 }

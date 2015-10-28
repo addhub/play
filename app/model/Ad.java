@@ -55,7 +55,6 @@ public class Ad extends BaseModel{
     public void setSubCat(String subCat) {
         subCat= WordUtils.capitalize(subCat);
         subCat=subCat.replaceAll("\\s","");
-        this.category = subCat;
         this.subCat = subCat;
     }
 

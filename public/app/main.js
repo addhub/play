@@ -39,7 +39,7 @@ require(['angular', './controllers', './directives', './filters', './services', 
         angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 'ngRoute', 'ngResource','ngCookies']).
             config(['$routeProvider', function ($routeProvider) {
                 $routeProvider.when('/home', {templateUrl: 'partials/home.html', controller: controllers.home});
-                $routeProvider.when('/list', {templateUrl: 'partials/list.html', controller: controllers.list});
+                $routeProvider.when('/list', {templateUrl: 'partials/list.html', controller: controllers.listAds});
                 $routeProvider.when('/postAd', {templateUrl: 'partials/postAd.html', controller: controllers.postAd, loginRequired:"postAd"});
                 $routeProvider.when('/success/:id', {templateUrl: 'partials/success.html', controller: controllers.postAdSuccess});
                 $routeProvider.when('/login', {templateUrl: 'partials/login.html', controller: controllers.login});

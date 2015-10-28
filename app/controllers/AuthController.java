@@ -2,28 +2,27 @@ package controllers;
 
 import com.google.inject.Inject;
 import exception.AuthException;
+import jdk.nashorn.internal.runtime.URIUtils;
 import model.Login;
 import model.User;
-import org.bson.Document;
-import org.pac4j.core.client.Clients;
-import org.pac4j.core.client.IndirectClient;
 import org.pac4j.core.profile.CommonProfile;
 import org.pac4j.play.ApplicationLogoutController;
 import org.pac4j.play.CallbackController;
-import org.pac4j.play.PlayWebContext;
 import org.pac4j.play.java.UserProfileController;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Result;
+import play.utils.UriEncoding;
 import service.UserService;
 
-import static com.mongodb.client.model.Filters.eq;
+import java.net.URI;
+
 import static play.data.Form.form;
 
 /**
  * Created by sasinda on 10/26/15.
  */
-public class AuthController extends UserProfileController<CommonProfile>{
+public class AuthController extends UserProfileController<CommonProfile> {
 
     @Inject
     UserService userService;
@@ -34,29 +33,40 @@ public class AuthController extends UserProfileController<CommonProfile>{
     @Inject
     API api;
 
-    public Result signup(){
+    public Result signup() {
         api.createUser();
         return login();
     }
 
     public Result login() {
         Form<Login> loginForm = form(Login.class).bindFromRequest();
-        String email = loginForm.get().email;
+        String username = loginForm.get().username;
         String pass = loginForm.get().password;
-
-        User user = authenticate(email, pass);
+        //TODO use MongoAuthenticator
+        User user = authenticate(username, pass);
         //if success
+        return afterLoginSuccess(user);
+    }
+
+    private Result afterLoginSuccess(User user) {
         session().clear();
-        session("email", email);
-        session("name", user.getName());
-        response().setCookie("user-name", user.getName());
+        session("username", user.getUsername());
+        session("name", user.getDisplayName());
+        response().setCookie("username", user.getUsername());
+        response().setCookie("displayName", user.getDisplayName().split(" ")[0]);
+        if(user.getPictureUrl()!=null){
+            response().setCookie("pictureUrl", UriEncoding.decodePath(user.getPictureUrl(),"UTF-8"));
+        }
         user.setPassword(null);
         return ok(Json.toJson(user));
     }
 
     public Result logout() {
         session().clear();
-        response().discardCookie("user-name");
+        response().discardCookie("username");
+        response().discardCookie("displayName");
+        response().discardCookie("pictureUrl");
+        response().discardCookie("socialLogin");
         logoutController.logout();
         return redirect("/");
     }
@@ -64,12 +74,12 @@ public class AuthController extends UserProfileController<CommonProfile>{
     /**
      * return error code if fail
      *
-     * @param email
+     * @param username
      * @param password
      * @return
      */
-    private User authenticate(String email, String password) {
-        User user = userService.getUser(email);
+    private User authenticate(String username, String password) {
+        User user = userService.getUser(username);
         if (user == null) {
             throw new AuthException("user not found");
         } else if (user.getPassword().equals(password)) {
@@ -83,9 +93,35 @@ public class AuthController extends UserProfileController<CommonProfile>{
     public Result callback() {
         Result result = callbackController.callback();
         CommonProfile userProfile = getUserProfile();
-        if(userProfile !=null){
-
+        if (userProfile != null) {
+            if (session().get("username") != null) {
+                //an already logged in user adding or refreshing a social profile token
+                //TODO
+                return redirect("/#/myAccount/profile/idTODO");
+            } else {
+                //loging in through social login
+                return socialLogin(userProfile);
+            }
         }
         return result;
+    }
+
+    private Result socialLogin(CommonProfile userProfile) {
+        //first time --> signup
+        User user = new User(userProfile.getId(), "autogen");
+        user.setDisplayName(userProfile.getDisplayName());
+        user.setPictureUrl(userProfile.getPictureUrl());
+        response().setCookie("socialLogin", request().getQueryString("client_name"));
+        User existUser = userService.getUser(user.getUsername());
+        if (existUser != null) {
+            //login
+            afterLoginSuccess(user);
+            return redirect("/#/login");
+        } else {
+            //signup
+            userService.createUser(user);
+            afterLoginSuccess(user);
+            return redirect("/#/login");
+        }
     }
 }

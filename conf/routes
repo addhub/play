@@ -8,12 +8,12 @@ GET           /                          @controllers.Application.viewIndex()
 
 #Rest API
 #Category api
-GET           /api/category/:name        @controllers.API.getCategory(name: String)
+GET           /api/category/:category        @controllers.API.getCategory(category: String)
 
 
 #Ad api
 POST          /api/ad                    @controllers.API.postAd()
-#/api/ad? category=Vehicles &subCat=Car &start=0 &limit=10 & price$lt9.95
+#/api/ad? category=Vehicle &subCat=Car &start=0 &limit=10 & price$lt9.95
 GET           /api/ad                    @controllers.API.queryAds()
 GET           /api/ad/:category/:id      @controllers.API.getAd(category:String , id: String)
 DELETE        /api/ad/:category/:id      @controllers.API.deleteAd( category:String, id:String)
@@ -30,7 +30,7 @@ GET           /api/user/:username        @controllers.API.getUser(username:Strin
 #Login logout signup
 POST         /auth/login                 @controllers.AuthController.login()
 GET          /auth/logout                @controllers.AuthController.logout()
-GET          /auth/signup                @controllers.AuthController.signup()
+POST         /auth/signup                @controllers.AuthController.signup()
 
 # Third party accesstokens, logins
 GET         /auth/callback                         @controllers.AuthController.callback()

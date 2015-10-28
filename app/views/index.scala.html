@@ -5,8 +5,8 @@
 <html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Responsive, Bootstrap, Html5, Css3, Blog, Classified, Ads, Simple, Clean ">
+        <meta username="viewport" content="width=device-width, initial-scale=1.0">
+        <meta username="description" content="Responsive, Bootstrap, Html5, Css3, Blog, Classified, Ads, Simple, Clean ">
 
         <title>Addhub</title>
 
@@ -49,18 +49,20 @@
 
                                             <span ng-show="currentUser" style="
                                             font-size: x-small;
-                                            ">&lt;Hi {{currentUser.name}}</span>
+                                            ">&lt;Hi {{currentUser.displayName}}
+                                            <img ng-src="{{currentUser.pictureUrl}}">
+                                            </span>
 
 
                                     </a>
                                     <div class="submenu">
                                         <ul>
-                                                <li ng-hide="currentUser"> <a class="" href="#/login">Login</a> </li>
-                                                <li ng-hide="currentUser"> <a class="" href="#/register">Register</a> </li>
+                                                <li ng-hide="currentUser"> <a class="" href="/#/login">Login</a> </li>
+                                                <li ng-hide="currentUser"> <a class="" href="/#/register">Register</a> </li>
                                                 <li ng-show="currentUser"> <a class="" href="/auth/logout">Logout</a> </li>
-                                                <li> <a ng-href="#/myAccount/dashboard/{{currentUser.id}}">Dashboard</a> </li>
-                                                <li> <a ng-href="#/myAccount/profile/{{currentUser.id}}">Profile</a> </li>
-                                                <li> <a class="" href="#/postad.html">Post An Ad</a> </li>
+                                                <li> <a ng-href="/#/myAccount/dashboard/{{currentUser.id}}">Dashboard</a> </li>
+                                                <li> <a ng-href="/#/myAccount/profile/{{currentUser.id}}">Profile</a> </li>
+                                                <li> <a class="" href="/#/postAd">Post An Ad</a> </li>
 
                                         </ul>
                                     </div>

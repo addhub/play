@@ -10,7 +10,6 @@ define(function () {
     var controllers = {};
 
     controllers.postAd = function ($scope, Category, Ad, $location) {
-        _Auth();
         Category.query(function (data) {
             $scope.categories = data;
             console.log(data);
@@ -31,6 +30,22 @@ define(function () {
     };
     controllers.postAd.$inject = ['$scope', 'Category', 'Ad', '$location'];
 
+    controllers.listAds = function ($scope, Category, Ad, $location, $http) {
+        Category.query(function (data) {
+            $scope.categories = data;
+            console.log(data);
+        });
+        var adUrl="/api/ad";
+        console.log("list ads")
+        $scope.adList = $http.get(adUrl, {params:{category: "Vehicle", subCat: "Cars"}}).then(
+            function (success) {
+                $scope.adList=success.data;
+            });
+
+
+    };
+    controllers.listAds.$inject = ['$scope', 'Category', 'Ad', '$location', '$http'];
+
     controllers.postAdSuccess = function ($scope, $routeParams) {
         $scope.docId = $routeParams.id;
     };
@@ -38,44 +53,62 @@ define(function () {
 
 
     controllers.home = function ($scope, $rootScope, $cookies) {
-        delete $rootScope.currentUser;
-        if ($cookies.get("user-name")) {
-            $rootScope.currentUser = {name: $cookies.get("user-name")}
+        if (!$cookies.get("username")) {
+            delete $rootScope.currentUser;
+        } else if ($cookies.get("username") && !$rootScope.currentUser) {
+            $rootScope.currentUser = {
+                username: $cookies.get("username"),
+                displayName: $cookies.get("displayName"),
+                pictureUrl: $cookies.get("pictureUrl")
+            }
         }
     };
     controllers.home.$inject = ['$scope', '$rootScope', '$cookies'];
 
 
-    controllers.login = function ($rootScope, $scope, $routeParams, $http, $window, $route, $location) {
+    controllers.login = function ($rootScope, $scope, $routeParams, $http, $window, $route, $location, $cookies) {
         $scope.message = $routeParams.message;
         var redirect = $routeParams.redirect;
         redirect = redirect || "/";
         var url = "/auth/login?redirect=" + redirect;
+
+        if ($cookies.get("socialLogin")) {
+            $location.path(redirect);
+            $route.reload();
+        }
+        function onLoginSuccess(response) {
+            $location.path(redirect);
+            $route.reload();
+            delete $rootScope.currentUser;
+            $rootScope.currentUser = response.data
+        }
+
         $scope.authenticate = function () {
             var user = $scope.user;
             $http.post(url, user).then(
                 function success(response) {
-                    $location.path(redirect);
-                    $route.reload();
-                    delete $rootScope.currentUser;
-                    $rootScope.currentUser = {name: response.data.name}
+                    onLoginSuccess(response);
                 },
-                function error(error) {
-                    $scope.message = error;
+                function error(response) {
+                    $scope.message = response;
                 }
             );
         }
 
+
     }
-    controllers.login.$inject = ['$rootScope', '$scope', '$routeParams', '$http', '$window', '$route', '$location'];
+    controllers.login.$inject = ['$rootScope', '$scope', '$routeParams', '$http', '$window', '$route', '$location', '$cookies'];
 
     controllers.register = function ($scope, $location, $http) {
         $scope.signUp = function () {
             var url = "/auth/signup";
             var user = $scope.user;
+            user.email = user.username;
             $http.post(url, user).then(
-                function (success) {
-                    $location.path('mydashboard/' + success.id);
+                function success(response) {
+                    delete $rootScope.currentUser;
+                    $rootScope.currentUser = response.data
+                    $location.path('mydashboard/' + response.data.id);
                 },
                 function error(error) {
                     $scope.message = error;
@@ -91,13 +124,12 @@ define(function () {
      */
 
     controllers.intercept = function (event, next, current, $rootScope, $location) {
-
-
+        //weak frontend security, just so that user does not gets rejected by backend all after he has filled the forms.
         if (next.loginRequired) {
             if (!$rootScope.currentUser) {
                 var msg = null;
                 var nextPath = '/#/' + $location.path()
-                $location.path('login/').search({'redirect': nextPath, 'message': msg});
+                $location.path('login').search({'redirect': nextPath, 'message': msg});
             }
         }
 

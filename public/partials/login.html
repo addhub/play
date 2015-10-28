@@ -8,7 +8,7 @@
                 <div class="control-group">
                     <label class="control-label">Email Address:</label>
                     <div class="controls">
-                        <input type="text" class="span3" id="email" ng-model="user.email">
+                        <input type="text" class="span3" id="email" ng-model="user.username">
                     </div>
                 </div>
                 <div class="control-group">
@@ -24,7 +24,12 @@
         </form>
     </div>
 </div>
-    <div class="col-md-6">
-        <a href="/auth/callback?client_name=TwitterClient&amp;needs_client_redirection=true">Authenticate with Twitter</a>
+    <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+        Authenticate with:
+        <a href="/auth/callback?client_name=TwitterClient&amp;needs_client_redirection=true" class="btn btn-primary">
+             Twitter <i class="fa fa-twitter"></i>
+        </a>
+        <br/>
+        {{message}}
     </div>
 </div>

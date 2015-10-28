@@ -2,8 +2,6 @@ package model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.pac4j.core.profile.CommonProfile;
-import org.pac4j.core.profile.UserProfile;
-import org.pac4j.http.profile.HttpProfile;
 import play.data.validation.Constraints;
 
 import java.util.HashMap;
@@ -13,24 +11,44 @@ import java.util.Map;
  * Created by sasinda on 10/15/15.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class User extends BaseModel{
+public class User extends BaseModel {
 
     @Constraints.Required
-    private String name;
-    @Constraints.Required
-    private String email;
+    private String username;
     @Constraints.Required
     private String password;
 
-    public CommonProfile main;
-    Map<String, CommonProfile> profiles=new HashMap<>();
+    private String email;
+    private String displayName;
+    private String pictureUrl;
 
-    public String getName() {
-        return name;
+    public CommonProfile main;
+    Map<String, CommonProfile> profiles = new HashMap<>();
+
+    public User() {
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public User(String userName, String password) {
+        this.username = userName;
+        this.password = password;
+    }
+
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEmail() {
@@ -41,12 +59,19 @@ public class User extends BaseModel{
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
+    }
 }
