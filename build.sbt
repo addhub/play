@@ -17,6 +17,7 @@ libraryDependencies ++= Seq(
   "org.mongodb" % "mongo-java-driver" % "3.0.4",
   "org.apache.commons" % "commons-lang3" % "3.4",
   "commons-collections" % "commons-collections" % "3.2.1",
+  "org.twitter4j" % "twitter4j-core" % "2.2.1",
   "org.jongo" % "jongo" % "1.2",
   "org.pac4j" % "play-pac4j-java" % "2.0.0",
   "org.pac4j" % "pac4j-http" % "1.8.0",
