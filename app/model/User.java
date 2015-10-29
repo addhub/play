@@ -1,6 +1,7 @@
 package model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.pac4j.core.profile.CommonProfile;
 import play.data.validation.Constraints;
 
@@ -10,6 +11,7 @@ import java.util.Map;
 /**
  * Created by sasinda on 10/15/15.
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User extends BaseModel {
 
@@ -23,7 +25,7 @@ public class User extends BaseModel {
     private String pictureUrl;
 
     public CommonProfile main;
-    Map<String, CommonProfile> profiles = new HashMap<>();
+    public Map<String, CommonProfile> profiles = new HashMap<>();
 
     public User() {
     }
@@ -32,7 +34,6 @@ public class User extends BaseModel {
         this.username = userName;
         this.password = password;
     }
-
 
     public String getUsername() {
         return username;
@@ -73,5 +74,9 @@ public class User extends BaseModel {
 
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
+    }
+
+    public void setProfile(String provider, CommonProfile profile ){
+        profiles.put(provider, profile);
     }
 }

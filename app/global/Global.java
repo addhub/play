@@ -7,6 +7,7 @@ import play.mvc.*;
 import play.mvc.Http.*;
 import play.libs.F.*;
 import play.GlobalSettings;
+import service.BasicMongoService;
 
 import static play.mvc.Results.badRequest;
 import static play.mvc.Results.internalServerError;
@@ -29,5 +30,10 @@ public class Global extends GlobalSettings {
 
     public Promise<Result> onBadRequest(RequestHeader request, String error) {
         return Promise.<Result>pure(badRequest("Don't try to hack the URI!"));
+    }
+
+    @Override
+    public void onStop(Application app) {
+        BasicMongoService.mongoClient.close();
     }
 }

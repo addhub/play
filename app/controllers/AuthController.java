@@ -111,10 +111,15 @@ public class AuthController extends UserProfileController<CommonProfile> {
         User user = new User(userProfile.getId(), "autogen");
         user.setDisplayName(userProfile.getDisplayName());
         user.setPictureUrl(userProfile.getPictureUrl());
-        response().setCookie("socialLogin", request().getQueryString("client_name"));
+        String provider=request().getQueryString("client_name");
+        provider=provider.replace("Client","").toLowerCase();
+        user.setProfile(provider,userProfile);
+        response().setCookie("socialLogin", provider);
+
         User existUser = userService.getUser(user.getUsername());
         if (existUser != null) {
             //login
+            userService.updateUser(user);
             afterLoginSuccess(user);
             return redirect("/#/login");
         } else {

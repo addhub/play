@@ -1,26 +1,21 @@
 package service;
 
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.mongodb.*;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCursor;
-import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.util.JSON;
 import global.AppConfig;
 import model.Ad;
 import model.Query;
-import org.apache.commons.lang3.text.WordUtils;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-import org.jongo.Jongo;
-import play.libs.Json;
-import static java.util.Arrays.asList;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import static com.mongodb.client.model.Filters.*;
+
+import static com.mongodb.client.model.Filters.eq;
 
 /**
  * Created by sasinda on 9/30/15.

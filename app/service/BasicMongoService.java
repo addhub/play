@@ -9,9 +9,7 @@ import com.mongodb.util.JSON;
 import global.AppConfig;
 import model.BaseModel;
 import org.bson.Document;
-import org.jongo.Jongo;
 import play.libs.Json;
-
 
 import java.io.IOException;
 
@@ -20,13 +18,13 @@ import java.io.IOException;
  */
 public class BasicMongoService {
 
-    String dburi= AppConfig.getString("mongodb.uri");
-    String dbName= AppConfig.getString("mongodb.name");
-    MongoClientURI uri = new MongoClientURI(dburi);
+    final static String dburi= AppConfig.getString("mongodb.uri");
+    final static String dbName= AppConfig.getString("mongodb.name");
+    final static MongoClientURI uri = new MongoClientURI(dburi);
 
-    MongoClient mongoClient = new MongoClient(uri);
-    MongoDatabase addhub = mongoClient.getDatabase(dbName);
-    Jongo jaddhub = new Jongo(mongoClient.getDB(dbName));
+    final static public MongoClient mongoClient = new MongoClient(uri);
+    final static MongoDatabase addhub = mongoClient.getDatabase(dbName);
+
 
 
     private static ObjectMapper mapper =new ObjectMapper();

@@ -1,10 +1,9 @@
 package service;
 
-import exception.AuthException;
-import model.Login;
+import com.mongodb.client.result.UpdateResult;
 import model.User;
 import org.bson.Document;
-import play.api.libs.json.Json;
+import org.bson.types.ObjectId;
 
 import static com.mongodb.client.model.Filters.eq;
 
@@ -19,6 +18,12 @@ public class UserService extends BasicMongoService {
         Document doc = asDocument(u);
         addhub.getCollection("User").insertOne(doc);
         return doc;
+    }
+
+    public long updateUser(User u) {
+        Document doc = asDocument(u);
+        UpdateResult result = addhub.getCollection("User").updateOne(eq("_id", new ObjectId(u.getId())), new Document("$set", doc));
+        return result.getModifiedCount();
     }
 
     public User getUser(String username) {

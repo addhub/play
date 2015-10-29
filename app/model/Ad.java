@@ -1,6 +1,7 @@
 package model;
 
 import global.AppConfig;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.apache.commons.lang3.text.WordUtils;
 import play.data.validation.Constraints;
 
@@ -9,6 +10,7 @@ import java.math.BigDecimal;
 /**
  * Created by sasinda on 10/2/15.
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Ad extends BaseModel{
     public static final String TITLE="title";
     public static final String CATEGORY="category";
@@ -23,7 +25,6 @@ public class Ad extends BaseModel{
     private String subCat;
     private String description;
     private String keywords;
-
     private String address;
     private String state;
     private String country;
