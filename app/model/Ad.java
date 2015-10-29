@@ -1,5 +1,6 @@
 package model;
 
+import global.AppConfig;
 import org.apache.commons.lang3.text.WordUtils;
 import play.data.validation.Constraints;
 
@@ -22,6 +23,7 @@ public class Ad extends BaseModel{
     private String subCat;
     private String description;
     private String keywords;
+
     private String address;
     private String state;
     private String country;
@@ -29,7 +31,6 @@ public class Ad extends BaseModel{
     private BigDecimal price;
     private boolean agree;
     String pictureUrl;
-
 
     public String getTitle() {
         return title;
@@ -130,4 +131,10 @@ public class Ad extends BaseModel{
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
     }
+
+    public String getAdurl(){
+        return AppConfig.getString("baseUrl")+"/#/ad/"+getId();
+    }
+
+
 }

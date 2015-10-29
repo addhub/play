@@ -8,6 +8,7 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.util.JSON;
+import global.AppConfig;
 import model.Ad;
 import model.Query;
 import org.apache.commons.lang3.text.WordUtils;
@@ -61,6 +62,7 @@ public class AdService extends BasicMongoService {
         Document myAd = addhub.getCollection(category).find(eq("_id", new ObjectId(id))).first();
         return myAd;
     }
+
 
     public Long deleteAd(String category, String id) {
         DeleteResult id1 = addhub.getCollection(category).deleteOne(eq("_id", new ObjectId(id)));//http://mongodb.github.io/mongo-java-driver/3.0/driver/getting-started/quick-tour/
