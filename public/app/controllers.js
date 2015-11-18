@@ -27,6 +27,11 @@ define(function () {
                 });
         }
 
+        require(['dropzone'],function(Dropzone){
+            window.dropzone=Dropzone;
+            var myDropzone = new Dropzone("div#upload", { url: "/upload/ad/img", previewTemplate: $('#template').html(), clickable:'.dz-clickable'});
+        })
+
     };
     controllers.postAd.$inject = ['$scope', 'Category', 'Ad', '$location'];
 
@@ -41,6 +46,7 @@ define(function () {
             function (success) {
                 $scope.adList=success.data;
             });
+
 
 
     };

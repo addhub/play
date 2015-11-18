@@ -9,7 +9,8 @@ requirejs.config({
         'angular-resource': ['../lib/angularjs/angular-resource'],
         'angular-cookies': ['../lib/angularjs/angular-cookies'],
         'angular-custom-auth': ['../lib/angular-auth-interceptor/http-auth-interceptor'],
-        'jquery': ['../lib/jquery/jquery']
+        'jquery': ['../lib/jquery/jquery'],
+        'dropzone':['../lib/dropzone/dropzone-amd-module']
     },
     shim: {
         'angular': {

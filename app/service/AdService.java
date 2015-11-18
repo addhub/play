@@ -4,6 +4,7 @@ package service;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.result.DeleteResult;
+import com.mongodb.gridfs.GridFS;
 import com.mongodb.util.JSON;
 import global.AppConfig;
 import model.Ad;
@@ -11,6 +12,7 @@ import model.Query;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +53,7 @@ public class AdService extends BasicMongoService {
         }
         return null;
     }
+
 
     public Document getAd(String category,String id){
 

@@ -5,11 +5,12 @@
 
 # Home page
 GET           /                          @controllers.Application.viewIndex()
+#File Uploads
+POST          /upload/ad/img                @controllers.Application.uploadAdImg()
 
 #Rest API
 #Category api
 GET           /api/category/:category        @controllers.API.getCategory(category: String)
-
 
 #Ad api
 POST          /api/ad                    @controllers.API.postAd()

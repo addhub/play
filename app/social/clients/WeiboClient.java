@@ -11,6 +11,7 @@ import social.clients.profile.WeiboProfile;
  * Created by sasinda on 10/29/15.
  */
 public class WeiboClient extends BaseOAuth20Client<WeiboProfile> {
+
     @Override
     protected boolean requiresStateParameter() {
         return false;

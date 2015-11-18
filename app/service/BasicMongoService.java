@@ -27,6 +27,7 @@ public class BasicMongoService {
 
 
 
+
     private static ObjectMapper mapper =new ObjectMapper();
     public static <T extends BaseModel>  T as(Class<T> as , Document doc){
         if(doc==null) return null;

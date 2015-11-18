@@ -1,76 +1,134 @@
 <div class="row">
     <div class="sidebar" ng-include src="'partials/sidenav.html'"></div>
-<div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-2">
-    <h2 class="heading5"><span class="maintext"> Post Your Ad</span></h2>
-    <form class="form-horizontal mt20" ng-submit="postAd()">
-        <fieldset>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Title:</label>
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="Title" ng-model='ad.title'  id="title" required>
+    <div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-2">
+        <h2 class="heading5"><span class="maintext"> Post Your Ad</span></h2>
+
+        <form class="form-horizontal mt20" ng-submit="postAd()">
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Title:</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" placeholder="Title" ng-model='ad.title' id="title"
+                               required>
+                    </div>
                 </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Category:</label>
+
+                    <div class="col-sm-6">
+                        <select name="category" class="form-control" id="category" ng-model='ad.category' id="category"
+                                required>
+                            <option value="">Choose a category</option>
+
+                            <optgroup ng-repeat="cat in categories" , ng-attr-label="{{cat.name}}" label="cat.name">
+                                <option ng-repeat="subcat in cat.subcats" , value="{{cat.name}}-{{subcat}}">{{subcat |
+                                    trust}}
+                                </option>
+                            </optgroup>
+
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Description</label>
+
+                    <div class="col-sm-6">
+                        <textarea rows="6" class="form-control col-sm-6" ng-model='ad.description' id='description'
+                                  required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Keywords</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" placeholder="Keywords" ng-model='ad.keywords'
+                               id='keywords'>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Address</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" placeholder="Address" ng-model='ad.address'
+                               id='address'>
+                        <input type="text" class="form-control  mt10" placeholder="State" ng-model='ad.state' id="state"
+                               required>
+                        <input type="text" class="form-control mt10" placeholder="Country" ng-model='ad.country'
+                               id="country" required>
+                        <input type="text" class="form-control mt10" placeholder="Zip Code" ng-model='ad.zipcode'
+                               id="zipcode" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Upload photos</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" ng-model="ad.pictureUrl">
+                        <input type="file" class="form-control">
+                        <input type="file" class="form-control mt10">
+                        <input type="file" class="form-control mt10">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Price</label>
+
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" placeholder="Price" ng-model='ad.price' id="price">
+                    </div>
+                </div>
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model='ad.agree' id="agree">
+                            I agree to the terms and conditions </label>
+                    </div>
+                </div>
+                <div class="col-sm-offset-2 col-sm-10 mt20">
+                    <input type="submit" class="btn btn-orange" value="Post Ad" id="submit">
+                </div>
+            </fieldset>
+        </form>
+
+        <div id="upload"
+             class="container-fluid dz-clickable"
+                style="width:600px; border: 3px dashed gray;border-radius: 25px;">
+                <p class="text-center dz-clickable" >
+                    <i class="fa fa-4x fa-cloud-upload"></i>
+                    <br/>
+                    drag and drop your files here
+                    <br/>
+                    <a>or click to upload</a>
+                </p>
+
+        </div>
+
+
+            <div id="template" class="dz-preview dz-file-preview" style="display: none;">
+                <div class=" col-md-3 dz-details" style="position: relative">
+                    <div class="dz-filename"><span data-dz-name></span></div>
+                    <div class="dz-size" data-dz-size></div>
+                    <img data-dz-thumbnail/>
+                    <div style="position: absolute; top:5%; right: 5%" data-dz-remove><i class="fa fa-2x fa-ban"></i></div>
+
+
+                    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar"
+                         aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" data-dz-uploadprogress>
+                    </div>
+                </div>
+
+
+                <!--<div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>-->
+
+
+
+
+                <div class="dz-success-mark"><i class="fa fa-check-square-o"></i></div>
+                <div class="dz-error-mark">not</div>
+                <div class="dz-error-message"><span data-dz-errormessage></span></div>
             </div>
 
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Category:</label>
-                <div class="col-sm-6">
-                    <select name="category" class="form-control" id="category" ng-model='ad.category' id="category" required>
-                        <option value="">Choose a category</option>
 
-                        <optgroup ng-repeat="cat in categories", ng-attr-label="{{cat.name}}" label="cat.name">
-                            <option ng-repeat="subcat in cat.subcats" ,  value="{{cat.name}}-{{subcat}}">{{subcat | trust}}</option>
-                        </optgroup>
-
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Description</label>
-                <div class="col-sm-6">
-                    <textarea rows="6" class="form-control col-sm-6" ng-model='ad.description' id='description' required></textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Keywords</label>
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="Keywords" ng-model='ad.keywords' id='keywords'>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Address</label>
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="Address"  ng-model='ad.address' id='address'>
-                    <input type="text" class="form-control  mt10" placeholder="State" ng-model='ad.state' id="state" required>
-                    <input type="text" class="form-control mt10" placeholder="Country" ng-model='ad.country' id="country" required>
-                    <input type="text" class="form-control mt10" placeholder="Zip Code" ng-model='ad.zipcode' id="zipcode" required>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Upload photos</label>
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" ng-model="ad.pictureUrl">
-                    <input type="file" class="form-control">
-                    <input type="file" class="form-control mt10">
-                    <input type="file" class="form-control mt10">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Price</label>
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="Price" ng-model='ad.price' id="price">
-                </div>
-            </div>
-            <div class="col-sm-offset-2 col-sm-10">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" ng-model='ad.agree' id="agree">
-                        I agree to the terms and conditions </label>
-                </div>
-            </div>
-            <div class="col-sm-offset-2 col-sm-10 mt20">
-                <input type="submit" class="btn btn-orange" value="Post Ad" id="submit">
-            </div>
-        </fieldset>
-    </form>
-</div>
+    </div>
 </div>
