@@ -3,9 +3,7 @@ package social;
 import model.Ad;
 import service.AdService;
 
-/**
- * Created by jingxiapang on 10/28/15.
- */
+
 public class TwitterServiceTest {
     static TwitterService twitterService;
     static Ad testtweetad;

@@ -1,0 +1,11 @@
+package social.clients.profile;
+
+/**
+ * Created by jingxiapang on 10/29/15.
+ */
+public enum WeiboScope {
+
+    ALL, EMAIL, DIRECT_MESSAGES_WRITE, DIRECT_MESSAGES_READ, INVITATION_WRITE, FRIENDSHIPS_GROUPS_READ, FRIENDSHIPS_GROUPS_WRITE, STATUSES_TO_ME_READ, FOLLOW_APP_OFFICIAL_MICROBLOG
+
+
+}

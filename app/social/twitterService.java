@@ -10,12 +10,6 @@ import twitter4j.conf.ConfigurationBuilder;
 import java.io.IOException;
 import java.net.URL;
 
-/**
- * Created by jingxiapang on 10/28/15.
- */
-
-
-
 public class TwitterService {
 
     public ConfigurationBuilder cb = new ConfigurationBuilder();
