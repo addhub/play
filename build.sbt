@@ -15,6 +15,7 @@ libraryDependencies ++= Seq(
   "org.webjars" % "bootstrap" % "3.3.5",
   //  "org.mongodb" % "mongodb-driver-async" % "3.0.4",
   "org.mongodb" % "mongo-java-driver" % "3.0.4",
+  "org.mongodb.morphia"% "morphia","1.0.0-rc0",
   "org.apache.commons" % "commons-lang3" % "3.4",
   "commons-collections" % "commons-collections" % "3.2.1",
   "com.restfb" % "restfb" % "1.16.0",

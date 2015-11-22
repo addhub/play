@@ -1,6 +1,7 @@
 package service;
 
 import com.mongodb.client.result.UpdateResult;
+import model.Ad;
 import model.User;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -29,4 +30,5 @@ public class UserService extends BasicMongoService {
     public User getUser(String username) {
         return as(User.class,addhub.getCollection("User").find(eq("username", username)).first());
     }
+
 }

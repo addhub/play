@@ -56,9 +56,12 @@ public class AdService extends BasicMongoService {
 
 
     public Document getAd(String category,String id){
-
         Document myAd = addhub.getCollection(category).find(eq("_id", new ObjectId(id))).first();
         return myAd;
+    }
+
+    public Ad getAd(Ad adIdCat){
+        return as(Ad.class, getAd(adIdCat.getCategory(), adIdCat.getId()));
     }
 
 

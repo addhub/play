@@ -2,7 +2,6 @@ package model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import org.pac4j.core.profile.CommonProfile;
 import play.data.validation.Constraints;
 
 import java.util.HashMap;
@@ -25,7 +24,7 @@ public class User extends BaseModel {
     private String pictureUrl;
 
     public CommonProfile main;
-    public Map<String, CommonProfile> profiles = new HashMap<>();
+    public Map<ProfileKey, CommonProfile> profiles = new HashMap<>();
 
     public User() {
     }
@@ -76,7 +75,26 @@ public class User extends BaseModel {
         this.pictureUrl = pictureUrl;
     }
 
+    public CommonProfile getProfile(ProfileKey key){
+        return profiles.get(key);
+    }
     public void setProfile(String provider, CommonProfile profile ){
-        profiles.put(provider, profile);
+        String p=provider.toUpperCase();
+        setProfile(ProfileKey.keyOf(p), profile);
+    }
+    public void setProfile(ProfileKey key, CommonProfile profile){
+        profiles.put(key, profile);
+    }
+
+    public enum ProfileKey {
+        TWITTER;
+
+        public static ProfileKey keyOf(String provider) {
+            ProfileKey key=null;
+            switch (provider){
+                case "TWITTER": key=TWITTER;
+            }
+            return key;
+        }
     }
 }

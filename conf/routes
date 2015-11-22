@@ -14,7 +14,7 @@ GET           /api/category/:category        @controllers.API.getCategory(catego
 
 #Ad api
 POST          /api/ad                    @controllers.API.postAd()
-#/api/ad? category=Vehicle &subCat=Car &start=0 &limit=10 & price$lt9.95
+#/api/ad?category=Vehicle &subCat=Car &start=0 &limit=10 & price$lt9.95
 GET           /api/ad                    @controllers.API.queryAds()
 GET           /api/ad/:category/:id      @controllers.API.getAd(category:String , id: String)
 DELETE        /api/ad/:category/:id      @controllers.API.deleteAd( category:String, id:String)

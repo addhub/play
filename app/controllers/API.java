@@ -1,20 +1,20 @@
 package controllers;
 
 
-import com.fasterxml.jackson.databind.JsonNode;
 import exception.RESTException;
 import model.Ad;
 import model.User;
 import org.bson.Document;
-import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import service.AdService;
+import service.ExportService;
 import service.UserService;
 
 import java.util.Map;
 
+import static model.Export.*;
 import static play.data.Form.form;
 
 /**
@@ -25,7 +25,7 @@ public class API extends Controller {
 
     private AdService adService = new AdService();
     private UserService userService = new UserService();
-
+    private ExportService exportService=new ExportService();
 
     /**
      * get category by name
@@ -45,13 +45,13 @@ public class API extends Controller {
     public Result postAd() {
         Ad ad = validateForModel(Ad.class);
         Document doc = adService.postAd(ad);
-        return getDocIDResponse(doc,"category must be provided");
+        return getDocID(doc, "category must be provided");
     }
 
 
     public Result getAd(String category, String id) { //fetch Ad once the Ad is posted by using postAd()
         Document doc = adService.getAd(category, id);
-        return getDocIDResponse(doc,"The required Advertisement doens not exist");
+        return getDocID(doc, "The required Advertisement doens not exist");
     }
 
     public Result queryAds() {
@@ -67,12 +67,20 @@ public class API extends Controller {
     public Result updateAd() {
         Ad ad = validateForModel(Ad.class);
         Document doc = adService.updateAd(ad);
-        return getDocIDResponse(doc,"The required Advertisement cannot be updated");
+        return getDocID(doc, "The required Advertisement cannot be updated");
+    }
+
+
+    public Result exportAd(){
+        Ad ad=extractModel(Ad.class);
+        ExportTo to= ExportTo.valueOf(request().getQueryString("to").toUpperCase());
+        boolean status=exportService.export(ad,to);
+        return ok(""+status);
     }
 
     public Result createUser() {
         User user=validateForModel(User.class);
-        return getDocIDResponse(userService.createUser(user),"error creating user");
+        return getDocID(userService.createUser(user), "error creating user");
     }
 
     public Result getUser(String email) {
@@ -80,7 +88,10 @@ public class API extends Controller {
         return ok(Json.toJson(userEmail));
     }
 
-    private Result getDocIDResponse(Document doc, String errorMsg) {
+
+
+
+    private Result getDocID(Document doc, String errorMsg) {
         if (doc != null) {
             return ok(Json.newObject().put("id", doc.get("_id").toString()));
         } else {
@@ -97,4 +108,16 @@ public class API extends Controller {
         }
         return model;
     }
+
+
+    private static <T> T extractModel(Class<T> modelType){
+        T model=null;
+        try{
+            model = Json.fromJson(request().body().asJson(), modelType);
+        }catch (IllegalStateException ex){
+            throw new RESTException(ex.getMessage());
+        }
+        return model;
+    }
+
 }

@@ -6,6 +6,10 @@ import org.apache.commons.lang3.text.WordUtils;
 import play.data.validation.Constraints;
 
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by sasinda on 10/2/15.
@@ -31,7 +35,11 @@ public class Ad extends BaseModel{
     private String zipcode;
     private BigDecimal price;
     private boolean agree;
-    String pictureUrl;
+    private List<String> pictureUrls=new ArrayList<>();
+    //number of days the add is valid -1 is good till cancelled
+    private int goodTill;
+    private ZonedDateTime createdOn;
+    private Export exports;
 
     public String getTitle() {
         return title;
@@ -125,17 +133,42 @@ public class Ad extends BaseModel{
         this.agree = agree;
     }
 
-    public String getPictureUrl() {
-        return pictureUrl;
-    }
 
-    public void setPictureUrl(String pictureUrl) {
-        this.pictureUrl = pictureUrl;
-    }
 
     public String getAdurl(){
         return AppConfig.getString("baseUrl")+"/#/ad/"+getId();
     }
 
 
+    public List<String> getPictureUrls() {
+        return pictureUrls;
+    }
+
+    public void setPictureUrls(List<String> pictureUrls) {
+        this.pictureUrls = pictureUrls;
+    }
+
+    public int getGoodTill() {
+        return goodTill;
+    }
+
+    public void setGoodTill(int goodTill) {
+        this.goodTill = goodTill;
+    }
+
+    public ZonedDateTime getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(ZonedDateTime createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public Export getExports() {
+        return exports;
+    }
+
+    public void setExports(Export exports) {
+        this.exports = exports;
+    }
 }
