@@ -1,6 +1,7 @@
 package service;
 
-import model.Ad;
+import model.BaseAd;
+import model.ad.Vehicle;
 import org.bson.Document;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import static org.junit.Assert.*;
 /**
  * Created by sasinda on 10/7/15.
  */
-public class AdServiceTest {
+public class BaseAdServiceTest {
 
     AdService adService =new AdService();
 
@@ -23,7 +24,7 @@ public class AdServiceTest {
 
     @org.junit.Test
     public void testPostAd() throws Exception {
-        Ad ad=new Ad();
+        BaseAd ad=new BaseAd();
         ad.setTitle("test ad");
         ad.setCategory("test");
         Document document = adService.postAd(ad);
@@ -32,7 +33,7 @@ public class AdServiceTest {
 
     @org.junit.Test
     public void testGetAd() throws Exception {
-        Ad ad=new Ad();
+        BaseAd ad=new BaseAd();
         ad.setTitle("testGet");
         ad.setCategory("test Get Ad"); // All category word unit is capitalized. Note this when using adService.getAd(categoryName)!
         Document document = adService.postAd(ad); //create one tested ad then get, delete or update
@@ -41,8 +42,26 @@ public class AdServiceTest {
     }
 
     @org.junit.Test
+    public void testGetAdModel() throws Exception {
+        Vehicle ad=new Vehicle();
+        ad.setId("56310b651792c62cd39d4f03");
+        Vehicle fullAd = adService.getAd(ad);
+        assertEquals("Vehicle",fullAd.getCategory());
+    }
+
+    @org.junit.Test
+    public void saveAdWithUserAndGet() throws Exception {
+        Vehicle ad=new Vehicle();
+        ad.setTitle("test ad");
+        ad.setCategory("test");
+        Document document = adService.postAd(ad);
+        assertNotNull(document.get("title"));
+    }
+
+
+    @org.junit.Test
     public void testDeleteAd() throws Exception { //test Delete Ad method from API - AdService
-        Ad ad=new Ad();
+        BaseAd ad=new BaseAd();
         ad.setTitle("testDelete");
         ad.setCategory("TestDeleteAd");
         Document document = adService.postAd(ad);
@@ -52,7 +71,7 @@ public class AdServiceTest {
 
     @org.junit.Test
     public void testUpdateAd() throws Exception {  //test update Ad method from API - AdService
-        Ad ad=new Ad();
+        BaseAd ad=new BaseAd();
         ad.setTitle("testUpdate");
         ad.setCategory("TestUpdateAd");
         ad.setZipcode("10011");

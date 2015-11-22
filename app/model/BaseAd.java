@@ -3,8 +3,11 @@ package model;
 import global.AppConfig;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.apache.commons.lang3.text.WordUtils;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Reference;
 import play.data.validation.Constraints;
 
+import javax.persistence.Embedded;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -15,7 +18,7 @@ import java.util.List;
  * Created by sasinda on 10/2/15.
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Ad extends BaseModel{
+public class BaseAd extends BaseModel{
     public static final String TITLE="title";
     public static final String CATEGORY="category";
     public static final String SUBCAT="subCat";
@@ -33,13 +36,16 @@ public class Ad extends BaseModel{
     private String state;
     private String country;
     private String zipcode;
-    private BigDecimal price;
+    private Double price;
     private boolean agree;
     private List<String> pictureUrls=new ArrayList<>();
     //number of days the add is valid -1 is good till cancelled
     private int goodTill;
     private ZonedDateTime createdOn;
-    private Export exports;
+    @Embedded
+    private List<Export> exports;
+    @Reference(lazy = true)
+    private User user;
 
     public String getTitle() {
         return title;
@@ -117,11 +123,15 @@ public class Ad extends BaseModel{
         this.zipcode = zipcode;
     }
 
-    public BigDecimal getPrice() {
+    /**
+     * Make sure to convert to Big Decimal when doing aggregate computations.
+     * @return price as double
+     */
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -164,11 +174,19 @@ public class Ad extends BaseModel{
         this.createdOn = createdOn;
     }
 
-    public Export getExports() {
+    public List<Export> getExports() {
         return exports;
     }
 
-    public void setExports(Export exports) {
+    public void setExports(List<Export> exports) {
         this.exports = exports;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
