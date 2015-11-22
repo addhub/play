@@ -50,7 +50,7 @@ public class FacebookService {
 
         FacebookType publishPhotoResponse =
                 facebookClient.publish("me/photos", FacebookType.class,
-                        BinaryAttachment.with("test.png", getClass().getResourceAsStream(String.valueOf(new URL(ad.getPictureUrl()).openStream()))),
+                        BinaryAttachment.with("test.png", getClass().getResourceAsStream(String.valueOf(new URL(ad.getPictureUrls().get(0)).openStream()))),
                         Parameter.with("message", "Test picture"));
 
         System.out.println("Published photo ID: " + publishPhotoResponse.getId());

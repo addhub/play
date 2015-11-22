@@ -1,29 +1,29 @@
 package controllers;
 
-import model.Login;
+import aws.S3Service;
 import model.User;
-import org.apache.commons.io.FileUtils;
-import play.data.Form;
-import play.libs.Json;
-import play.mvc.*;
+import play.Logger;
+import play.libs.F;
+import play.mvc.Controller;
+import play.mvc.Http;
+import play.mvc.Result;
 import service.UserService;
-import views.html.*;
+import views.html.index;
 
 import java.io.File;
-import java.io.IOException;
-
-import static play.data.Form.form;
 
 public class Application extends Controller {
+    UserService userService = new UserService();
+    S3Service s3Service = new S3Service();
 
-    UserService userService=new UserService();
+
 
     public Result viewIndex() {
         User user=userService.getUser(session().get("email"));
         return ok(index.render(user));
     }
 
-    public Result uploadAdImg() {
+    /*public Result uploadAdImg() {
         Http.MultipartFormData body = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart picture = body.getFile("file");
         if (picture != null) {
@@ -41,7 +41,24 @@ public class Application extends Controller {
         } else {
             return badRequest();
         }
+    }*/
+    public F.Promise<Result> uploadAdImg() {
+        final Http.MultipartFormData.FilePart meta = request().body().asMultipartFormData().getFile("picture");
+        Logger.info("start upload " + meta.getFilename());
+        if (meta != null) {
+            File file = meta.getFile();
+
+            return s3Service.uploadAdImg(file).map((uploadResult) -> {
+                Logger.info("finished " + meta.getFilename());
+                return ok(uploadResult);
+            });
+        }
+        else{
+            return F.Promise.pure(badRequest());
+        }
+
     }
+
 
 
 }
