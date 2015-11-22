@@ -113,7 +113,11 @@ public class AuthController extends UserProfileController<CommonProfile> {
         user.setPictureUrl(userProfile.getPictureUrl());
         String provider=request().getQueryString("client_name");
         provider=provider.replace("Client","").toLowerCase();
-        user.setProfile(provider,userProfile);
+
+        //convert to model.CommonProfile and add to users profiles
+        model.CommonProfile profile=new model.CommonProfile();
+        profile.build(userProfile.getTypedId(), userProfile.getAttributes());
+        user.setProfile(provider,profile);
         response().setCookie("socialLogin", provider);
 
         User existUser = userService.getUser(user.getUsername());

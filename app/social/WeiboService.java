@@ -34,7 +34,7 @@ public class WeiboService {
     public void postTweet(Ad ad) throws IOException { //After parsed Ad to a string, tweet the string
         twitter = tf.getInstance();
         StatusUpdate adtweet = new StatusUpdate(parseAd(ad));
-        adtweet.setMedia("AdPhoto",new URL(ad.getPictureUrl()).openStream());
+        adtweet.setMedia("AdPhoto",new URL(ad.getPictureUrls().get(0)).openStream());
         try {
             twitter.updateStatus(adtweet);
         } catch (TwitterException e) {

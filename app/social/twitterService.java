@@ -1,6 +1,9 @@
 package social;
 
 import model.Ad;
+import play.Play;
+import play.mvc.Result;
+import play.mvc.Results;
 import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -8,9 +11,16 @@ import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
-public class TwitterService {
+/**
+ * Created by jingxiapang on 10/28/15.
+ */
+
+
+
+public class TwitterService implements SocialExport {
 
     public ConfigurationBuilder cb = new ConfigurationBuilder();
     TwitterFactory tf;
@@ -25,17 +35,31 @@ public class TwitterService {
         tf = new TwitterFactory(cb.build());
     }
 
-    public void postTweet(Ad ad) throws IOException { //After parsed Ad to a string, tweet the string
+    @Override
+    public void publish(Ad ad) {
+        postTweet(ad);
+    }
+
+    @Override
+    public Result preview(Ad ad) {
+        return null;
+    }
+
+    public void postTweet(Ad ad){ //After parsed Ad to a string, tweet the string
         twitter = tf.getInstance();
         StatusUpdate adtweet = new StatusUpdate(parseAd(ad));
-        adtweet.setMedia("AdPhoto",new URL(ad.getPictureUrl()).openStream());
         try {
+            if(!ad.getPictureUrls().isEmpty()){
+                adtweet.setMedia("AdPhoto",new URL(ad.getPictureUrls().get(0)).openStream());
+            }
             twitter.updateStatus(adtweet);
         } catch (TwitterException e) {
             e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        //System.out.println("Successfully posted to [" + adtweet.getStatus() + "].");
     }
 
     private String parseAd(Ad ad) { // parse Ad obj to a string since twitter udpate method accept String as parameter
@@ -49,6 +73,7 @@ public class TwitterService {
         //System.out.println(adinfo+shorturl);
         return adinfo+" "+shorturl;
     }
+
 
 
 }
