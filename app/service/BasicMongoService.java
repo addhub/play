@@ -9,6 +9,8 @@ import com.mongodb.util.JSON;
 import global.AppConfig;
 import model.BaseModel;
 import org.bson.Document;
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Morphia;
 import play.libs.Json;
 
 import java.io.IOException;
@@ -18,17 +20,28 @@ import java.io.IOException;
  */
 public class BasicMongoService {
 
+    //settings
     final static String dburi= AppConfig.getString("mongodb.uri");
     final static String dbName= AppConfig.getString("mongodb.name");
     final static MongoClientURI uri = new MongoClientURI(dburi);
 
+    //connection
     final static public MongoClient mongoClient = new MongoClient(uri);
-    final static MongoDatabase addhub = mongoClient.getDatabase(dbName);
+    final static MongoDatabase db = mongoClient.getDatabase(dbName);
+
+    //OM Morphia
+
+    final static Morphia morphia = new Morphia();
+    final static Datastore datastore = morphia.createDatastore(mongoClient, dbName);
+
+    static {
+        morphia.mapPackage("model");
+        datastore.ensureIndexes();
+    }
+
+    private final static ObjectMapper mapper =new ObjectMapper();
 
 
-
-
-    private static ObjectMapper mapper =new ObjectMapper();
     public static <T extends BaseModel>  T as(Class<T> as , Document doc){
         if(doc==null) return null;
         try {

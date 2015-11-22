@@ -1,17 +1,17 @@
 package social;
 
-import model.Ad;
+import model.BaseAd;
 import org.junit.Before;
 
 public class FacebookServiceTest {
 
     static FacebookService facebookService;
-    static Ad testfacebookad;
+    static BaseAd testfacebookad;
 
 
     @Before
     public  void setup(){
-        testfacebookad = new Ad();
+        testfacebookad = new BaseAd();
         testfacebookad.setTitle("testTweetAd");
         testfacebookad.setCategory("testTweetAd");
         //testfacebookad.setPictureUrl("http://cloudlakes.com/data_images/makers/mersedes-benz/mersedes-benz-01.jpg");

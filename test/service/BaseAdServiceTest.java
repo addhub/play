@@ -27,7 +27,7 @@ public class BaseAdServiceTest {
         BaseAd ad=new BaseAd();
         ad.setTitle("test ad");
         ad.setCategory("test");
-        Document document = adService.postAd(ad);
+        Document document = adService.saveAdByCat(ad);
         assertNotNull(document.get("title"));
     }
 
@@ -36,7 +36,7 @@ public class BaseAdServiceTest {
         BaseAd ad=new BaseAd();
         ad.setTitle("testGet");
         ad.setCategory("test Get Ad"); // All category word unit is capitalized. Note this when using adService.getAd(categoryName)!
-        Document document = adService.postAd(ad); //create one tested ad then get, delete or update
+        Document document = adService.saveAdByCat(ad); //create one tested ad then get, delete or update
         Document getAdDoc = adService.getAd("TestGetAd", document.getObjectId("_id").toString());
         assertEquals("testGet", getAdDoc.get("title"));
     }
@@ -51,10 +51,10 @@ public class BaseAdServiceTest {
 
     @org.junit.Test
     public void saveAdWithUserAndGet() throws Exception {
-        Vehicle ad=new Vehicle();
+        BaseAd ad=new Vehicle();
         ad.setTitle("test ad");
         ad.setCategory("test");
-        Document document = adService.postAd(ad);
+        Document document = adService.saveAdByCat(ad);
         assertNotNull(document.get("title"));
     }
 
@@ -64,7 +64,7 @@ public class BaseAdServiceTest {
         BaseAd ad=new BaseAd();
         ad.setTitle("testDelete");
         ad.setCategory("TestDeleteAd");
-        Document document = adService.postAd(ad);
+        Document document = adService.saveAdByCat(ad);
         long deleteAdDoc = adService.deleteAd("TestDeleteAd", document.getObjectId("_id").toString());
         assertEquals((long)1, deleteAdDoc);
     }
@@ -75,7 +75,7 @@ public class BaseAdServiceTest {
         ad.setTitle("testUpdate");
         ad.setCategory("TestUpdateAd");
         ad.setZipcode("10011");
-        Document document = adService.postAd(ad);
+        Document document = adService.saveAdByCat(ad);
 
         ad.setZipcode("11122");
 

@@ -123,6 +123,7 @@ public class AuthController extends UserProfileController<CommonProfile> {
         User existUser = userService.getUser(user.getUsername());
         if (existUser != null) {
             //login
+            user.setId(existUser.getId());
             userService.updateUser(user);
             afterLoginSuccess(user);
             return redirect("/#/login");

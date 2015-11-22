@@ -1,9 +1,7 @@
 package service;
 
-import model.Ad;
-import model.Export;
+import model.BaseAd;
 import model.Export.ExportTo;
-import org.bson.Document;
 import social.SocialExport;
 import social.TwitterService;
 
@@ -26,8 +24,8 @@ public class ExportService {
     }
 
 
-    public boolean export(Ad adIdnCat, ExportTo to){
-        Ad ad = adService.getAd(adIdnCat);
+    public boolean export(BaseAd adIdnCat, ExportTo to){
+        BaseAd ad = adService.getAd(adIdnCat);
 
         if(to.val<ExportTo.SOCIAL){
             socialServices.get(to).publish(ad);

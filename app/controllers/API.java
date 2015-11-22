@@ -2,7 +2,7 @@ package controllers;
 
 
 import exception.RESTException;
-import model.Ad;
+import model.BaseAd;
 import model.User;
 import org.bson.Document;
 import play.libs.Json;
@@ -42,9 +42,9 @@ public class API extends Controller {
      * Post an advertisement
      * @return
      */
-    public Result postAd() {
-        Ad ad = validateForModel(Ad.class);
-        Document doc = adService.postAd(ad);
+    public Result postAd(String category) {
+        BaseAd ad = validateForModel(BaseAd.class);
+        Document doc = adService.saveAdByCat(ad);
         return getDocID(doc, "category must be provided");
     }
 
@@ -54,7 +54,14 @@ public class API extends Controller {
         return getDocID(doc, "The required Advertisement doens not exist");
     }
 
+    //Get ads from all categories
     public Result queryAds() {
+        Map<String, String[]> query = request().queryString();
+        return ok(Json.toJson(adService.queryAds(query)));
+    }
+
+    //get ads from given category
+    public Result queryAdsBy(String category) {
         Map<String, String[]> query = request().queryString();
         return ok(Json.toJson(adService.queryAds(query)));
     }
@@ -64,15 +71,15 @@ public class API extends Controller {
         return ok(Json.toJson(deletes));
     }
 
-    public Result updateAd() {
-        Ad ad = validateForModel(Ad.class);
+    public Result updateAd(String category) {
+        BaseAd ad = validateForModel(BaseAd.class);
         Document doc = adService.updateAd(ad);
         return getDocID(doc, "The required Advertisement cannot be updated");
     }
 
 
     public Result exportAd(){
-        Ad ad=extractModel(Ad.class);
+        BaseAd ad=extractModel(BaseAd.class);
         ExportTo to= ExportTo.valueOf(request().getQueryString("to").toUpperCase());
         boolean status=exportService.export(ad,to);
         return ok(""+status);

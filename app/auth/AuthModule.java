@@ -50,7 +50,7 @@ public class AuthModule extends AbstractModule {
         com.typesafe.config.Config facebook = AppConfig.getConfig("facebook");
         // OAuth
         final TwitterClient twitterClient = new TwitterClient(twitter.getString("consumerKey"), twitter.getString("consumerSecret"));
-        final FacebookClient facebookClient = new FacebookClient(facebook.getString("consumerKey"), facebook.getString("consumerSecret"));
+        final FacebookClient facebookClient = new FacebookClient();
         // HTTP
         final FormClient formClient = new FormClient("/", new SimpleTestUsernamePasswordAuthenticator());
 

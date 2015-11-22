@@ -39,6 +39,7 @@ public class BaseAd extends BaseModel{
     private Double price;
     private boolean agree;
     private List<String> pictureUrls=new ArrayList<>();
+    private String premiumAd;
     //number of days the add is valid -1 is good till cancelled
     private int goodTill;
     private ZonedDateTime createdOn;

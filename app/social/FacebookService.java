@@ -6,7 +6,7 @@ import com.restfb.DefaultFacebookClient;
 import com.restfb.Parameter;
 import com.restfb.Version;
 import com.restfb.types.FacebookType;
-import model.Ad;
+import model.BaseAd;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,7 +24,7 @@ public class FacebookService {
         facebookClient = new DefaultFacebookClient(accessToken, Version.VERSION_2_5);
     }
 
-    private String parseAd(Ad ad) { // parse Ad obj to a string since twitter udpate method accept String as parameter
+    private String parseAd(BaseAd ad) { // parse Ad obj to a string since twitter udpate method accept String as parameter
         String adTitle = ad.getTitle().replaceAll("[\\-\\+\\.\\^:,]","");
         String adkey = ad.getKeywords();
         String adinfo = adTitle + adkey;
@@ -36,7 +36,7 @@ public class FacebookService {
         return adinfo+" "+shorturl;
     }
 
-    public String publishMessage(Ad ad){
+    public String publishMessage(BaseAd ad){
         System.out.println("* Feed Publishing");
         FacebookType publishMessageResponse =
                 facebookClient.publish(parseAd(ad), FacebookType.class, Parameter.with("message", "RestFB test"));
@@ -45,7 +45,7 @@ public class FacebookService {
         return publishMessageResponse.getId();
     }
 
-    public String publishPhoto(Ad ad) throws IOException {
+    public String publishPhoto(BaseAd ad) throws IOException {
         System.out.println("* Binary file publishing *");
 
         FacebookType publishPhotoResponse =

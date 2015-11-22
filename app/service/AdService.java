@@ -4,15 +4,12 @@ package service;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.result.DeleteResult;
-import com.mongodb.gridfs.GridFS;
-import com.mongodb.util.JSON;
-import global.AppConfig;
-import model.Ad;
+import model.BaseAd;
 import model.Query;
+import model.ad.Ad;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +29,7 @@ public class AdService extends BasicMongoService {
             categories = findAll(collection);
         } else {
             categories = new ArrayList<>();
-//          Document catdoc = addhub.getCollection(collection).findOne();
+//          Document catdoc = db.getCollection(collection).findOne();
 //          categories.add(catdoc);
         }
         return categories;
@@ -42,42 +39,46 @@ public class AdService extends BasicMongoService {
      * @param ad
      * @return
      */
-    public Document postAd(Ad ad) {
+    public Document saveAdByCat(BaseAd ad) {
         String cat = ad.getCategory(); // ad's collection name, eg "vehicle"
         //String adid = ad.getId(); //get ad's unique mongo _id
         if (cat != null) {
             Document doc = asDocument(ad);
-            addhub.getCollection(cat).insertOne(doc);
+            db.getCollection(cat).insertOne(doc);
             ad.setId(doc.getObjectId("_id").toString());
             return doc;
         }
         return null;
     }
 
+    public <T extends Ad> T saveAd(T ad) {
+        return null;
+    }
+
 
     public Document getAd(String category,String id){
-        Document myAd = addhub.getCollection(category).find(eq("_id", new ObjectId(id))).first();
+        Document myAd = db.getCollection(category).find(eq("_id", new ObjectId(id))).first();
         return myAd;
     }
 
-    public Ad getAd(Ad adIdCat){
-        return as(Ad.class, getAd(adIdCat.getCategory(), adIdCat.getId()));
+    public <T extends BaseAd> T getAd(T ad){
+        return datastore.get(ad);
     }
 
 
     public Long deleteAd(String category, String id) {
-        DeleteResult id1 = addhub.getCollection(category).deleteOne(eq("_id", new ObjectId(id)));//http://mongodb.github.io/mongo-java-driver/3.0/driver/getting-started/quick-tour/
+        DeleteResult id1 = db.getCollection(category).deleteOne(eq("_id", new ObjectId(id)));//http://mongodb.github.io/mongo-java-driver/3.0/driver/getting-started/quick-tour/
         return id1.getDeletedCount();
 
     }
 
-    public Document updateAd(Ad ad) {
+    public Document updateAd(BaseAd ad) {
         String cat = ad.getCategory(); // ad's collection name, eg "vehicle"
         String adid = ad.getId(); //get ad's unique mongo _id
 
         if (cat != null && adid != null) {
             Document doc = asDocument(ad);
-            addhub.getCollection(cat).updateOne(eq("_id", adid), new Document("$set", doc)) ;
+            db.getCollection(cat).updateOne(eq("_id", adid), new Document("$set", doc)) ;
             return doc;
         }
         return null;
@@ -88,7 +89,7 @@ public class AdService extends BasicMongoService {
 
     private List<Document> findAll(String collection) {
         List<Document> docs = new ArrayList<>();
-        MongoCursor<Document> cursor = addhub.getCollection(collection).find().iterator();
+        MongoCursor<Document> cursor = db.getCollection(collection).find().iterator();
         try {
             while (cursor.hasNext()) {
                 docs.add(cursor.next());
@@ -100,9 +101,9 @@ public class AdService extends BasicMongoService {
     }
 
     public List<Document> queryAds(Map<String, String[]> queryMap) {
-        String cat = queryMap.get(Ad.CATEGORY)[0];
+        String cat = queryMap.get(BaseAd.CATEGORY)[0];
         Query query = new Query(queryMap);
-        FindIterable<Document> documents = addhub.getCollection(cat).find(query.getFilter()).skip(query.getStart()).limit(query.getLimit());
+        FindIterable<Document> documents = db.getCollection(cat).find(query.getFilter()).skip(query.getStart()).limit(query.getLimit());
         return getList(documents);
     }
 

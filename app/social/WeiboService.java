@@ -1,6 +1,6 @@
 package social;
 
-import model.Ad;
+import model.BaseAd;
 import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -31,7 +31,7 @@ public class WeiboService {
         tf = new TwitterFactory(cb.build());
     }
 
-    public void postTweet(Ad ad) throws IOException { //After parsed Ad to a string, tweet the string
+    public void postTweet(BaseAd ad) throws IOException { //After parsed Ad to a string, tweet the string
         twitter = tf.getInstance();
         StatusUpdate adtweet = new StatusUpdate(parseAd(ad));
         adtweet.setMedia("AdPhoto",new URL(ad.getPictureUrls().get(0)).openStream());
@@ -44,7 +44,7 @@ public class WeiboService {
         //System.out.println("Successfully posted to [" + adtweet.getStatus() + "].");
     }
 
-    private String parseAd(Ad ad) { // parse Ad obj to a string since twitter udpate method accept String as parameter
+    private String parseAd(BaseAd ad) { // parse Ad obj to a string since twitter udpate method accept String as parameter
         String adTitle = ad.getTitle().replaceAll("[\\-\\+\\.\\^:,]","");
         String adkey = ad.getKeywords();
         String adinfo = adTitle + adkey;

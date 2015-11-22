@@ -1,6 +1,6 @@
 package social;
 
-import model.Ad;
+import model.BaseAd;
 import service.AdService;
 
 import java.util.ArrayList;
@@ -11,13 +11,13 @@ import java.util.ArrayList;
 
 public class TwitterServiceTest {
     static TwitterService twitterService;
-    static Ad testtweetad;
+    static BaseAd testtweetad;
     static AdService adService;
 
     @org.junit.Test
     public void testPostTweet() throws Exception {
         twitterService = new TwitterService();
-        testtweetad = new Ad();
+        testtweetad = new BaseAd();
         adService=new AdService();
         testtweetad.setTitle("testTweetAd");
         testtweetad.setCategory("testTweetAd");
