@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import global.AppConfig;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.apache.commons.lang3.text.WordUtils;
@@ -17,6 +18,7 @@ import java.util.List;
 /**
  * Created by sasinda on 10/2/15.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BaseAd extends BaseModel{
     public static final String TITLE="title";
@@ -31,7 +33,7 @@ public class BaseAd extends BaseModel{
     @Constraints.Required
     private String subCat;
     private String description;
-    private String keywords;
+    private List<String> keywords;
     private String address;
     private String state;
     private String country;
@@ -84,11 +86,11 @@ public class BaseAd extends BaseModel{
         this.description = description;
     }
 
-    public String getKeywords() {
+    public List<String> getKeywords() {
         return keywords;
     }
 
-    public void setKeywords(String keywords) {
+    public void setKeywords(List<String> keywords) {
         this.keywords = keywords;
     }
 
@@ -189,5 +191,9 @@ public class BaseAd extends BaseModel{
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getKeywordString() {
+        return getKeywords().toString();
     }
 }

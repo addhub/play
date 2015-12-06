@@ -1,8 +1,10 @@
 package controllers;
 
 
+import exception.AuthException;
 import exception.RESTException;
 import model.BaseAd;
+import model.BaseModel;
 import model.User;
 import org.bson.Document;
 import play.libs.Json;
@@ -27,6 +29,7 @@ public class API extends Controller {
     private UserService userService = new UserService();
     private ExportService exportService=new ExportService();
 
+
     /**
      * get category by name
      *
@@ -44,8 +47,9 @@ public class API extends Controller {
      */
     public Result postAd(String category) {
         BaseAd ad = validateForModel(BaseAd.class);
-        Document doc = adService.saveAdByCat(ad);
-        return getDocID(doc, "category must be provided");
+        User user=getCurrentUser();
+        BaseAd baseAd = adService.saveAd(ad, user);
+        return getModelId(baseAd,"Error saving, category must be provided");
     }
 
 
@@ -78,11 +82,17 @@ public class API extends Controller {
     }
 
 
-    public Result exportAd(){
+    public Result exportAd(String category, String id){
         BaseAd ad=extractModel(BaseAd.class);
         ExportTo to= ExportTo.valueOf(request().getQueryString("to").toUpperCase());
-        boolean status=exportService.export(ad,to);
-        return ok(""+status);
+        String username=session().get("username");
+        //TODO: use aop to check authentication
+        if(username!=null){
+            boolean status=exportService.export(username, ad,to);
+            return ok(""+status);
+        }else {
+            return unauthorized("{\"success\":false, \"message\":\"user not logged in\"}");
+        }
     }
 
     public Result createUser() {
@@ -97,7 +107,13 @@ public class API extends Controller {
 
 
 
-
+    private Result getModelId(BaseModel model, String errorMsg) {
+        if (model != null) {
+            return ok(Json.newObject().put("id", model.getId()));
+        } else {
+            return badRequest(errorMsg);
+        }
+    }
     private Result getDocID(Document doc, String errorMsg) {
         if (doc != null) {
             return ok(Json.newObject().put("id", doc.get("_id").toString()));
@@ -125,6 +141,14 @@ public class API extends Controller {
             throw new RESTException(ex.getMessage());
         }
         return model;
+    }
+
+    private User getCurrentUser(){
+        String username = session().get("username");
+        if(username==null){
+            throw new AuthException("User not logged in");
+        }
+        return userService.getUser(username);
     }
 
 }

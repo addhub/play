@@ -46,7 +46,7 @@ public class WeiboService {
 
     private String parseAd(BaseAd ad) { // parse Ad obj to a string since twitter udpate method accept String as parameter
         String adTitle = ad.getTitle().replaceAll("[\\-\\+\\.\\^:,]","");
-        String adkey = ad.getKeywords();
+        String adkey = ad.getKeywordString();
         String adinfo = adTitle + adkey;
         if (adinfo.length()>=118) {
             adinfo = adinfo.substring(0,115);

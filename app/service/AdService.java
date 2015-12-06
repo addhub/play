@@ -6,10 +6,14 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.result.DeleteResult;
 import model.BaseAd;
 import model.Query;
+import model.User;
 import model.ad.Ad;
+import model.ad.Categories;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.Key;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -45,14 +49,19 @@ public class AdService extends BasicMongoService {
         if (cat != null) {
             Document doc = asDocument(ad);
             db.getCollection(cat).insertOne(doc);
-            ad.setId(doc.getObjectId("_id").toString());
+            ad.set_id(doc.getObjectId("_id"));
             return doc;
         }
         return null;
     }
 
-    public <T extends Ad> T saveAd(T ad) {
-        return null;
+
+    public <A extends BaseAd> A saveAd(A ad, User user) {
+        ad.setUser(user);
+        ad.setCreatedOn(ZonedDateTime.now());
+        Key<A> save = datastore.save(ad);
+        ad.set_id((ObjectId) save.getId());
+        return ad;
     }
 
 
@@ -61,7 +70,12 @@ public class AdService extends BasicMongoService {
         return myAd;
     }
 
-    public <T extends BaseAd> T getAd(T ad){
+    public <V extends BaseAd> V getAd(V ad){
+        if(ad.getClass().getSimpleName().equals("BaseAd")){
+            Document myAd = db.getCollection(ad.getCategory()).find(eq("_id", new ObjectId(ad.getId()))).first();
+            Class<V> c= (Class<V>) ad.getClass();
+            return as(c, myAd);
+        }
         return datastore.get(ad);
     }
 

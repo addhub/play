@@ -2,7 +2,6 @@ package controllers;
 
 import com.google.inject.Inject;
 import exception.AuthException;
-import jdk.nashorn.internal.runtime.URIUtils;
 import model.Login;
 import model.User;
 import org.pac4j.core.profile.CommonProfile;
@@ -14,8 +13,6 @@ import play.libs.Json;
 import play.mvc.Result;
 import play.utils.UriEncoding;
 import service.UserService;
-
-import java.net.URI;
 
 import static play.data.Form.form;
 
@@ -40,8 +37,8 @@ public class AuthController extends UserProfileController<CommonProfile> {
 
     public Result login() {
         Form<Login> loginForm = form(Login.class).bindFromRequest();
-        String username = loginForm.get().username;
-        String pass = loginForm.get().password;
+        String username = loginForm.get().getUsername();
+        String pass = loginForm.get().getPassword();
         //TODO use MongoAuthenticator
         User user = authenticate(username, pass);
         //if success

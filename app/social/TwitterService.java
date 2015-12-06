@@ -1,6 +1,8 @@
 package social;
 
-import model.Ad;
+import model.BaseAd;
+import model.CommonProfile;
+import model.User;
 import play.Play;
 import play.mvc.Result;
 import play.mvc.Results;
@@ -8,6 +10,7 @@ import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+import twitter4j.auth.AccessToken;
 import twitter4j.conf.ConfigurationBuilder;
 
 import java.io.IOException;
@@ -17,9 +20,6 @@ import java.net.URL;
 /**
  * Created by jingxiapang on 10/28/15.
  */
-
-
-
 public class TwitterService implements SocialExport {
 
     public ConfigurationBuilder cb = new ConfigurationBuilder();
@@ -36,17 +36,24 @@ public class TwitterService implements SocialExport {
     }
 
     @Override
-    public void publish(Ad ad) {
-        postTweet(ad);
+    public void publish(BaseAd ad, User user) {
+        if(ad==null || user==null){
+            throw new NullPointerException("cant export to twitter. user or ad is null");
+        }
+        postTweet(ad,user);
     }
 
     @Override
-    public Result preview(Ad ad) {
+    public Result preview(BaseAd ad) {
         return null;
     }
 
-    public void postTweet(Ad ad){ //After parsed Ad to a string, tweet the string
+    public void postTweet(BaseAd ad, User user){ //After parsed BaseAd to a string, tweet the string
+        CommonProfile profile = user.getProfile(User.ProfileKey.TWITTER);
+        String accessToken = profile.getAccessToken();
+        String accessSecret = profile.getAccessSecret();
         twitter = tf.getInstance();
+        twitter.setOAuthAccessToken(new AccessToken(accessToken, accessSecret));
         StatusUpdate adtweet = new StatusUpdate(parseAd(ad));
         try {
             if(!ad.getPictureUrls().isEmpty()){
@@ -62,9 +69,9 @@ public class TwitterService implements SocialExport {
         }
     }
 
-    private String parseAd(Ad ad) { // parse Ad obj to a string since twitter udpate method accept String as parameter
+    private String parseAd(BaseAd ad) { // parse Ad obj to a string since twitter udpate method accept String as parameter
         String adTitle = ad.getTitle().replaceAll("[\\-\\+\\.\\^:,]","");
-        String adkey = ad.getKeywords();
+        String adkey = ad.getKeywordString();
         String adinfo = adTitle + adkey;
         if (adinfo.length()>=118) {
             adinfo = adinfo.substring(0,115);

@@ -2,6 +2,8 @@ package service;
 
 import model.BaseAd;
 import model.Export.ExportTo;
+import model.User;
+import model.ad.Vehicle;
 import social.SocialExport;
 import social.TwitterService;
 
@@ -24,11 +26,11 @@ public class ExportService {
     }
 
 
-    public boolean export(BaseAd adIdnCat, ExportTo to){
+    public boolean export(String username, BaseAd adIdnCat, ExportTo to){
+        User user = userService.getUser(username);
         BaseAd ad = adService.getAd(adIdnCat);
-
         if(to.val<ExportTo.SOCIAL){
-            socialServices.get(to).publish(ad);
+            socialServices.get(to).publish(ad, user);
         }
         return false;
     }

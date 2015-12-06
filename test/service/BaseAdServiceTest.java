@@ -1,6 +1,7 @@
 package service;
 
 import model.BaseAd;
+import model.User;
 import model.ad.Vehicle;
 import org.bson.Document;
 
@@ -15,6 +16,7 @@ import static org.junit.Assert.*;
 public class BaseAdServiceTest {
 
     AdService adService =new AdService();
+    UserService userService=new UserService();
 
     @org.junit.Test
     public void testGetCategory() throws Exception {
@@ -23,12 +25,25 @@ public class BaseAdServiceTest {
     }
 
     @org.junit.Test
-    public void testPostAd() throws Exception {
+    public void testSaveAdByCat() throws Exception {
         BaseAd ad=new BaseAd();
         ad.setTitle("test ad");
         ad.setCategory("test");
         Document document = adService.saveAdByCat(ad);
         assertNotNull(document.get("title"));
+    }
+
+    @org.junit.Test
+    public void testSaveAdWithUserAndGet() throws Exception {
+        BaseAd ad=new Vehicle();
+        ad.setTitle("test ad");
+        ad.setCategory("test");
+
+        User user = userService.getUser("117314158");
+
+        BaseAd result = adService.saveAd(ad, user);
+        BaseAd savedAd = adService.getAd(ad);
+        assertNotNull(savedAd.getUser());
     }
 
     @org.junit.Test
@@ -49,14 +64,7 @@ public class BaseAdServiceTest {
         assertEquals("Vehicle",fullAd.getCategory());
     }
 
-    @org.junit.Test
-    public void saveAdWithUserAndGet() throws Exception {
-        BaseAd ad=new Vehicle();
-        ad.setTitle("test ad");
-        ad.setCategory("test");
-        Document document = adService.saveAdByCat(ad);
-        assertNotNull(document.get("title"));
-    }
+
 
 
     @org.junit.Test

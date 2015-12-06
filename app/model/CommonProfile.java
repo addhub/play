@@ -18,10 +18,16 @@ public class CommonProfile extends org.pac4j.core.profile.CommonProfile {
     public Map<String, Object> getAttributes() {
         return super.getAttributes();
     }
-
-
     @JsonAnySetter
     public void addAttribute(String key, Object value) {
         super.addAttribute(key, value);
     }
+
+    public String getAccessToken(){
+        return  getAttribute("access_token", String.class);
+    }
+    public String getAccessSecret(){
+        return  getAttribute("access_secret", String.class);
+    }
+
 }

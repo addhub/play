@@ -42,7 +42,7 @@ public class BasicMongoService {
     private final static ObjectMapper mapper =new ObjectMapper();
 
 
-    public static <T extends BaseModel>  T as(Class<T> as , Document doc){
+    public static <T extends BaseModel>  T  as(Class<T> as , Document doc){
         if(doc==null) return null;
         try {
             T t = mapper.readValue(doc.toJson(), as);

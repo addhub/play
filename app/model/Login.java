@@ -7,11 +7,11 @@ import play.data.validation.Constraints;
  */
 public class Login {
     @Constraints.Required
-    public String username;
+    private String username;
     @Constraints.Required
-    public String password;
+    private String password;
 
-    public String redirect;
+    private String redirect;
 
 
     public String getUsername() {

@@ -27,6 +27,7 @@ define(function () {
                 });
         }
 
+
         require(['dropzone'],function(Dropzone){
             window.dropzone=Dropzone;
             var myDropzone = new Dropzone("div#upload", { url: "/upload/ad/img", previewTemplate: $('#template').html(), clickable:'.dz-clickable'});
@@ -35,7 +36,7 @@ define(function () {
     };
     controllers.postAd.$inject = ['$scope', 'Category', 'Ad', '$location'];
 
-    controllers.listAds = function ($scope, Category, Ad, $location, $http) {
+    controllers.listAds = function ($scope, Category, Ad, AdExport, $location, $http) {
         Category.query(function (data) {
             $scope.categories = data;
             console.log(data);
@@ -47,10 +48,12 @@ define(function () {
                 $scope.adList=success.data;
             });
 
-
+        $scope.exportAd = function(category, id, to){
+            AdExport.save({category:category, id:id, to:to}, {category:category, id:id})
+        }
 
     };
-    controllers.listAds.$inject = ['$scope', 'Category', 'Ad', '$location', '$http'];
+    controllers.listAds.$inject = ['$scope', 'Category', 'Ad', 'AdExport', '$location', '$http'];
 
     controllers.postAdSuccess = function ($scope, $routeParams) {
         $scope.docId = $routeParams.id;
