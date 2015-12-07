@@ -23,6 +23,8 @@ public class User extends BaseModel {
     private String displayName;
     private String pictureUrl;
 
+    private String lastUpdated;
+
     public CommonProfile main;
     public Map<ProfileKey, CommonProfile> profiles = new HashMap<>();
 
@@ -41,7 +43,6 @@ public class User extends BaseModel {
     public void setUsername(String username) {
         this.username = username;
     }
-
 
     public String getPassword() {
         return password;

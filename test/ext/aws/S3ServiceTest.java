@@ -1,4 +1,4 @@
-package aws;
+package ext.aws;
 
 import play.libs.F;
 

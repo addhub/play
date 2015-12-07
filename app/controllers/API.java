@@ -6,6 +6,7 @@ import exception.RESTException;
 import model.BaseAd;
 import model.BaseModel;
 import model.User;
+import model.ad.Categories;
 import org.bson.Document;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -46,9 +47,11 @@ public class API extends Controller {
      * @return
      */
     public Result postAd(String category) {
-        BaseAd ad = validateForModel(BaseAd.class);
+        BaseAd modelType = Categories.getModelType(Categories.Category.valueOf(category));
+        BaseAd ad = validateForModel(modelType.getClass());
         User user=getCurrentUser();
         BaseAd baseAd = adService.saveAd(ad, user);
+        adService.savePictures(ad, user);
         return getModelId(baseAd,"Error saving, category must be provided");
     }
 

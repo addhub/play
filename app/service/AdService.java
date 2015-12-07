@@ -5,18 +5,26 @@ import com.mongodb.DBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.result.DeleteResult;
+import controllers.Application;
+import ext.aws.S3Service;
 import model.BaseAd;
 import model.Query;
 import model.User;
 import model.ad.Ad;
 import model.ad.Categories;
+import model.ad.Categories.Category;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Key;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +35,8 @@ import static com.mongodb.client.model.Filters.eq;
  * Useful reference for 'Mongodb java driver' : http://mongodb.github.io/mongo-java-driver/3.0/driver/getting-started/quick-tour/
  */
 public class AdService extends BasicMongoService {
+
+    S3Service s3Service=new S3Service();
 
     public List<Document> getCategories(String name) {
         String collection = "category";
@@ -134,6 +144,31 @@ public class AdService extends BasicMongoService {
         return getList(documents);
     }
 
+    public List<Document> searchAds(String searchString){
+        String[] split = searchString.split(" ");
+        String cat=split[0];
+        try {
+            Category category = Category.valueOf(cat);
+            return findAll(category.name);
+        }catch (IllegalArgumentException ex){
+            System.out.println(ex);
+        }
+        return findAll(Category.Vehicle.name);
+    }
+
+    public void savePictures(BaseAd ad, User user) {
+        File userDir=new File(Application.PICTURE_FOLDER + user.getUsername());
+        Collection<File> files = FileUtils.listFiles(userDir, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
+        for (File file : files) {
+            s3Service.uploadAdImg(file);
+        }
+        try {
+            FileUtils.deleteDirectory(userDir);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public List<Document> getList( FindIterable<Document> iterable) {
         List<Document> list=new ArrayList<>();
         for (Document document : iterable) {
@@ -142,6 +177,7 @@ public class AdService extends BasicMongoService {
         }
         return list;
     }
+
 
 
 }

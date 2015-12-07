@@ -1,17 +1,15 @@
-package aws;
+package ext.aws;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.event.ProgressEvent;
 import com.amazonaws.event.ProgressEventType;
-import com.amazonaws.event.ProgressListener;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.Upload;
 import com.amazonaws.services.s3.transfer.model.UploadResult;
 import global.AppConfig;
 import play.Logger;
 import play.libs.F;
-import play.mvc.Http;
 import scala.concurrent.Promise$;
 
 import java.io.File;
@@ -33,14 +31,13 @@ public class S3Service {
     public F.Promise<String> uploadAdImg(File file) {
         System.out.printf("Start to call upload method");
         final Upload upload = tm.upload(BUCKET_NAME, file.getName(), file);
-
         return asPromise(file.getName(), upload);
     }
 
 
     private static F.Promise<String> asPromise(final String filename, final Upload upload) {
-        final scala.concurrent.Promise<String> scalaPromise = Promise$.MODULE$.apply();
 
+        final scala.concurrent.Promise<String> scalaPromise = Promise$.MODULE$.apply();
         upload.addProgressListener((ProgressEvent progressEvent) -> {
             if (progressEvent.getEventType() == ProgressEventType.TRANSFER_CANCELED_EVENT) {
                 scalaPromise.failure(new RuntimeException("canceled " + filename));

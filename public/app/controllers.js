@@ -108,7 +108,7 @@ define(function () {
     }
     controllers.login.$inject = ['$rootScope', '$scope', '$routeParams', '$http', '$window', '$route', '$location', '$cookies'];
 
-    controllers.register = function ($scope, $location, $http) {
+    controllers.register = function ($rootScope, $scope, $location, $http) {
         $scope.signUp = function () {
             var url = "/auth/signup";
             var user = $scope.user;
@@ -125,7 +125,7 @@ define(function () {
             );
         };
     }
-    controllers.register.$inject = ['$scope', '$location', '$http'];
+    controllers.register.$inject = ['$rootScope', '$scope', '$location', '$http'];
 
 
     /**

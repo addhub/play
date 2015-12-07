@@ -33,14 +33,13 @@ public class Categories {
     }
 
 
-    private final static Map<Category,? extends BaseAd> models=new HashMap<>();
+    private final static Map<Category,BaseAd> models=new HashMap<>();
 
     static {
-//        models.put(Category.Vehicle,);
+         models.put(Category.Vehicle, new Vehicle() );
     }
 
     public static BaseAd getModelType(Category cat){
-//        return models.get(cat).getClass();
-        return null;
+       return models.get(cat);
     }
 }
