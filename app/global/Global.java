@@ -2,6 +2,7 @@ package global;
 
 import exception.AuthException;
 import exception.RESTException;
+import jobs.JobScheduler;
 import play.*;
 import play.mvc.*;
 import play.mvc.Http.*;
@@ -35,5 +36,11 @@ public class Global extends GlobalSettings {
     @Override
     public void onStop(Application app) {
         BasicMongoService.mongoClient.close();
+    }
+
+    @Override
+    public void onStart(Application app) {
+        super.onStart(app);
+        JobScheduler.init();
     }
 }

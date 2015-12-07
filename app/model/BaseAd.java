@@ -44,7 +44,8 @@ public class BaseAd extends BaseModel{
     private String premiumAd;
     //number of days the add is valid -1 is good till cancelled
     private int goodTill;
-    private ZonedDateTime createdOn;
+    private Long createdOn;
+    private Long updatedOn;
     @Embedded
     private List<Export> exports;
     @Reference(lazy = true)
@@ -169,11 +170,11 @@ public class BaseAd extends BaseModel{
         this.goodTill = goodTill;
     }
 
-    public ZonedDateTime getCreatedOn() {
+    public Long getCreatedOn() {
         return createdOn;
     }
 
-    public void setCreatedOn(ZonedDateTime createdOn) {
+    public void setCreatedOn(Long createdOn) {
         this.createdOn = createdOn;
     }
 

@@ -1,6 +1,7 @@
 package service;
 
 
+import com.mongodb.DBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.result.DeleteResult;
@@ -10,6 +11,7 @@ import model.User;
 import model.ad.Ad;
 import model.ad.Categories;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Key;
 
@@ -58,7 +60,7 @@ public class AdService extends BasicMongoService {
 
     public <A extends BaseAd> A saveAd(A ad, User user) {
         ad.setUser(user);
-        ad.setCreatedOn(ZonedDateTime.now());
+        ad.setCreatedOn(ZonedDateTime.now().toEpochSecond());
         Key<A> save = datastore.save(ad);
         ad.set_id((ObjectId) save.getId());
         return ad;
@@ -82,6 +84,12 @@ public class AdService extends BasicMongoService {
 
     public Long deleteAd(String category, String id) {
         DeleteResult id1 = db.getCollection(category).deleteOne(eq("_id", new ObjectId(id)));//http://mongodb.github.io/mongo-java-driver/3.0/driver/getting-started/quick-tour/
+        return id1.getDeletedCount();
+
+    }
+
+    public Long deleteAds(String category, Bson query) {
+        DeleteResult id1 = db.getCollection(category).deleteMany(query);//http://mongodb.github.io/mongo-java-driver/3.0/driver/getting-started/quick-tour/
         return id1.getDeletedCount();
 
     }
@@ -118,6 +126,11 @@ public class AdService extends BasicMongoService {
         String cat = queryMap.get(BaseAd.CATEGORY)[0];
         Query query = new Query(queryMap);
         FindIterable<Document> documents = db.getCollection(cat).find(query.getFilter()).skip(query.getStart()).limit(query.getLimit());
+        return getList(documents);
+    }
+
+    public List<Document> queryAds(String category, Document query, int skip, int limit) {
+        FindIterable<Document> documents = db.getCollection(category).find(query).skip(skip).limit(limit);
         return getList(documents);
     }
 
