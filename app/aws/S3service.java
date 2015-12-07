@@ -40,13 +40,30 @@ public class S3Service {
 
     private static F.Promise<String> asPromise(final String filename, final Upload upload) {
         final scala.concurrent.Promise<String> scalaPromise = Promise$.MODULE$.apply();
+
+        upload.addProgressListener((ProgressEvent progressEvent) -> {
+            if (progressEvent.getEventType() == ProgressEventType.TRANSFER_CANCELED_EVENT) {
+                scalaPromise.failure(new RuntimeException("canceled " + filename));
+            } else if (progressEvent.getEventType() == ProgressEventType.TRANSFER_FAILED_EVENT) {
+                scalaPromise.failure(new RuntimeException("failed " + filename));
+            } else if (progressEvent.getEventType() == ProgressEventType.TRANSFER_COMPLETED_EVENT) {
+                Logger.info("done " + filename);
+                try {
+                    UploadResult uploadResult = upload.waitForUploadResult();
+                    scalaPromise.success(asString(uploadResult));
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
         try {
             upload.waitForUploadResult();
-            scalaPromise.success("yay");
+            scalaPromise.success("uploaded to S3");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-//
+
         return F.Promise.wrap(scalaPromise.future());
     }
 
