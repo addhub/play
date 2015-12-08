@@ -1,5 +1,11 @@
 package service;
 
+
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -74,5 +80,26 @@ public class Util {
         }
 
         return map;
+    }
+
+    public static Map<String, String[]> queryStringToMap(String query){
+        String url = "http://www.example.com/something.html?one=1&two=2&three=3&three=3a";
+        Map<String, String[]> map=new HashMap<>();
+        List<NameValuePair> params = null;
+        try {
+            params = URLEncodedUtils.parse(new URI(query), "UTF-8");
+        } catch (URISyntaxException e) {
+            System.out.println(e);;
+        }
+        for (NameValuePair param : params) {
+            System.out.println(param.getName() + " : " + param.getValue());
+            String[] values={param.getValue()};
+            map.put(param.getName(),values );
+        }
+        return map;
+    }
+
+    public static void main(String[] args) {
+        queryStringToMap("?createdOn%5B%24gt%5D=12121212");
     }
 }

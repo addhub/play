@@ -22,3 +22,7 @@ server.pid
 *.iml
 *.eml
 activator-*.sbt
+
+
+#ignore auth config file
+conf/auth*

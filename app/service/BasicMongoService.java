@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.util.JSON;
 import global.AppConfig;
@@ -14,6 +15,8 @@ import org.mongodb.morphia.Morphia;
 import play.libs.Json;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by sasinda on 10/14/15.
@@ -57,5 +60,31 @@ public class BasicMongoService {
     public static Document asDocument(Object o) {
         DBObject adv = (DBObject) JSON.parse(Json.toJson(o).toString());
         return new Document(adv.toMap());
+    }
+
+    public List<Document> getList( FindIterable<Document> iterable) {
+        List<Document> list=new ArrayList<>();
+        for (Document document : iterable) {
+            document.put("id", document.remove("_id").toString());
+            list.add(document);
+        }
+        return list;
+    }
+
+    public <T extends BaseModel>  List<T> getListAs(Class<T> as ,FindIterable<Document> iterable) {
+        List<T> list=new ArrayList<>();
+        for (Document document : iterable) {
+            document.put("id", document.remove("_id").toString());
+            list.add(as(as, document));
+        }
+        return list;
+    }
+    public <T extends BaseModel>  List<T> getListAs(Class<T> as ,List<Document> docs) {
+        List<T> list=new ArrayList<>();
+        for (Document document : docs) {
+            document.put("id", document.remove("_id").toString());
+            list.add(as(as, document));
+        }
+        return list;
     }
 }

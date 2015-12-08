@@ -23,10 +23,7 @@ import org.mongodb.morphia.Key;
 import java.io.File;
 import java.io.IOException;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.mongodb.client.model.Filters.eq;
 
@@ -132,6 +129,15 @@ public class AdService extends BasicMongoService {
         return docs;
     }
 
+    /**
+     *
+     * @param queryString  make sure this begins with a ? mark.
+     * @return
+     */
+    public List<Document> queryAds(String queryString) {
+        return queryAds(Util.queryStringToMap(queryString));
+    }
+
     public List<Document> queryAds(Map<String, String[]> queryMap) {
         String cat = queryMap.get(BaseAd.CATEGORY)[0];
         Query query = new Query(queryMap);
@@ -139,7 +145,7 @@ public class AdService extends BasicMongoService {
         return getList(documents);
     }
 
-    public List<Document> queryAds(String category, Document query, int skip, int limit) {
+    public List<Document> queryAds(String category, Bson query, int skip, int limit) {
         FindIterable<Document> documents = db.getCollection(category).find(query).skip(skip).limit(limit);
         return getList(documents);
     }
@@ -168,16 +174,5 @@ public class AdService extends BasicMongoService {
             e.printStackTrace();
         }
     }
-
-    public List<Document> getList( FindIterable<Document> iterable) {
-        List<Document> list=new ArrayList<>();
-        for (Document document : iterable) {
-            document.put("id", document.remove("_id").toString());
-            list.add(document);
-        }
-        return list;
-    }
-
-
 
 }
