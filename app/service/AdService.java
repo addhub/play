@@ -159,8 +159,10 @@ public class AdService extends BasicMongoService {
     public void savePictures(BaseAd ad, User user) {
         File userDir=new File(Application.PICTURE_FOLDER + user.getUsername());
         Collection<File> files = FileUtils.listFiles(userDir, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
+        String s3Folder=user.getUsername()+"/"+ ad.getId();
+        s3Service.createFolder(S3Service.BUCKET_NAME,s3Folder );
         for (File file : files) {
-            s3Service.uploadAdImg(file);
+            s3Service.uploadAdImg(file,s3Folder);
         }
         try {
             FileUtils.deleteDirectory(userDir);
