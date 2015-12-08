@@ -20,10 +20,16 @@ public class User extends BaseModel {
     private String password;
 
     private String email;
+    private String mobile;
     private String displayName;
     private String pictureUrl;
+    private Long lastUpdated;
 
-    private String lastUpdated;
+    //Notifications
+    private boolean notifications;
+    private Long lastNotificationAt;
+    private String notificationQuery;
+
 
     public CommonProfile main;
     public Map<ProfileKey, CommonProfile> profiles = new HashMap<>();
@@ -85,6 +91,46 @@ public class User extends BaseModel {
     }
     public void setProfile(ProfileKey key, CommonProfile profile){
         profiles.put(key, profile);
+    }
+
+    public Long getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(Long lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    public boolean isNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(boolean notifications) {
+        this.notifications = notifications;
+    }
+
+    public Long getLastNotificationAt() {
+        return lastNotificationAt;
+    }
+
+    public void setLastNotificationAt(Long lastNotificationAt) {
+        this.lastNotificationAt = lastNotificationAt;
+    }
+
+    public String getNotificationQuery() {
+        return notificationQuery;
+    }
+
+    public void setNotificationQuery(String notificationQuery) {
+        this.notificationQuery = notificationQuery;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public enum ProfileKey {

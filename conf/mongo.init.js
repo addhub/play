@@ -81,7 +81,7 @@ db.Vehicle.insert({
     "country" : "United States",
     "zipcode" : "10001",
     "price" : 10000.0000000000000000,
-    "pictureUrl" : "http://shebuyscars.com/wp-content/uploads/2014/10/2014-Camry-Hybrid-Ventura-Toyota.jpg",
+    "pictureUrls" :[ "http://shebuyscars.com/wp-content/uploads/2014/10/2014-Camry-Hybrid-Ventura-Toyota.jpg"],
     "agree" : true
 });
 
@@ -100,5 +100,5 @@ db.Vehicle.insert({
     "zipcode" : "11109",
     "price" : 99999,
     "agree" : false,
-    "pictureUrl" : "http://i.ytimg.com/vi/CMHH5T0My6k/maxresdefault.jpg"
+    "pictureUrls" : "http://i.ytimg.com/vi/CMHH5T0My6k/maxresdefault.jpg"
 });

@@ -13,11 +13,14 @@ public class TwilioService {
     public static final String ACCOUNT_SID = "AC73b3243b165da3eabaf2a14183cbcb78";
     public static final String AUTH_TOKEN = "[AuthToken]";
 
-    private final TwilioClient twilioClient=new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
+    private final TwilioRestClient client;
+    private MessageFactory messageFactory;
+    public TwilioService() {
+        client=new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
+        messageFactory= client.getAccount().getMessageFactory();
+    }
 
-
-    public void sendSMS(String to, String body) throws TwilioRestException {
-        TwilioRestClient client = new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
+    public void sendSMS(String to, String body) {
 
         // Build the parameters
         List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -25,8 +28,12 @@ public class TwilioService {
         params.add(new BasicNameValuePair("From", "+13478481804"));
         params.add(new BasicNameValuePair("Body", body));
 
-        MessageFactory messageFactory = client.getAccount().getMessageFactory();
-        Message message = messageFactory.create(params);
+        Message message = null;
+        try {
+            message = messageFactory.create(params);
+        } catch (TwilioRestException e) {
+            e.printStackTrace();
+        }
         System.out.println(message.getSid());
     }
 }
