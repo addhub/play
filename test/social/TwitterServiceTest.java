@@ -24,6 +24,6 @@ public class TwitterServiceTest {
         ArrayList<String> pics = new ArrayList<>();
         pics.add("http://cloudlakes.com/data_images/makers/mersedes-benz/mersedes-benz-01.jpg");
         testtweetad.setPictureUrls(pics);
-        twitterService.postTweet(testtweetad);
+//        twitterService.postTweet(testtweetad);
     }
 }

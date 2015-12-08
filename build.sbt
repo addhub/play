@@ -28,7 +28,8 @@ libraryDependencies ++= Seq(
   "org.pac4j" % "play-pac4j-java" % "2.0.0",
   "org.pac4j" % "pac4j-http" % "1.8.0",
   "org.pac4j" % "pac4j-oauth" % "1.8.0",
-  "org.pac4j" % "pac4j-mongo" % "1.8.0"
+  "org.pac4j" % "pac4j-mongo" % "1.8.0",
+  "com.twilio.sdk" % "twilio-java-sdk" % "6.0.1-edge"
 )
 
 //RjsKeys.mainModule := "app/main"

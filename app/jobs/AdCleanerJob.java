@@ -19,8 +19,14 @@ public class AdCleanerJob implements Runnable{
 
         for (Categories.Category category : Categories.Category.values()) {
             String cat=category.name;
-            Long dels = adService.deleteAds(cat, Filters.lt("createdOn", now.minusDays(0).toEpochSecond()));
-            System.out.println("Deleted "+ dels+" ads in"+cat);
+            Long dels7 = adService.deleteAds(cat, Filters.lt("createdOn", now.minusDays(7).toEpochSecond()));
+            System.out.println("7 days old: Deleted "+ dels7+" ads in"+cat);
+
+            Long dels14 = adService.deleteAds(cat, Filters.lt("createdOn", now.minusDays(7).toEpochSecond()));
+            System.out.println("14 days old: Deleted "+ dels14+" ads in"+cat);
+
+            Long dels30 = adService.deleteAds(cat, Filters.lt("createdOn", now.minusDays(7).toEpochSecond()));
+            System.out.println("30 days old: Deleted "+ dels30+" ads in"+cat);
         }
 
 
