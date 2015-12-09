@@ -165,6 +165,17 @@ define(function () {
         controllers.userProfile.$inject = ['$scope', 'User'];
 
 
+        controllers.adDetail = function ($scope, Ad) {
+
+            // Ad detail
+            Ad.get({category: 'Vehicle', id: 'abc'}, function (ad, getResponseHeaders) {
+                console.log(ad);
+                $scope.ad = ad;
+
+            });
+        }
+        controllers.adDetail.$inject = ['$scope', 'Ad'];
+
         /**
          * Interceptors for the controllers
          */

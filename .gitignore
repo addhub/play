@@ -28,3 +28,5 @@ activator-*.sbt
 conf/auth*
 
 *.log
+.sbtserver
+.idea
