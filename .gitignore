@@ -26,3 +26,5 @@ activator-*.sbt
 
 #ignore auth config file
 conf/auth*
+
+*.log
