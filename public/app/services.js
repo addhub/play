@@ -20,7 +20,7 @@ define(['angular'], function (angular) {
             return $resource('/api/ad/export/:category/:id', {id:'@id', category:'@category'});
         })
         .factory('User',function($resource){
-            return $resource('/api/user/:email', {email:'@id'});
+            return $resource('/api/user/:username', {username:'@username'});
         });
 
 });

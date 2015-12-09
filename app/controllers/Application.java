@@ -45,21 +45,6 @@ public class Application extends Controller {
             return badRequest();
         }
     }
-//    public F.Promise<Result> uploadAdImgToS3() {
-//        final Http.MultipartFormData.FilePart meta = request().body().asMultipartFormData().getFile("picture");
-//        Logger.info("start upload " + meta.getFilename());
-//        if (meta != null) {
-//            File file = meta.getFile();
-//
-//            return s3Service.uploadAdImg(file).map((uploadResult) -> {
-//                Logger.info("finished " + meta.getFilename());
-//                return ok(uploadResult);
-//            });
-//        }
-//        else{
-//            return F.Promise.pure(badRequest());
-//        }
-//    }
 
 
 

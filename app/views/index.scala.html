@@ -25,7 +25,7 @@
         <link  rel="stylesheet" href=@routes.Assets.versioned("css/colors.css") >
             <!-- Font Icons -->
         <link href=@routes.Assets.versioned("css/font-awesome.css") rel="stylesheet" media="screen">
-
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc5/angular-material.min.css">
 
         <script data-main="@routes.Assets.versioned("app/main.js")" src="@routes.Assets.versioned("lib/requirejs/require.js")"></script>
 
@@ -61,7 +61,7 @@
                                                 <li ng-hide="currentUser"> <a class="" href="/#/register">Register</a> </li>
                                                 <li ng-show="currentUser"> <a class="" href="/auth/logout">Logout</a> </li>
                                                 <li> <a ng-href="/#/myAccount/dashboard/{{currentUser.id}}">Dashboard</a> </li>
-                                                <li> <a ng-href="/#/myAccount/profile/{{currentUser.id}}">Profile</a> </li>
+                                                <li> <a ng-href="/#/myAccount/profile/{{currentUser.username}}">Profile</a> </li>
                                                 <li> <a class="" href="/#/postAd">Post An Ad</a> </li>
 
                                         </ul>
