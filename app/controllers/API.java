@@ -57,8 +57,8 @@ public class API extends Controller {
 
 
     public Result getAd(String category, String id) { //fetch Ad once the Ad is posted by using postAd()
-        Document doc = adService.getAd(category, id);
-        return getDocID(doc, "The required Advertisement doens not exist");
+        BaseAd search=new BaseAd(category,id);
+        return ok(Json.toJson(adService.getAd(search)));
     }
 
     //Get ads from all categories

@@ -53,6 +53,14 @@ public class BaseAd extends BaseModel{
     @Reference(lazy = true)
     private User user;
 
+    public BaseAd() {
+    }
+
+    public BaseAd(String category, String id) {
+        this.category = category;
+        super.setId(id);
+    }
+
     public String getTitle() {
         return title;
     }

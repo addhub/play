@@ -149,21 +149,22 @@ define(function () {
             // User data
             User.get({username: $scope.currentUser.username}, function (user, getResponseHeaders) {
                 console.log(user);
-                $scope.user = {
-                    name: 'Admin C.John',
-                    nickname: 'johnny@addhub',
-                    address: 'No.123 45th Street, Brokelynn',
-                    location: 'New York City',
-                    company: 'Addhub',
-                    workPhone: '404-123-5678',
-                    mobilePhone: '404-987-6543',
-                    alias: 'admin.john@addhub.com',
-                    otherInfo: 'Don not disturb during week time!'
-                }
+                $scope.user = user;
             });
         }
         controllers.userProfile.$inject = ['$scope', 'User'];
 
+
+        controllers.adDetail = function ($scope, Ad) {
+
+            // Ad detail
+            Ad.get({category: 'Vehicle', id: '560f0841e746b7031b037829'}, function (ad, getResponseHeaders) {
+                console.log(ad);
+                $scope.ad = ad;
+
+            });
+        }
+        controllers.adDetail.$inject = ['$scope', 'Ad'];
 
         /**
          * Interceptors for the controllers
