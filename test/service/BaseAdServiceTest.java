@@ -28,7 +28,7 @@ public class BaseAdServiceTest {
     public void testSaveAdByCat() throws Exception {
         BaseAd ad=new BaseAd();
         ad.setTitle("test ad");
-        ad.setCategory("test");
+        ad.setCategory("TESTAD");
         Document document = adService.saveAdByCat(ad);
         assertNotNull(document.get("title"));
     }
@@ -37,7 +37,7 @@ public class BaseAdServiceTest {
     public void testSaveAdWithUserAndGet() throws Exception {
         BaseAd ad=new Vehicle();
         ad.setTitle("test ad");
-        ad.setCategory("test");
+        ad.setCategory("TESTAD");
 
         User user = userService.getUser("117314158");
 
@@ -71,7 +71,7 @@ public class BaseAdServiceTest {
     public void testDeleteAd() throws Exception { //test Delete Ad method from API - AdService
         BaseAd ad=new BaseAd();
         ad.setTitle("testDelete");
-        ad.setCategory("TestDeleteAd");
+        ad.setCategory("TESTAD");
         Document document = adService.saveAdByCat(ad);
         long deleteAdDoc = adService.deleteAd("TestDeleteAd", document.getObjectId("_id").toString());
         assertEquals((long)1, deleteAdDoc);
@@ -81,11 +81,13 @@ public class BaseAdServiceTest {
     public void testUpdateAd() throws Exception {  //test update Ad method from API - AdService
         BaseAd ad=new BaseAd();
         ad.setTitle("testUpdate");
-        ad.setCategory("TestUpdateAd");
+        ad.setCategory("TESTAD");
         ad.setZipcode("10011");
+
         Document document = adService.saveAdByCat(ad);
 
         ad.setZipcode("11122");
+        ad.addPictureUrl("test pic");
 
         Document updateAd = adService.updateAd(ad);
         assertEquals("11122", updateAd.get("zipcode"));

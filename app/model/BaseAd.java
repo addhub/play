@@ -33,7 +33,7 @@ public class BaseAd extends BaseModel{
     @Constraints.Required
     private String subCat;
     private String description;
-    private List<String> keywords;
+    private List<String> keywords=new ArrayList<>();
     private String address;
     private String state;
     private String country;
@@ -196,5 +196,9 @@ public class BaseAd extends BaseModel{
 
     public String getKeywordString() {
         return getKeywords().toString();
+    }
+
+    public void addPictureUrl(String picUrl) {
+        pictureUrls.add(picUrl);
     }
 }

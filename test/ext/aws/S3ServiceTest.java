@@ -14,11 +14,11 @@ public class S3ServiceTest {
     public void testUploadAdImg() throws Exception {
         s3service = new S3Service();
 
-        final F.Promise<String> promise = s3service.uploadAdImg(new File(this.getClass().getResource("/exercise1.jpg").getFile()),"userjacalpha");
+        final F.Promise<S3Result> promise = s3service.uploadAdImg(new File(this.getClass().getResource("/exercise1.jpg").getFile()),"userjacalpha");
 
-        String result = promise.get((50000));
+        S3Result result = promise.get((50000));
 
-        System.out.println(result);
+        System.out.println(result.getUploadUrl());
 
 
     }

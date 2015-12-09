@@ -6,6 +6,7 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.result.DeleteResult;
 import controllers.Application;
+import ext.aws.S3Result;
 import ext.aws.S3Service;
 import model.BaseAd;
 import model.Query;
@@ -19,6 +20,7 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Key;
+import play.libs.F;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,7 +35,7 @@ import static com.mongodb.client.model.Filters.eq;
  */
 public class AdService extends BasicMongoService {
 
-    S3Service s3Service=new S3Service();
+    private  S3Service s3Service=new S3Service();
 
     public List<Document> getCategories(String name) {
         String collection = "category";
@@ -162,14 +164,30 @@ public class AdService extends BasicMongoService {
         return findAll(Category.Vehicle.name);
     }
 
+    /**
+     * Fully asynchronous saving of ad pictures to amazon and updating the locally saved ad in mongo db
+     * @param ad
+     * @param user
+     */
     public void savePictures(BaseAd ad, User user) {
         File userDir=new File(Application.PICTURE_FOLDER + user.getUsername());
         Collection<File> files = FileUtils.listFiles(userDir, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
         String s3Folder=user.getUsername()+"/"+ ad.getId();
         s3Service.createFolder(S3Service.BUCKET_NAME,s3Folder );
+
+        List<F.Promise<S3Result>> promises=new ArrayList<>();
         for (File file : files) {
-            s3Service.uploadAdImg(file,s3Folder);
+            F.Promise<S3Result> promise = s3Service.uploadAdImg(file, s3Folder);
+            promises.add(promise);
         }
+        F.Promise.sequence(promises).onRedeem((s3results) -> {
+            BaseAd savedAd=getAd(ad);
+            for (S3Result s3result : s3results) {
+                savedAd.addPictureUrl(s3result.getUploadUrl());
+            }
+            updateAd(ad);
+        });
+
         try {
             FileUtils.deleteDirectory(userDir);
         } catch (IOException e) {

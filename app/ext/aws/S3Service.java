@@ -57,7 +57,7 @@ public class S3Service {
         return folderName;
     }
 
-    public F.Promise<String> uploadAdImg(File file, String folderName) {
+    public F.Promise<S3Result> uploadAdImg(File file, String folderName) {
         System.out.printf("Start to call upload method");
         String targetFolder = BUCKET_NAME+"/"+folderName;
         final Upload upload = tm.upload(targetFolder, file.getName(), file);
@@ -67,8 +67,8 @@ public class S3Service {
     }
 
 
-    private static F.Promise<String> asPromise(final String folderName, final String filename, final Upload upload) {
-        final scala.concurrent.Promise<String> scalaPromise = Promise$.MODULE$.apply();
+    private static F.Promise<S3Result> asPromise(final String folderName, final String filename, final Upload upload) {
+        final scala.concurrent.Promise<S3Result> scalaPromise = Promise$.MODULE$.apply();
         upload.addProgressListener((ProgressEvent progressEvent) -> {
             if (progressEvent.getEventType() == ProgressEventType.TRANSFER_CANCELED_EVENT) {
                 scalaPromise.failure(new RuntimeException("canceled " + filename));
@@ -78,18 +78,15 @@ public class S3Service {
                 Logger.info("done " + filename);
                 try {
                     UploadResult uploadResult = upload.waitForUploadResult();
-                    scalaPromise.success(AMAZON_URL+uploadResult.getBucketName()+"/"+folderName+"/"+filename); //cannot call sucess multiple times
-
+                    String url=AMAZON_URL+uploadResult.getBucketName()+"/"+folderName+"/"+filename;
+                    scalaPromise.success(new S3Result(url)); //cannot call sucess multiple times
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }
         });
-
         try {
             UploadResult uploadResult = upload.waitForUploadResult();
-
-
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
