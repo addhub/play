@@ -23,6 +23,7 @@ public class User extends BaseModel {
     private String mobile;
     private String displayName;
     private String pictureUrl;
+    private String address;
     private Long lastUpdated;
 
     //Notifications
@@ -48,6 +49,14 @@ public class User extends BaseModel {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String useraddr) {
+        this.address = useraddr;
     }
 
     public String getPassword() {

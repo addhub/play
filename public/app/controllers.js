@@ -128,6 +128,37 @@ define(function () {
     controllers.register.$inject = ['$rootScope', '$scope', '$location', '$http'];
 
 
+    controllers.userProfile=function($scope,User) {
+        $scope.viewMode = true;
+
+        // Switch between view mode and edit mode
+        $scope.switchMode = function () {
+            return $scope.viewMode = !$scope.viewMode;
+        };
+
+        // Save the changes
+        $scope.saveChanges = function () {
+            /* Validate the input
+             Save the changes */
+        };
+
+        // User data
+        //$scope.user = $scope
+        $scope.user = {
+            name: 'Admin C.John',
+            nickname: 'johnny@addhub',
+            address: 'No.123 45th Street, Brokelynn',
+            location: 'New York City',
+            company: 'Addhub',
+            workPhone: '404-123-5678',
+            mobilePhone: '404-987-6543',
+            alias: 'admin.john@addhub.com',
+            otherInfo: 'Don not disturb during week time!'
+        }
+    }
+    controllers.userProfile.$inject = ['$scope', 'User'];
+
+
     /**
      * Interceptors for the controllers
      */

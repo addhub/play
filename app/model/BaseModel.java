@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Id;
 
-/**
- * Created by sasinda on 10/17/15.
- */
+
 public class BaseModel {
 
     @Id
