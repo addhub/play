@@ -45,14 +45,14 @@
         </md-toolbar>
         <md-card-content layout="column" layout-gt-md="row">
             <div class="user" layout="column" layout-md="row">
-                <img src="https://lh3.googleusercontent.com/-W2XryVdi-lA/U6tSAh3SsbI/AAAAAAAAFGY/ZHJiUEcR_Zs/w480-h480/avatar%2Bmaterial%2Bdesign.png" alt="user avatar" class="user-avatar" />
+                <img ng-src="{{user.pictureUrl}}" alt="user avatar" class="user-avatar" />
                 <md-button class="md-icon-button user-avatar-edit" ng-click="browserAvatar()">
                     <md-icon>photo_camera</md-icon>
                 </md-button>
                 <form name="userBasicInfoForm" layout="column" flex>
                     <md-input-container class="user-input-container">
                         <label>Name</label>
-                        <textarea name="userName" required class="user-name" ng-model="user.name" ng-disabled="viewMode" flex></textarea>
+                        <textarea name="userName" required class="user-name" ng-model="{{user.displayName}}" ng-disabled="viewMode" flex></textarea>
                         <div ng-messages="userBasicInfoForm.userName.$error">
                             <div ng-message="required">This is required.</div>
                         </div>
