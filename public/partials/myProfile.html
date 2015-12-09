@@ -10,43 +10,48 @@
                     <md-tooltip>
                         Edit
                     </md-tooltip>
+                    <md-icon>edit</md-icon>
                 </md-button>
+
+
+
                 <md-button class="md-icon-button" ng-if="!viewMode" ng-click="switchMode(); saveChanges()">
                     <md-tooltip>
                         Save
                     </md-tooltip>
+                    <md-icon>Save</md-icon>
 
                 </md-button>
-                <md-menu>
-                    <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)">
-                        <md-tooltip>
-                            More
-                        </md-tooltip>
+                <!--<md-menu>-->
+                    <!--<md-button class="md-icon-button" ng-click="$mdOpenMenu($event)">-->
+                        <!--<a class="list-group-item" href="#"><i class="fa fa-cog fa-fw"></i>&nbsp; Settings</a>-->
+                        <!--<md-tooltip>-->
+                            <!--More-->
+                        <!--</md-tooltip>-->
+                        <!--<md-icon>More</md-icon>-->
+                    <!--</md-button>-->
+                    <!--<md-menu-content>-->
+                        <!--<md-menu-item>-->
+                            <!--<md-button ng-click="deleteUser()">-->
+                                <!--Delete-->
+                            <!--</md-button>-->
+                            <!--<md-icon>Delete</md-icon>-->
+                        <!--</md-menu-item>-->
+                        <!--<md-menu-item>-->
+                            <!--<md-button ng-click="resetPassword()">-->
 
-                    </md-button>
-                    <md-menu-content>
-                        <md-menu-item>
-                            <md-button ng-click="deleteUser()">
-
-                                Delete
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-item>
-                            <md-button ng-click="resetPassword()">
-
-                                Reset
-                            </md-button>
-                        </md-menu-item>
-                    </md-menu-content>
-                </md-menu>
+                                <!--Reset-->
+                            <!--</md-button>-->
+                            <!--<md-icon>Reset</md-icon>-->
+                        <!--</md-menu-item>-->
+                    <!--</md-menu-content>-->
+                <!--</md-menu>-->
             </div>
         </md-toolbar>
         <md-card-content layout="column" layout-gt-md="row">
             <div class="user" layout="column" layout-md="row">
                 <img src="https://lh3.googleusercontent.com/-W2XryVdi-lA/U6tSAh3SsbI/AAAAAAAAFGY/ZHJiUEcR_Zs/w480-h480/avatar%2Bmaterial%2Bdesign.png" alt="user avatar" class="user-avatar" />
-                <md-button class="md-icon-button user-avatar-edit" ng-click="browserAvatar()">
-                    <md-icon>photo_camera</md-icon>
-                </md-button>
+
                 <form name="userBasicInfoForm" layout="column" flex>
                     <md-input-container class="user-input-container">
                         <label>Name</label>
