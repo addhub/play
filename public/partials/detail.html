@@ -1,0 +1,66 @@
+<div class="sidebar" ng-include src="'partials/listsidenav.html'"></div>
+
+<div class="row">
+<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+    <!--  breadcrumb -->
+    <ul class="breadcrumb">
+      <li> <a>All Categories</a> </li>
+      <li> <a>Vehicles</a> </li>
+      <li class="active"> {{ad.category}}</li>
+    </ul>
+    
+    <!-- Title-->
+    
+    <h2 class="heading3 mt40"> {{ad.title}}</h2>
+    
+    <!-- Product Details-->
+    <div class="row mt40"> 
+      <!-- Left Image-->
+      <div class="col-lg-5 col-md-5 col-xs-12 col-sm-12">
+        <ul class="thumbnails mainimage clearfix">
+            <li><img ng-src="{{ad.pictureUrl}}" style="visibility: visible;" data-large="{{ad.pictureUrl}}" data-title="{{ad.title}}"></li>
+          
+        </ul>
+        <ul ng-repeat="img in imgList" class="thumbnails mainimage clearfix mt10">
+
+          <li class="producthtumb col-lg-3 col-md-3 col-xs-3 col-sm-3"> <img class="zoom" src="{{img}}" data-large="{{img}}" ></li>
+        </ul>
+        
+      </div>
+      <!-- Right Details-->
+      <div class="col-lg-7 col-md-7 col-xs-12 col-sm-12 mt40column">
+        <div class="clearfix">
+          <div class="price pull-left"> <i class="fa fa-tags"></i> {{ad.price}}</div>
+          <a class="pull-right btn btn-orange btn-lg">Contact</a> </div>
+        <!-- Product Description tab & comments-->
+        <div class="productdesc">
+          <ul class="nav nav-tabs" id="myTab">
+            <li class="active"><a href="#description">Description</a> </li>
+            <li><a href="#specification">Specification</a> </li>
+            <li><a href="#contact">Send Message</a> </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="description">
+              <h2 class="m0">Discripiton Titles</h2>
+              {{ad.description}}<br>
+              <ul class="listoption3">
+                <li> Features</li>
+              </ul>
+            </div>
+            <div class="tab-pane " id="specification">
+              <ul class="productinfo">
+                <li> <span class="productinfoleft"> Brand:</span> Samsung </li>
+                <li> <span class="productinfoleft"> Model Name:</span> Galaxy S Duos 2 </li>
+              </ul>
+            </div>
+            <div class="tab-pane" id="contact">
+              <div class="share"> Share On : <br>
+                        <a ng-click="exportAd(ad.category, ad.id, 'twitter')" title="Twitter" class="tooltip-test"><i class="fa fa-twitter"></i></a> </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
