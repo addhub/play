@@ -82,15 +82,21 @@ public class BaseAdServiceTest {
         BaseAd ad=new BaseAd();
         ad.setTitle("testUpdate");
         ad.setCategory("TESTAD");
-        ad.setZipcode("10011");
+        //ad.setZipcode("10011");
 
         Document document = adService.saveAdByCat(ad);
 
-        ad.setZipcode("11122");
-        ad.addPictureUrl("test pic");
+        ad.setZipcode("12345");
+        ad.addPictureUrl("test pic url");
 
-        Document updateAd = adService.updateAd(ad);
-        assertEquals("11122", updateAd.get("zipcode"));
+        Document updateAdStub = adService.updateAd(ad);
+//        assertEquals("11122", updateAdStub.get("zipcode"));
+
+        Document updatedDoc = adService.getAd(ad.getCategory(), ad.getId());
+        BaseAd updateAd = adService.as(BaseAd.class, updatedDoc);
+
+        assertEquals("12345", updateAd.getZipcode());
+        assertEquals("TESTAD", updateAd.getCategory());
     }
 
 }

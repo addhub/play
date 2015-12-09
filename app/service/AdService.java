@@ -5,6 +5,7 @@ import com.mongodb.DBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 import controllers.Application;
 import ext.aws.S3Result;
 import ext.aws.S3Service;
@@ -109,7 +110,8 @@ public class AdService extends BasicMongoService {
 
         if (cat != null && adid != null) {
             Document doc = asDocument(ad);
-            db.getCollection(cat).updateOne(eq("_id", adid), new Document("$set", doc)) ;
+            UpdateResult updateResult = db.getCollection(cat).updateOne(eq("_id",new ObjectId(adid)), new Document("$set", doc));
+
             return doc;
         }
         return null;
