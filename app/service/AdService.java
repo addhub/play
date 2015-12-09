@@ -1,6 +1,7 @@
 package service;
 
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCursor;
@@ -21,6 +22,7 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Key;
+import org.mongodb.morphia.Morphia;
 import play.libs.F;
 
 import java.io.File;
@@ -36,7 +38,7 @@ import static com.mongodb.client.model.Filters.eq;
  */
 public class AdService extends BasicMongoService {
 
-    private  S3Service s3Service=new S3Service();
+    private S3Service s3Service = new S3Service();
 
     public List<Document> getCategories(String name) {
         String collection = "category";
@@ -77,16 +79,16 @@ public class AdService extends BasicMongoService {
     }
 
 
-    public Document getAd(String category,String id){
+    public Document getAd(String category, String id) {
         Document myAd = db.getCollection(category).find(eq("_id", new ObjectId(id))).first();
         return myAd;
     }
 
-    public <V extends BaseAd> V getAd(V ad){
-        if(ad.getClass().getSimpleName().equals("BaseAd")){
+    public <V extends BaseAd> V getAd(V ad) {
+        if (ad.getClass().getSimpleName().equals("BaseAd")) {
             Document myAd = db.getCollection(ad.getCategory()).find(eq("_id", new ObjectId(ad.getId()))).first();
-            Class<V> c= (Class<V>) ad.getClass();
-            return as(c, myAd);
+            Class<V> c = (Class<V>) ad.getClass();
+            return morphia.fromDBObject(c, new BasicDBObject(myAd));
         }
         return datastore.get(ad);
     }
@@ -107,17 +109,14 @@ public class AdService extends BasicMongoService {
     public Document updateAd(BaseAd ad) {
         String cat = ad.getCategory(); // ad's collection name, eg "vehicle"
         String adid = ad.getId(); //get ad's unique mongo _id
-
+        ad.setUser(null);
         if (cat != null && adid != null) {
             Document doc = asDocument(ad);
-            UpdateResult updateResult = db.getCollection(cat).updateOne(eq("_id",new ObjectId(adid)), new Document("$set", doc));
-
+            UpdateResult updateResult = db.getCollection(cat).updateOne(eq("_id", new ObjectId(adid)), new Document("$set", doc));
             return doc;
         }
         return null;
     }
-
-
 
 
     private List<Document> findAll(String collection) {
@@ -134,8 +133,7 @@ public class AdService extends BasicMongoService {
     }
 
     /**
-     *
-     * @param queryString  make sure this begins with a ? mark.
+     * @param queryString make sure this begins with a ? mark.
      * @return
      */
     public List<Document> queryAds(String queryString) {
@@ -154,13 +152,13 @@ public class AdService extends BasicMongoService {
         return getList(documents);
     }
 
-    public List<Document> searchAds(String searchString){
+    public List<Document> searchAds(String searchString) {
         String[] split = searchString.split(" ");
-        String cat=split[0];
+        String cat = split[0];
         try {
             Category category = Category.valueOf(cat);
             return findAll(category.name);
-        }catch (IllegalArgumentException ex){
+        } catch (IllegalArgumentException ex) {
             System.out.println(ex);
         }
         return findAll(Category.Vehicle.name);
@@ -168,26 +166,27 @@ public class AdService extends BasicMongoService {
 
     /**
      * Fully asynchronous saving of ad pictures to amazon and updating the locally saved ad in mongo db
+     *
      * @param ad
      * @param user
      */
     public void savePictures(BaseAd ad, User user) {
-        File userDir=new File(Application.PICTURE_FOLDER + user.getUsername());
+        File userDir = new File(Application.PICTURE_FOLDER + user.getUsername());
         Collection<File> files = FileUtils.listFiles(userDir, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
-        String s3Folder=user.getUsername()+"/"+ ad.getId();
-        s3Service.createFolder(S3Service.BUCKET_NAME,s3Folder );
+        String s3Folder = user.getUsername() + "/" + ad.getId();
+        s3Service.createFolder(S3Service.BUCKET_NAME, s3Folder);
 
-        List<F.Promise<S3Result>> promises=new ArrayList<>();
+        List<F.Promise<S3Result>> promises = new ArrayList<>();
         for (File file : files) {
             F.Promise<S3Result> promise = s3Service.uploadAdImg(file, s3Folder);
             promises.add(promise);
         }
         F.Promise.sequence(promises).onRedeem((s3results) -> {
-            BaseAd savedAd=getAd(ad);
+            BaseAd savedAd = getAd(ad);
             for (S3Result s3result : s3results) {
                 savedAd.addPictureUrl(s3result.getUploadUrl());
             }
-            updateAd(ad);
+            updateAd(savedAd);
         });
 
         try {

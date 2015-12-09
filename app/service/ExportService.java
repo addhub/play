@@ -25,7 +25,6 @@ public class ExportService {
         socialServices.put(ExportTo.TWITTER, new TwitterService());
     }
 
-
     public boolean export(String username, BaseAd adIdnCat, ExportTo to){
         User user = userService.getUser(username);
         BaseAd ad = adService.getAd(adIdnCat);

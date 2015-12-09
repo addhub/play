@@ -59,7 +59,7 @@ public class S3Service {
 
     public F.Promise<S3Result> uploadAdImg(File file, String folderName) {
         System.out.printf("Start to call upload method");
-        String targetFolder = BUCKET_NAME+"/"+folderName;
+        String targetFolder = BUCKET_NAME+"/public/"+folderName;
         final Upload upload = tm.upload(targetFolder, file.getName(), file);
 
         //final Upload upload = tm.upload(BUCKET_NAME, file.getName(), file);
@@ -78,7 +78,7 @@ public class S3Service {
                 Logger.info("done " + filename);
                 try {
                     UploadResult uploadResult = upload.waitForUploadResult();
-                    String url=AMAZON_URL+uploadResult.getBucketName()+"/"+folderName+"/"+filename;
+                    String url=AMAZON_URL+uploadResult.getBucketName()+"/"+filename;
                     scalaPromise.success(new S3Result(url)); //cannot call sucess multiple times
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);

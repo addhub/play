@@ -1,3 +1,14 @@
+a:link.badge{
+    background-color:#0787C4;
+}
+a:hover.badge{
+    background-color:#0099ff;
+}
+
+a:visited.badge{
+    background-color: gray;
+}
+
 md-card-header {
     padding: 8px 16px;
     min-height: 48px;
