@@ -64,6 +64,7 @@ require(['angular', './controllers', './directives', './filters', './services', 
                 $routeProvider.when('/success/:id', {templateUrl: 'partials/success.html', controller: controllers.postAdSuccess});
                 $routeProvider.when('/login', {templateUrl: 'partials/login.html', controller: controllers.login});
                 $routeProvider.when('/register', {templateUrl: 'partials/register.html', controller: controllers.register});
+                $routeProvider.when('/detail:', {templateUrl: 'partials/detail.html', controller: controllers.home});
                 $routeProvider.when('/myAccount/dashboard/:id', {templateUrl: 'partials/mydashboard.html', controller: controllers.register, loginRequired:true});
                 $routeProvider.when('/myAccount/profile/:id', {templateUrl: 'partials/myProfile.html', controller: controllers.userProfile, loginRequired:true});
                 $routeProvider.otherwise({redirectTo: '/home'});
