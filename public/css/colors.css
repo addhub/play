@@ -1,0 +1,10 @@
+a:link.badge{
+    background-color:#0787C4;
+}
+a:hover.badge{
+    background-color:#0099ff;
+}
+
+a:visited.badge{
+    background-color: gray;
+}

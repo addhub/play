@@ -3,6 +3,7 @@ package model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import global.AppConfig;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import model.ad.Categories;
 import org.apache.commons.lang3.text.WordUtils;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Reference;
@@ -20,6 +21,7 @@ import java.util.List;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Entity("BaseAd")
 public class BaseAd extends BaseModel{
     public static final String TITLE="title";
     public static final String CATEGORY="category";

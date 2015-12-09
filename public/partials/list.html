@@ -10,7 +10,7 @@
                     <h3><a class="title" href="#/detail">{{ad.title}}</a></h3>
                     <ul class="icondetail">
                         <list ng-attr-label="{{ad.title}}" label="ad.name">
-                            <li><img ng-src="{{ad.pictureUrl}}" style="width: 80%"></li>
+                            <li><img ng-src="{{ad.pictureUrls[0]}}" style="width: 80%"></li>
                             <li><i class="fa fa-th-list"></i> Category: <a href="#">{{ad.category}}</a></li>
                             <li><i class="fa fa-map-marker"></i> Location: {{ad.state}}, {{ad.country}}</li>
                             <li><i class="fa fa-calendar"></i> Posted On: {{ad.date}}</li>
@@ -21,7 +21,7 @@
                 </div>
                 <div class="col-sm-2">
                     <div class="share"> Share On : <br>
-                        <a ng-click="exportAd(ad.category, ad.id, 'twitter')" title="Twitter" class="tooltip-test"><i class="fa fa-twitter"></i></a> </div>
+                        <a ng-click="exportAd(ad.category, ad.id, 'twitter')" title="Twitter" class="badge"><i class="fa fa-twitter"></i></a> </div>
                     <a class="btn  contact"><i class="fa fa-envelope-o"></i> Contact</a> </div>
             </li>
         </ul>
