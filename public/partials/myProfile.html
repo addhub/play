@@ -58,15 +58,15 @@
                 </md-button>
                 <form name="userBasicInfoForm" layout="column" flex>
                     <md-input-container class="user-input-container">
-                        <label>Name</label>
-                        <textarea name="userName" required class="user-name" ng-model="{{user.displayName}}" ng-disabled="viewMode" flex></textarea>
+                        <label>User Name</label>
+                        <textarea name="userName" required class="user-name" ng-model="user.username" ng-disabled="viewMode" flex></textarea>
                         <div ng-messages="userBasicInfoForm.userName.$error">
                             <div ng-message="required">This is required.</div>
                         </div>
                     </md-input-container>
                     <md-input-container class="user-input-container">
                         <label>User Display Name</label>
-                        <input name="usernickname" required class="user-nickname" ng-model="user.nickname" ng-disabled="viewMode"></input>
+                        <input name="usernickname" required class="user-nickname" ng-model="user.displayName" ng-disabled="viewMode"></input>
                         <div ng-messages="userBasicInfoForm.usernickname.$error">
                             <div ng-message="required">This is required.</div>
                         </div>
@@ -94,20 +94,20 @@
                 <div layout="column" layout-gt-sm="row">
                     <md-input-container flex>
                         <label>Work Phone</label>
-                        <input type="tel" name="userWorkPhone" required ng-model="user.workPhone" ng-disabled="viewMode"></input>
+                        <input type="tel" name="userWorkPhone" required ng-model="user.mobile" ng-disabled="viewMode"></input>
                         <div ng-messages="userDetailsForm.userWorkPhone.$error">
                             <div ng-message="required">This is required.</div>
                         </div>
                     </md-input-container>
                     <md-input-container flex>
                         <label>Mobile Phone</label>
-                        <input type="tel" ng-model="user.mobilePhone" ng-disabled="viewMode"></input>
+                        <input type="tel" ng-model="user.mobile" ng-disabled="viewMode"></input>
                     </md-input-container>
                 </div>
                 <div layout="column" layout-gt-sm="row">
                     <md-input-container flex>
                         <label>Main Contact Email</label>
-                        <input type="email" name="userAlias" ng-model="user.alias" ng-disabled="viewMode"></input>
+                        <input type="email" name="userAlias" ng-model="user.email" ng-disabled="viewMode"></input>
                     </md-input-container>
                     <md-input-container flex>
                         <label>Other Email</label>
