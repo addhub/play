@@ -115,6 +115,19 @@
 
                     </md-input-container>
                 </div>
+
+                <div layout="column" layout-gt-sm="row">
+                    <md-input-container flex>
+                        <label>Notification Condition</label>
+                        <input type="text" name="notificationQuery" ng-model="user.notificationQuery" ng-disabled="viewMode"></input>
+                    </md-input-container>
+                    <md-input-container flex>
+                        <md-checkbox ng-disabled="viewMode" ng-model="user.notifications" aria-label="Disabled"></md-checkbox>
+                    </md-input-container>
+
+                </div>
+
+
             </form>
         </md-card-content>
     </md-card>
