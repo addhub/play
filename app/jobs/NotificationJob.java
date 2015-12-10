@@ -8,6 +8,7 @@ import org.bson.Document;
 import service.AdService;
 import service.UserService;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -26,9 +27,11 @@ public class NotificationJob implements Runnable {
             String query=user.getNotificationQuery();
             query=query+"&createdOn[$gt]="+ user.getLastNotificationAt();
             List<Document> documents = adService.queryAds(query);
-            List<BaseAd> adsList = adService.getListAs(BaseAd.class, documents);
-            if(!adsList.isEmpty()){
+            if(!documents.isEmpty()){
+                List<BaseAd> adsList = adService.getListAs(BaseAd.class, documents);
                 twilioService.sendSMS(user.getMobile(),"New ads for your query");
+                user.setLastNotificationAt(ZonedDateTime.now().toEpochSecond());
+                userService.updateUser(user);
             }
         }
     }
