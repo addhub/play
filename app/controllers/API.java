@@ -30,6 +30,12 @@ public class API extends Controller {
     private UserService userService = new UserService();
     private ExportService exportService=new ExportService();
 
+    public Result updateUser(String username) {
+        User user=extractModel(User.class);
+        userService.updateUser(user);
+        return ok(Json.toJson(userService.getUser(username)));
+    }
+
 
     /**
      * get category by name

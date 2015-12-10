@@ -11,16 +11,24 @@ define(['angular'], function (angular) {
     angular.module('myApp.services', []).
         value('version', '0.21')
         .factory('Category', function ($resource) {
-            return $resource('/api/category/:name', {name:'all'});
+            return $resource('/api/category/:name', {name: 'all'});
         })
-        .factory('Ad',function($resource){
-            return $resource('/api/ad/:category/:id', {id:'@id', category:'@category'});
+        .factory('Ad', function ($resource) {
+            return $resource('/api/ad/:category/:id', {id: '@id', category: '@category'});
         })
-        .factory('AdExport',function($resource){
-            return $resource('/api/ad/export/:category/:id', {id:'@id', category:'@category'});
+        .factory('AdExport', function ($resource) {
+            return $resource('/api/ad/export/:category/:id', {id: '@id', category: '@category'});
         })
-        .factory('User',function($resource){
-            return $resource('/api/user/:username', {username:'@username'});
+        .factory('User', function ($resource) {
+            return $resource('/api/user/:username', {username: '@username'},
+                {
+                    'get': {method: 'GET'},
+                    'save': {method: 'POST'},
+                    'update': {method: 'PUT'},
+                    'query': {method: 'GET', isArray: true},
+                    'remove': {method: 'DELETE'},
+                    'delete': {method: 'DELETE'}
+                });
         });
 
 });

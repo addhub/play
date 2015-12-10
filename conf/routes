@@ -27,7 +27,7 @@ POST          /api/ad/export/:category/:id   @controllers.API.exportAd(category:
 #User API
 POST          /api/user                      @controllers.API.createUser()
 GET           /api/user/:username            @controllers.API.getUser(username:String)
-#PUT           /api/user/:username        controllers.API.updateUser()
+PUT           /api/user/:username            @controllers.API.updateUser(username:String)
 #DELETE        /api/user/:username        controllers.API.deleteUser()
 
 

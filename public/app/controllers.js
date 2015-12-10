@@ -142,8 +142,7 @@ define(function () {
 
             // Save the changes
             $scope.saveChanges = function () {
-                /* Validate the input
-                 Save the changes */
+                $scope.user.$update();
             };
 
             // User data
