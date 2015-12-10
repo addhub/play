@@ -20,6 +20,7 @@ public class NotificationJob implements Runnable {
 
     @Override
     public void run() {
+        System.out.println("notifications job running");
         List<User> users = userService.queryUsers(Filters.eq("notifications", true));
         for (User user : users) {
             String query=user.getNotificationQuery();
@@ -36,3 +37,4 @@ public class NotificationJob implements Runnable {
 //$.param(a)
 //createdOn%5B%24gt%5D=12121212
 //"category=Vehicle&subCat=Cars&price%5B%24gt%5D=10000"
+//"category=Vehicle&subCat=Cars&price[$gt]=10000"

@@ -154,16 +154,15 @@ define(function () {
         controllers.userProfile.$inject = ['$scope', 'User'];
 
 
-        controllers.adDetail = function ($scope, Ad) {
-
+        controllers.adDetail = function ($scope, $routeParams, Ad) {
             // Ad detail
-            Ad.get({category: 'Vehicle', id: '560f0841e746b7031b037829'}, function (ad, getResponseHeaders) {
+            Ad.get({category: $routeParams.category, id: $routeParams.id}, function (ad, getResponseHeaders) {
                 console.log(ad);
                 $scope.ad = ad;
 
             });
         }
-        controllers.adDetail.$inject = ['$scope', 'Ad'];
+        controllers.adDetail.$inject = ['$scope', '$routeParams', 'Ad'];
 
         /**
          * Interceptors for the controllers
