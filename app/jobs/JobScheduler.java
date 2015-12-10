@@ -21,7 +21,7 @@ public class JobScheduler {
         );
 
         Akka.system().scheduler().schedule(
-                Duration.create(0, TimeUnit.DAYS),
+                Duration.create(0, TimeUnit.MINUTES),
                 Duration.create(1, TimeUnit.MINUTES),
                 new NotificationJob(),ctx
         );
