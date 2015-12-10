@@ -14,7 +14,8 @@ env:
   - AWS_SECRET_ACCESS_KEY=xxxx
 
 script:
--  ./activator test
+-  ./activator compile
+#-  ./activator test
 
 notifications:
 email: false
