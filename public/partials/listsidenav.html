@@ -7,29 +7,29 @@
             <li>
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" value="">
-                        Rs. 999 and Below (0) </label>
+                        <md-checkbox taria-label="$999 and Below">
+                        $999 and Below </label>
                 </div>
             </li>
             <li>
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" value="">
-                        Rs. 1000 - Rs. 1999 </label>
+                        <md-checkbox taria-label="$1000 - $1999">
+                        $1000 - $1999 </label>
                 </div>
             </li>
             <li>
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" value="">
-                        Rs. 2000 - Rs. 3999 </label>
+                        <md-checkbox taria-label="$2000 - $3999">
+                        $2000 - $3999 </label>
                 </div>
             </li>
             <li>
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" value="">
-                        Rs. 3000 - Rs. 5000 </label>
+                        <md-checkbox taria-label="$4000 and above">
+                        $4000 and above </label>
                 </div>
             </li>
         </ul>
@@ -41,18 +41,6 @@
         <list ng-repeat="cat in categories", ng-attr-label="{{cat.name}}" label="cat.name">
             <option ng-repeat="subcat in cat.subcats" ,  value="{{cat.name}}-{{subcat}}">{{subcat | trust}}</option>
         </list>
-        <ul class="nav nav-list categories">
-            <li> <a href="#">Real Estate </a></li>
-            <li> <a href="#">Services </a></li>
-            <li> <a href="#">Electronics </a>
-                <ul class="nav nav-list">
-                    <li> <a href="#">Mobiles &amp; Tablets </a>
-                        <ul class="nav nav-list">
-                            <li class="active"> <a href="#">Mobile Phones </a> </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-        </ul>
+
     </div>
     </div>
