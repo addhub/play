@@ -50,9 +50,9 @@ public class BaseAdServiceTest {
     public void testGetAd() throws Exception {
         BaseAd ad=new BaseAd();
         ad.setTitle("testGet");
-        ad.setCategory("test Get Ad"); // All category word unit is capitalized. Note this when using adService.getAd(categoryName)!
+        ad.setCategory("TESTAD"); // All category word unit is capitalized. Note this when using adService.getAd(categoryName)!
         Document document = adService.saveAdByCat(ad); //create one tested ad then get, delete or update
-        Document getAdDoc = adService.getAd("TestGetAd", document.getObjectId("_id").toString());
+        Document getAdDoc = adService.getAd("TESTAD", document.getObjectId("_id").toString());
         assertEquals("testGet", getAdDoc.get("title"));
     }
 
@@ -73,7 +73,7 @@ public class BaseAdServiceTest {
         ad.setTitle("testDelete");
         ad.setCategory("TESTAD");
         Document document = adService.saveAdByCat(ad);
-        long deleteAdDoc = adService.deleteAd("TestDeleteAd", document.getObjectId("_id").toString());
+        long deleteAdDoc = adService.deleteAd("TESTAD", document.getObjectId("_id").toString());
         assertEquals((long)1, deleteAdDoc);
     }
 

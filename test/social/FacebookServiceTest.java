@@ -1,8 +1,11 @@
 package social;
 
+
 import model.BaseAd;
 import org.junit.Before;
+import org.junit.Ignore;
 
+@Ignore
 public class FacebookServiceTest {
 
     static FacebookService facebookService;
@@ -16,6 +19,7 @@ public class FacebookServiceTest {
         testfacebookad.setCategory("testTweetAd");
         //testfacebookad.setPictureUrl("http://cloudlakes.com/data_images/makers/mersedes-benz/mersedes-benz-01.jpg");
     }
+    @Ignore
     @org.junit.Test
     public void testPublishMessage() throws Exception {
         facebookService = new FacebookService();
