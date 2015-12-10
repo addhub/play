@@ -47,7 +47,7 @@ define(function () {
             });
             var adUrl = "/api/ad";
             console.log("list ads")
-            $scope.adList = $http.get(adUrl, {params: {category: "Vehicle", subCat: "Cars"}}).then(
+            $scope.adList = $http.get(adUrl, {params: {category: "Vehicle"}}).then(
                 function (success) {
                     $scope.adList = success.data;
                 });
