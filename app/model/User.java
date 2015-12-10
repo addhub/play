@@ -20,12 +20,13 @@ public class User extends BaseModel {
     private String password;
 
     private String email;
-    private String mobile;
+    private String mobile; //workphone during day time
     private String displayName;
     private String pictureUrl;
     private String address;
+    private String location; //actully user's city
     private Long lastUpdated;
-
+    private String otherInfo;
     //Notifications
     private boolean notifications;
     private Long lastNotificationAt;
@@ -55,8 +56,16 @@ public class User extends BaseModel {
         return address;
     }
 
-    public void setAddress(String useraddr) {
-        this.address = useraddr;
+    public void setAddress(String usercity) {
+        this.address = usercity;
+    }
+
+    public String getCity() {
+        return location;
+    }
+
+    public void setCity(String usercity) {
+        this.location = usercity;
     }
 
     public String getPassword() {
@@ -141,6 +150,22 @@ public class User extends BaseModel {
     public void setMobile(String mobile) {
         this.mobile = mobile;
     }
+
+    public String getOtherInfo() {
+        return otherInfo;
+    }
+
+    public void setOtherInfo(String theInfo) {
+        if (theInfo.length()>=1){
+            this.otherInfo = theInfo;
+        }
+        else{
+            this.otherInfo = "S/he is very lazy, hence nothing left here!";
+        }
+
+
+    }
+
 
     public enum ProfileKey {
         TWITTER;

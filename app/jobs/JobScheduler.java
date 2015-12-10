@@ -19,5 +19,11 @@ public class JobScheduler {
                 Duration.create(1, TimeUnit.DAYS),
                 new AdCleanerJob(),ctx
         );
+
+        Akka.system().scheduler().schedule(
+                Duration.create(0, TimeUnit.DAYS),
+                Duration.create(1, TimeUnit.MINUTES),
+                new NotificationJob(),ctx
+        );
     }
 }
