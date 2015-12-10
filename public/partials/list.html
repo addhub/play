@@ -1,10 +1,10 @@
 <div class="sidebar" ng-include src="'partials/listsidenav.html'"></div>
 <div class="row">
-<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 " id="serchlist">
-    <div class="list">
-        <ul ng-repeat="ad in adList">
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 " id="serchlist">
+        <div class="list">
+            <ul ng-repeat="ad in adList">
 
-            <li class="clearfix">
+                <li class="clearfix">
 
                 <div class="col-sm-8">
                     <h3><a class="title" href="#/adDetail/{{ad.category}}/{{ad.id}}">{{ad.title}}</a></h3>
@@ -22,33 +22,8 @@
                 <div class="col-sm-2">
                     <div class="share"> Share On : <br>
                         <a ng-click="exportAd(ad.category, ad.id, 'twitter')" title="Twitter" class="badge"><i class="fa fa-twitter"></i></a> </div>
-                    <a class="btn  contact"><i class="fa fa-envelope-o"></i> Contact</a> </div>
-            </li>
-        </ul>
-    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 " id="serchlist">
-        <div class="list">
-            <ul ng-repeat="ad in adList">
-                <li class="clearfix">
-                    <div class="col-sm-8">
-                        <h3><a class="title" href="#/adDetail">{{ad.title}}</a></h3>
-                        <ul class="icondetail">
-                            <list ng-attr-label="{{ad.title}}" label="ad.name">
-                                <li><img ng-src="{{ad.pictureUrls[0]}}" style="width: 80%"></li>
-                                <li><i class="fa fa-th-list"></i> Category: <a href="#">{{ad.category}}</a></li>
-                                <li><i class="fa fa-map-marker"></i> Location: {{ad.state}}, {{ad.country}}</li>
-                                <li><i class="fa fa-calendar"></i> Posted On: {{ad.date}}</li>
-                                <li><i class="fa fa-user"></i> Posted by: <a href="#">{{ad.author}}</a></li>
-                            </list>
-                        </ul>
-                        <div class="discrption"> {{ad.description}}</div>
-                    </div>
-                    <div class="col-sm-2">
-                        <div class="share"> Share On : <br>
-                            <a ng-click="exportAd(ad.category, ad.id, 'twitter')" title="Twitter" class="badge">
-                                <i class="fa fa-twitter"></i></a>
-                        </div>
-                        <a class="btn  contact"><i class="fa fa-envelope-o"></i> Contact</a>
-                    </div>
+                    <a class="btn  contact"><i class="fa fa-envelope-o"></i> Contact</a>
+                </div>
                 </li>
             </ul>
         </div>
