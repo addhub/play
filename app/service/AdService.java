@@ -173,6 +173,7 @@ public class AdService extends BasicMongoService {
     public void savePictures(BaseAd ad, User user) {
         File userDir = new File(Application.PICTURE_FOLDER + user.getUsername());
         Collection<File> files = FileUtils.listFiles(userDir, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
+//        List<File> files= FileStoreService.getFiles(user.getUsername());
         String s3Folder = user.getUsername() + "/" + ad.getId();
         s3Service.createFolder(S3Service.BUCKET_NAME, s3Folder);
 
@@ -194,6 +195,7 @@ public class AdService extends BasicMongoService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+//        FileStoreService.removeFiles(user.getUsername());
     }
 
 }

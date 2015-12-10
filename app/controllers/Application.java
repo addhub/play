@@ -8,6 +8,7 @@ import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
+import service.FileStoreService;
 import service.UserService;
 import views.html.index;
 
@@ -34,6 +35,7 @@ public class Application extends Controller {
             String contentType = picture.getContentType();
             File file = picture.getFile();
             String username=session().get("username");
+//            FileStoreService.addFile(username, file);
             try {
                 FileUtils.moveFile(file, new File(PICTURE_FOLDER + username, fileName));
             } catch (IOException e) {

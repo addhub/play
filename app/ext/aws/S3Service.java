@@ -7,6 +7,8 @@ import com.amazonaws.event.ProgressEventType;
 import com.amazonaws.event.ProgressListener;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.CopyObjectRequest;
+import com.amazonaws.services.s3.model.CopyObjectResult;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.transfer.TransferManager;
@@ -20,6 +22,7 @@ import scala.concurrent.Promise$;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
+import java.util.List;
 
 
 public class S3Service {
@@ -34,7 +37,6 @@ public class S3Service {
         final String secretKey = AppConfig.getString("aws.AWS_SECRET");
         final AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
         tm = new TransferManager(credentials);
-
         client = new AmazonS3Client();
     }
 
@@ -62,9 +64,19 @@ public class S3Service {
         System.out.printf("Start to call upload method");
         String targetFolder = BUCKET_NAME+"/public/"+folderName;
         final Upload upload = tm.upload(targetFolder, file.getName(), file);
-
         //final Upload upload = tm.upload(BUCKET_NAME, file.getName(), file);
         return asPromise(folderName,file.getName(), upload);
+    }
+
+    public F.Promise<S3Result> moveFiles(List<S3Result> files, String targetFolder){
+        for (S3Result file : files) {
+            String bucketName= file.getUploadResult().getBucketName();
+            String srcKey= file.getUploadResult().getKey();
+
+            CopyObjectRequest req=new CopyObjectRequest(bucketName,srcKey, bucketName, targetFolder);
+            CopyObjectResult copyObjectResult = client.copyObject(req);
+        }
+        return null;
     }
 
 
@@ -80,7 +92,7 @@ public class S3Service {
                 try {
                     UploadResult uploadResult = upload.waitForUploadResult();
                     String url=AMAZON_URL+uploadResult.getBucketName()+"/"+filename;
-                    scalaPromise.success(new S3Result(url)); //cannot call sucess multiple times
+                    scalaPromise.success(new S3Result(url, uploadResult)); //cannot call sucess multiple times
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
