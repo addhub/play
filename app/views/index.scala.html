@@ -9,13 +9,6 @@
         <meta username="description" content="Responsive, Bootstrap, Html5, Css3, Blog, Classified, Ads, Simple, Clean ">
 
         <title>Addhub</title>
-
-        <style type="text/css">.gm-style.gm-style-mtc label,.gm-style.gm-style-mtc div { font-weight : 400 }</style>
-        <style type="text/css">.gm-style.gm-style-cc span,.gm-style.gm-style-cc a,.gm-style.gm-style-mtc div { font-size : 10px }</style>
-        <style type="text/css">@@media print {.gm-style.gmnoprint,.gmnoprint { display : none } } @@media screen {.gm-style.gmnoscreen,.gmnoscreen { display : none } }</style>
-        <style type="text/css">.gm-style { font-family : Roboto, Arial, sans-serif ; font-size : 11 px ; font-weight : 400 ; text-decoration : none }.gm-style img { max-width : none }</style>
-
-
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("img/favicon.png")">
 
             <!-- Bootstrap -->
@@ -50,30 +43,27 @@
                                 <li> <a class="submenu2" href="#/list">Listing</a></li>
                                 <li>
                                     <a class="submenu2">My Account
-
-                                            <span ng-show="currentUser" style="
+                                        <span ng-show="currentUser" style="
                                             font-size: x-small;
                                             ">&lt;Hi {{currentUser.displayName}}
                                             <img ng-src="{{currentUser.pictureUrl}}">
-                                            </span>
-
-
+                                        </span>
                                     </a>
                                     <div class="submenu">
                                         <ul>
-                                                <li ng-hide="currentUser"> <a class="" href="/#/login">Login</a> </li>
-                                                <li ng-hide="currentUser"> <a class="" href="/#/register">Register</a> </li>
-                                                <li ng-show="currentUser"> <a class="" href="/auth/logout">Logout</a> </li>
-                                                <li ng-show="currentUser"> <a class="" href="#/myAccount/dashboard/{{currentUser.username}}"> Dashboard</a> </li>
-                                                <li ng-show="currentUser"> <a class="" href="#/myAccount/profile/{{currentUser.username}}"> Profile</a> </li>
-                                                <li ng-show="currentUser"> <a class="" href="/#/postAd">Post An Ad</a> </li>
-
+                                            <li ng-hide="currentUser"> <a class="" href="/#/login">Login</a> </li>
+                                            <li ng-hide="currentUser"> <a class="" href="/#/register">Register</a> </li>
+                                            <li ng-show="currentUser"> <a class="" href="/auth/logout">Logout</a> </li>
+                                            <li ng-show="currentUser"> <a class="" href="#/myAccount/dashboard/{{currentUser.username}}"> Dashboard</a> </li>
+                                            <li ng-show="currentUser"> <a class="" href="#/myAccount/profile/{{currentUser.username}}"> Profile</a> </li>
+                                            <li ng-show="currentUser"> <a class="" href="/#/postAd">Post An Ad</a> </li>
                                         </ul>
                                     </div>
                                 </li>
                                 <li> <a class="" href="contact.html">Contact</a> </li>
 
-                            </ul></div>
+                            </ul>
+                        </div>
                     </nav>
                     <div class="mt10 pull-right">
                             <!--Social -->
@@ -130,8 +120,6 @@
                 </div>
             </section>
         </footer>
-            <!-- Got to top -->
-        <a id="gotop" style="display : none ;"><i class="fa fa-arrow-circle-up"></i></a>
     </div>
 
 
