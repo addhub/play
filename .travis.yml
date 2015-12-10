@@ -10,8 +10,8 @@ services:
 
 env:
   - PLAY_VERSION=2.11.6
-  -AWS_ACCESS_KEY_ID=xxxx
-  -AWS_SECRET_ACCESS_KEY=xxxx
+  - AWS_ACCESS_KEY_ID=xxxx
+  - AWS_SECRET_ACCESS_KEY=xxxx
 
 script:
 -  ./activator test
