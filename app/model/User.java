@@ -32,6 +32,7 @@ public class User extends BaseModel {
     private long lastNotificationAt;
     private String notificationQuery;
 
+    private String skypeId;
 
     public CommonProfile main;
     public Map<ProfileKey, CommonProfile> profiles = new HashMap<>();
@@ -60,12 +61,12 @@ public class User extends BaseModel {
         this.address = usercity;
     }
 
-    public String getCity() {
+    public String getLocation() {
         return location;
     }
 
-    public void setCity(String usercity) {
-        this.location = usercity;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getPassword() {
@@ -156,7 +157,7 @@ public class User extends BaseModel {
     }
 
     public void setOtherInfo(String theInfo) {
-        if (theInfo.length()>=1){
+        if (theInfo.length()>0){
             this.otherInfo = theInfo;
         }
         else{
@@ -164,6 +165,14 @@ public class User extends BaseModel {
         }
 
 
+    }
+
+    public String getSkypeId() {
+        return skypeId;
+    }
+
+    public void setSkypeId(String skypeId) {
+        this.skypeId = skypeId;
     }
 
 

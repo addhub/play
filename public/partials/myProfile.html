@@ -24,30 +24,7 @@
                     <md-icon>Save</md-icon>
 
                 </md-button>
-                <!--<md-menu>-->
-                    <!--<md-button class="md-icon-button" ng-click="$mdOpenMenu($event)">-->
-                        <!--<a class="list-group-item" href="#"><i class="fa fa-cog fa-fw"></i>&nbsp; Settings</a>-->
-                        <!--<md-tooltip>-->
-                            <!--More-->
-                        <!--</md-tooltip>-->
-                        <!--<md-icon>More</md-icon>-->
-                    <!--</md-button>-->
-                    <!--<md-menu-content>-->
-                        <!--<md-menu-item>-->
-                            <!--<md-button ng-click="deleteUser()">-->
-                                <!--Delete-->
-                            <!--</md-button>-->
-                            <!--<md-icon>Delete</md-icon>-->
-                        <!--</md-menu-item>-->
-                        <!--<md-menu-item>-->
-                            <!--<md-button ng-click="resetPassword()">-->
 
-                                <!--Reset-->
-                            <!--</md-button>-->
-                            <!--<md-icon>Reset</md-icon>-->
-                        <!--</md-menu-item>-->
-                    <!--</md-menu-content>-->
-                <!--</md-menu>-->
             </div>
         </md-toolbar>
         <md-card-content layout="column" layout-gt-md="row">
@@ -56,7 +33,7 @@
                 <md-button class="md-icon-button user-avatar-edit" ng-click="browserAvatar()">
                     <md-icon>photo_camera</md-icon>
                 </md-button>
-                <form name="userBasicInfoForm" layout="column" flex>
+                <form name="userBasicInfoForm" style="line-height:18px" layout="column" flex>
                     <md-input-container class="user-input-container">
                         <label>User Name</label>
                         <textarea name="userName" required class="user-name" ng-model="user.username" ng-disabled="viewMode" flex></textarea>
@@ -100,8 +77,8 @@
                         </div>
                     </md-input-container>
                     <md-input-container flex>
-                        <label>Mobile Phone</label>
-                        <input type="tel" ng-model="user.mobile" ng-disabled="viewMode"></input>
+                        <label>Skype</label>
+                        <input type="text" name= "userSkypeId" ng-model="user.skypeId" ng-disabled="viewMode"></input>
                     </md-input-container>
                 </div>
                 <div layout="column" layout-gt-sm="row">
@@ -110,20 +87,21 @@
                         <input type="email" name="userAlias" ng-model="user.email" ng-disabled="viewMode"></input>
                     </md-input-container>
                     <md-input-container flex>
-                        <label>Other Email</label>
+                        <label>Other Information</label>
                         <input type="text" name="userOtherInfo" ng-model="user.otherInfo" ng-disabled="viewMode"></input>
 
                     </md-input-container>
                 </div>
 
-                <div layout="column" layout-gt-sm="row">
+                <div layout="column" layout-gt-sm="row" layout-align="space-between center">
                     <md-input-container flex>
+                        <md-checkbox ng-disabled="viewMode" ng-model="user.notifications" aria-label="Disabled"></md-checkbox>
                         <label>Notification Condition</label>
                         <input type="text" name="notificationQuery" ng-model="user.notificationQuery" ng-disabled="viewMode"></input>
                     </md-input-container>
-                    <md-input-container flex>
-                        <md-checkbox ng-disabled="viewMode" ng-model="user.notifications" aria-label="Disabled"></md-checkbox>
-                    </md-input-container>
+                    <!--<md-input-container>-->
+                        <!--<md-checkbox ng-disabled="viewMode" ng-model="user.notifications" aria-label="Disabled"></md-checkbox>-->
+                    <!--</md-input-container>-->
 
                 </div>
 
