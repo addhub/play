@@ -29,7 +29,7 @@ public class User extends BaseModel {
     private String otherInfo;
     //Notifications
     private boolean notifications;
-    private Long lastNotificationAt;
+    private long lastNotificationAt;
     private String notificationQuery;
 
 

@@ -83,7 +83,11 @@ public class Util {
     }
 
     public static Map<String, String[]> queryStringToMap(String query){
-        String url = "http://www.example.com/something.html?one=1&two=2&three=3&three=3a";
+        if(query==null){
+            return null;
+        }else if(!query.startsWith("?")){
+            query="?"+query;
+        }
         Map<String, String[]> map=new HashMap<>();
         List<NameValuePair> params = null;
         try {

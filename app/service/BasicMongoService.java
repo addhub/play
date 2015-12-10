@@ -65,7 +65,7 @@ public class BasicMongoService {
     public List<Document> getList( FindIterable<Document> iterable) {
         List<Document> list=new ArrayList<>();
         for (Document document : iterable) {
-            document.put("id", document.remove("_id").toString());
+//            document.put("id", document.remove("_id").toString());
             list.add(document);
         }
         return list;
@@ -74,7 +74,6 @@ public class BasicMongoService {
     public <T extends BaseModel>  List<T> getListAs(Class<T> as ,FindIterable<Document> iterable) {
         List<T> list=new ArrayList<>();
         for (Document document : iterable) {
-            document.put("id", document.remove("_id").toString());
             list.add(as(as, document));
         }
         return list;
@@ -82,7 +81,6 @@ public class BasicMongoService {
     public <T extends BaseModel>  List<T> getListAs(Class<T> as ,List<Document> docs) {
         List<T> list=new ArrayList<>();
         for (Document document : docs) {
-            document.put("id", document.remove("_id").toString());
             list.add(as(as, document));
         }
         return list;
