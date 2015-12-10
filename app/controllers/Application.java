@@ -18,7 +18,7 @@ public class Application extends Controller {
     UserService userService = new UserService();
     S3Service s3Service = new S3Service();
 
-    public static final String PICTURE_FOLDER ="~/Shared/upload/";
+    public static final String PICTURE_FOLDER ="./tmp/upload/";
 
 
     public Result viewIndex() {

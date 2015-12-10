@@ -53,6 +53,7 @@ public class S3Service {
 
         // send request to S3 to create folder
         client.putObject(putObjectRequest);
+
         String folderName = putObjectRequest.toString();
         return folderName;
     }
