@@ -59,7 +59,7 @@ public class BaseAdServiceTest {
     @org.junit.Test
     public void testGetAdModel() throws Exception {
         Vehicle ad=new Vehicle();
-        ad.setId("56310b651792c62cd39d4f03");
+        ad.setId("56310b651792c62cd39d4f57");
         Vehicle fullAd = adService.getAd(ad);
         assertEquals("Vehicle",fullAd.getCategory());
     }
